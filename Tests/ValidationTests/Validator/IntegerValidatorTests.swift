@@ -79,4 +79,12 @@ final class IntegerValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
     }
+
+    func testValueBetweenMinAndMaxValues() {
+        // Arrange
+        let value = "1"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
+    }
 }
