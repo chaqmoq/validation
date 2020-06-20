@@ -6,13 +6,13 @@ struct LengthValidator: ConstraintValidator {
     func validate(_ value: String, against constraints: [Constraint]) throws {
         guard let constraint = constraints.first(where: { $0 is LengthConstraint }) as? LengthConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: LengthConstraint.self)) type."
+                "The constraint must be of \(String(describing: LengthConstraint.self)) type."
             )
         }
 
         if constraint.min > constraint.max {
             throw ValidatorError.invalidArgument(
-                message: "The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max)."
+                "The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max)."
             )
         }
 

@@ -20,7 +20,7 @@ extension VINValidator {
 
         guard let constraint = constraints.first(where: { $0 is VINConstraint }) as? VINConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: VINConstraint.self)) type."
+                "The constraint must be of \(String(describing: VINConstraint.self)) type."
             )
         }
 

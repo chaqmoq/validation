@@ -20,7 +20,7 @@ struct PhoneNumberValidator: ConstraintValidator {
 
         guard let constraint = constraints.first(where: { $0 is PhoneNumberConstraint }) as? PhoneNumberConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: PhoneNumberConstraint.self)) type."
+                "The constraint must be of \(String(describing: PhoneNumberConstraint.self)) type."
             )
         }
 

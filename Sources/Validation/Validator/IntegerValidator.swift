@@ -12,18 +12,18 @@ struct IntegerValidator: ConstraintValidator {
 
         guard let constraint = constraints.first(where: { $0 is IntegerConstraint }) as? IntegerConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: IntegerConstraint.self)) type."
+                "The constraint must be of \(String(describing: IntegerConstraint.self)) type."
             )
         }
 
         if constraint.min > constraint.max {
             throw ValidatorError.invalidArgument(
-                message: "The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max)."
+                "The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max)."
             )
         }
 
         guard let intValue = Int(value) else {
-            throw ValidatorError.invalidArgument(message: "The value must be an integer.")
+            throw ValidatorError.invalidArgument("The value must be an integer.")
         }
 
         if constraint.min == constraint.max && intValue != constraint.min {

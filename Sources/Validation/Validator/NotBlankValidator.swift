@@ -12,7 +12,7 @@ struct NotBlankValidator: ConstraintValidator {
 
         guard let constraint = constraints.first(where: { $0 is NotBlankConstraint }) as? NotBlankConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: NotBlankConstraint.self)) type."
+                "The constraint must be of \(String(describing: NotBlankConstraint.self)) type."
             )
         }
 

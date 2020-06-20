@@ -14,7 +14,7 @@ struct EmailValidator: ConstraintValidator {
 
         guard let constraint = constraints.first(where: { $0 is EmailConstraint }) as? EmailConstraint else {
             throw ValidatorError.invalidArgument(
-                message: "The constraint must be of \(String(describing: EmailConstraint.self)) type."
+                "The constraint must be of \(String(describing: EmailConstraint.self)) type."
             )
         }
 
