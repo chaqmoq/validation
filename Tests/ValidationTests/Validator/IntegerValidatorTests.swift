@@ -43,4 +43,12 @@ final class IntegerValidatorTests: XCTestCase {
             XCTAssertTrue(error is ValidatorError)
         }
     }
+
+    func testValueEqualToExactValue() {
+        // Arrange
+        let value = "1"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(exact: 1)))
+    }
 }
