@@ -55,4 +55,12 @@ final class LengthValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testValueEqualToMinimumValue() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: LengthConstraint(min: 1, max: 2)))
+    }
 }
