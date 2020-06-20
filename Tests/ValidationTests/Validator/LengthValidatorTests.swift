@@ -19,4 +19,12 @@ final class LengthValidatorTests: XCTestCase {
             XCTAssertTrue(error is ValidatorError)
         }
     }
+
+    func testValueAgainstInvalidConstraint() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint()))
+    }
 }
