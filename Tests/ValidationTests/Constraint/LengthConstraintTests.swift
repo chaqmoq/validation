@@ -48,4 +48,20 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.maxMessage, "This value is too long. It must have \(max) characters or less.")
         XCTAssertEqual(constraint.exactMessage, "This value must have %d characters.")
     }
+
+    func testInitWhenMinLengthIsEqualToMaxLength() {
+        // Arrange
+        let min: UInt = 1
+        let max = min
+
+        // Act
+        let constraint = LengthConstraint(min: min, max: max)
+
+        // Assert
+        XCTAssertEqual(constraint.min, min)
+        XCTAssertEqual(constraint.max, max)
+        XCTAssertEqual(constraint.minMessage, "This value is too short. It must have \(min) characters or more.")
+        XCTAssertEqual(constraint.maxMessage, "This value is too long. It must have \(min) characters or less.")
+        XCTAssertEqual(constraint.exactMessage, "This value must have \(min) characters.")
+    }
 }
