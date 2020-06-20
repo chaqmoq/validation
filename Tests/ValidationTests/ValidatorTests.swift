@@ -17,4 +17,14 @@ final class ValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value))
     }
+
+    func testValueWithOneConstraint() {
+        // Arrange
+        let value = ""
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
 }
