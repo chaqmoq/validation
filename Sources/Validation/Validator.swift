@@ -7,7 +7,7 @@ public struct Validator: ConstraintValidator {
 
     public func validate(_ value: String, against constraints: [Constraint]) throws {
         for constraint in constraints {
-            try constraint.validator.validate(value)
+            try constraint.validator.validate(value, against: constraint)
         }
     }
 
@@ -18,7 +18,7 @@ public struct Validator: ConstraintValidator {
     public func validate(_ value: String, against constraintTypes: [ConstraintType]) throws {
         for constraintType in constraintTypes {
             let constraint = constraintType.constraint
-            try constraint.validator.validate(value)
+            try constraint.validator.validate(value, against: constraint)
         }
     }
 }
