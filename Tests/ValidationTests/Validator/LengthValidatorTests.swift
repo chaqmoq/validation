@@ -27,4 +27,12 @@ final class LengthValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint()))
     }
+
+    func testValueEqualToExactValue() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: LengthConstraint(exact: 1)))
+    }
 }
