@@ -1,7 +1,7 @@
 import XCTest
 @testable import enum Validation.ValidatorError
 
-final class ValidatorErrorTestCase: XCTestCase {
+final class ValidatorErrorTests: XCTestCase {
     func testInvalidArgumentError() {
         // Arrange
         let message = "The argument is not valid."
