@@ -71,4 +71,12 @@ final class IntegerValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testValueEqualToMinValue() {
+        // Arrange
+        let value = "0"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
+    }
 }
