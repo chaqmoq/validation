@@ -29,4 +29,12 @@ final class NotBlankValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testValueWithImplicitConstraint() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value))
+    }
 }
