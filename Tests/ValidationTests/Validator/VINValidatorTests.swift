@@ -130,4 +130,22 @@ final class VINValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testInvalidLengthVINs() {
+        // Arrange
+        var vin = "1G1BE5SM4G723486"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "1G1BE5SM4G7234862828"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
 }
