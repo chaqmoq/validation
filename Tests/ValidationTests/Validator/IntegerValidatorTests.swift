@@ -33,4 +33,14 @@ final class IntegerValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint()))
     }
+
+    func testInvalidValue() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(exact: 1))) { error in
+            XCTAssertTrue(error is ValidatorError)
+        }
+    }
 }
