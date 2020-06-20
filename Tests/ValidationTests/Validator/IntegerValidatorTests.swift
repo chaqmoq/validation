@@ -51,4 +51,14 @@ final class IntegerValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(exact: 1)))
     }
+
+    func testValueNotEqualToExactValue() {
+        // Arrange
+        let value = "0"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(exact: 1))) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
 }
