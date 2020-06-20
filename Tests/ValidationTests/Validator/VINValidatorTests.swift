@@ -148,4 +148,14 @@ final class VINValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testValueWithInvalidConstraint() {
+        // Arrange
+        let value = "I1G1BE5SM4G7234868"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+            XCTAssertTrue(error is ValidatorError)
+        }
+    }
 }
