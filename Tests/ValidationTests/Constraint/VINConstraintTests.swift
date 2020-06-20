@@ -9,4 +9,15 @@ final class VINConstraintTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.message, "This value must be a valid VIN.")
     }
+
+    func testInitWithCustomMessage() {
+        // Arrange
+        let message = "This value is not a valid VIN."
+
+        // Act
+        let constraint = VINConstraint(message: message)
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
 }
