@@ -56,4 +56,78 @@ final class VINValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testInvalidCharacterVINs() {
+        // Arrange
+        var vin = "1G1BE5SM4GI234868"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "1G1BE5SM4G7234O68"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "1G1BQ5SM4G7234868"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "1G1BE5SM4G723 868"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "SAFETKBUNPEANDTHS"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "1G1BE5S-4G7234868"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "INI503779(C0NTENT"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "SEEHTTPS7ELLEN.WI"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        // Arrange
+        vin = "CAPTUREC0NNECTI0N"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(vin)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
 }
