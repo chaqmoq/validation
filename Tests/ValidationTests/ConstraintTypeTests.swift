@@ -73,4 +73,15 @@ final class ConstraintTypeTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.message, message)
     }
+
+    func testVINType() {
+        // Arrange
+        let message = "This value is not a valid VIN."
+
+        // Act
+        let constraint = ConstraintType.vin(message: message).constraint as! VINConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
 }
