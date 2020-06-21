@@ -1,6 +1,6 @@
 struct VINValidator: ConstraintValidator {
-    static let vinMinLength: Int = 17
-    static let vinMaxLength: Int = 18
+    static let vinMinLength = 17
+    static let vinMaxLength = 18
     static let allowedCharacters = "0123456789.ABCDEFGH..JKLMN.P.R..STUVWXYZ"
     static let map = "0123456789X"
     static let weights = "8765432X098765432"
