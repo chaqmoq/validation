@@ -62,4 +62,15 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.maxMessage, maxMessage)
         XCTAssertEqual(constraint.exactMessage, exactMessage)
     }
+
+    func testNotBlankType() {
+        // Arrange
+        let message = "This value is required."
+
+        // Act
+        let constraint = ConstraintType.notBlank(message: message).constraint as! NotBlankConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
 }
