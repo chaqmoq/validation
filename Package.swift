@@ -7,11 +7,8 @@ let package = Package(
     products: [
         .library(name: "Validation", targets: ["Validation"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/marmelroy/PhoneNumberKit.git", from: "3.2.0")
-    ],
     targets: [
-        .target(name: "Validation", dependencies: ["PhoneNumberKit"]),
+        .target(name: "Validation"),
         .testTarget(name: "ValidationTests", dependencies: ["Validation"])
     ],
     swiftLanguageVersions: [.v5]

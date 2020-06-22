@@ -15,10 +15,6 @@ public enum ConstraintType {
         exactMessage: String = LengthConstraint.exactMessage
     )
     case notBlank(message: String = NotBlankConstraint.message)
-    case phoneNumber(
-        message: String = PhoneNumberConstraint.message,
-        regionCode: String = PhoneNumberConstraint.regionCode
-    )
     case vin(message: String = VINConstraint.message)
 
     public var constraint: Constraint {
@@ -43,8 +39,6 @@ public enum ConstraintType {
             )
         case .notBlank(let message):
             return NotBlankConstraint(message: message)
-        case .phoneNumber(let message, let regionCode):
-            return PhoneNumberConstraint(message: message, regionCode: regionCode)
         case .vin(let message):
             return VINConstraint(message: message)
         }
