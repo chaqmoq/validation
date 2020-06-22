@@ -2,7 +2,7 @@ import XCTest
 @testable import Validation
 
 final class LengthValidatorTests: XCTestCase {
-    var validator: ConstraintValidator!
+    var validator: LengthValidator!
 
     override func setUp() {
         super.setUp()

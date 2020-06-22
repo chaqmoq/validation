@@ -1,8 +1,4 @@
 struct LengthValidator: ConstraintValidator {
-    func validate(_ value: String, against constraints: Constraint...) throws {
-        try validate(value, against: constraints)
-    }
-
     func validate(_ value: String, against constraints: [Constraint]) throws {
         guard let constraint = constraints.first(where: { $0 is LengthConstraint }) as? LengthConstraint else {
             throw ValidatorError.invalidArgument(

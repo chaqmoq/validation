@@ -2,7 +2,7 @@ import XCTest
 @testable import Validation
 
 final class NotBlankValidatorTests: XCTestCase {
-    var validator: ConstraintValidator!
+    var validator: NotBlankValidator!
 
     override func setUp() {
         super.setUp()

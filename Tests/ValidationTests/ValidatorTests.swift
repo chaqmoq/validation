@@ -2,7 +2,7 @@ import XCTest
 @testable import Validation
 
 final class ValidatorTests: XCTestCase {
-    var validator: ConstraintValidator!
+    var validator: Validator!
 
     override func setUp() {
         super.setUp()
@@ -33,7 +33,7 @@ final class ValidatorTests: XCTestCase {
         let value = "a"
 
         // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: NotBlankConstraint(), LengthConstraint(min: 1)))
+        XCTAssertNoThrow(try validator.validate(value, against: [.notBlank(), .length(min: 1)]))
     }
 
     func testInvalidValueWithMultipleConstraints() {

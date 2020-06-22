@@ -2,7 +2,7 @@ import XCTest
 @testable import Validation
 
 final class VINValidatorTests: XCTestCase {
-    var validator: ConstraintValidator!
+    var validator: VINValidator!
 
     override func setUp() {
         super.setUp()

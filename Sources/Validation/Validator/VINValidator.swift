@@ -7,10 +7,6 @@ struct VINValidator: ConstraintValidator {
 }
 
 extension VINValidator {
-    func validate(_ value: String, against constraints: Constraint...) throws {
-        try validate(value, against: constraints)
-    }
-
     func validate(_ value: String, against constraints: [Constraint]) throws {
         var constraints = constraints
 

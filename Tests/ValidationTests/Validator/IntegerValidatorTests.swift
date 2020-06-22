@@ -2,7 +2,7 @@ import XCTest
 @testable import Validation
 
 final class IntegerValidatorTests: XCTestCase {
-    var validator: ConstraintValidator!
+    var validator: IntegerValidator!
 
     override func setUp() {
         super.setUp()
