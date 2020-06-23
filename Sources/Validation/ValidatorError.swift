@@ -1,7 +1,7 @@
 import protocol Foundation.LocalizedError
 
 public enum ValidatorError: LocalizedError {
-    case invalidArgument(_ message: String = "")
+    case invalidArgument(_ message: String?)
 
     public var errorDescription: String? {
         switch self {
