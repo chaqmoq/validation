@@ -45,4 +45,14 @@ final class EmailValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value, against: EmailConstraint()))
     }
+
+    func testInvalidValueWithImplicitConstraint() {
+        // Arrange
+        let value = "contact.chaqmoq.dev"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
 }
