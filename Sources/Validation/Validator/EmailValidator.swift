@@ -20,7 +20,7 @@ struct EmailValidator: ConstraintValidator {
             )
         }
 
-        if value.isEmpty { throw ConstraintViolation(message: constraint.message) }
+        if value.isEmpty { return }
         guard let regex = try? NSRegularExpression(pattern: EmailValidator.pattern) else { return }
         let range = NSRange(location: 0, length: value.utf8.count)
 

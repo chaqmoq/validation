@@ -15,9 +15,7 @@ final class EmailValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
+        XCTAssertNoThrow(try validator.validate(value))
     }
 
     func testEmptyValueWithExplicitConstraint() {
@@ -25,9 +23,7 @@ final class EmailValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: EmailConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
+        XCTAssertNoThrow(try validator.validate(value, against: EmailConstraint()))
     }
 
     func testValueWithImplicitConstraint() {
