@@ -37,4 +37,12 @@ final class EmailValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value))
     }
+
+    func testValueWithExplicitConstraint() {
+        // Arrange
+        let value = "contact@chaqmoq.dev"
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: EmailConstraint()))
+    }
 }
