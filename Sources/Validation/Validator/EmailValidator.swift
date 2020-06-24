@@ -1,12 +1,18 @@
-import class Foundation.NSPredicate
+import struct Foundation.NSRange
+import class Foundation.NSRegularExpression
 
 struct EmailValidator: ConstraintValidator {
+    static let pattern = "(?:[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}" +
+    "~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\" +
+    "x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[\\p{L}0-9](?:[a-" +
+    "z0-9-]*[\\p{L}0-9])?\\.)+[\\p{L}0-9](?:[\\p{L}0-9-]*[\\p{L}0-9])?|\\[(?:(?:25[0-5" +
+    "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-" +
+    "9][0-9]?|[\\p{L}0-9-]*[\\p{L}0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21" +
+    "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+
     func validate(_ value: String, against constraints: [Constraint]) throws {
         var constraints = constraints
-
-        if constraints.isEmpty {
-            constraints.append(EmailConstraint())
-        }
+        if constraints.isEmpty { constraints.append(EmailConstraint()) }
 
         guard let constraint = constraints.first(where: { $0 is EmailConstraint }) as? EmailConstraint else {
             throw ValidatorError.invalidArgument(
@@ -14,64 +20,12 @@ struct EmailValidator: ConstraintValidator {
             )
         }
 
-        if !isValidEmail(value) {
+        if value.isEmpty { throw ConstraintViolation(message: constraint.message) }
+        guard let regex = try? NSRegularExpression(pattern: EmailValidator.pattern) else { return }
+        let range = NSRange(location: 0, length: value.utf8.count)
+
+        if regex.firstMatch(in: value, range: range) == nil {
             throw ConstraintViolation(message: constraint.message)
         }
-    }
-}
-
-extension EmailValidator {
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", "^\\b.+@.+\\..+\\b$")
-
-        if !emailPredicate.evaluate(with: email) {
-            return false
-        }
-
-        let (username, domain, tld) = splitEmail(email)
-        let usernamePredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z.!#$%&'*+-/=?^_`{|}~]+")
-
-        if username.isEmpty ||
-            username.hasPrefix(".") ||
-            username.hasSuffix(".") ||
-            username.range(of: "..") != nil ||
-            !usernamePredicate.evaluate(with: username) {
-            return false
-        }
-
-        let domainPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z.-]+")
-
-        if domain.isEmpty ||
-            domain.hasPrefix(".") ||
-            domain.hasSuffix(".") ||
-            domain.range(of: "..") != nil ||
-            !domainPredicate.evaluate(with: domain) {
-            return false
-        }
-
-        let tldPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Za-z][A-Z0-9a-z-]{0,22}[A-Z0-9a-z]")
-
-        if !tldPredicate.evaluate(with: tld) {
-            return false
-        }
-
-        return true
-    }
-
-    private func splitEmail(_ email: String) -> (String, String, String) {
-        var username = ""
-        var domain = ""
-        var tld = ""
-
-        if let atRange = email.range(of: "@") {
-            username = String(email[email.startIndex..<atRange.lowerBound])
-
-            if let dotRange = email.range(of: ".", options: .backwards) {
-                domain = String(email[atRange.upperBound..<dotRange.lowerBound])
-                tld = String(email[dotRange.upperBound..<email.endIndex])
-            }
-        }
-
-        return (username, domain, tld)
     }
 }
