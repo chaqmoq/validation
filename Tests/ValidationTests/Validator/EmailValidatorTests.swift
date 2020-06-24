@@ -65,4 +65,14 @@ final class EmailValidatorTests: XCTestCase {
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
+
+    func testValueWithInvalidConstraint() {
+        // Arrange
+        let value = "a"
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+            XCTAssertTrue(error is ValidatorError)
+        }
+    }
 }
