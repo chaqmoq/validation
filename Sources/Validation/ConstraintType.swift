@@ -1,8 +1,8 @@
 public enum ConstraintType {
     case email(message: String = EmailConstraint.message)
     case integer(
-        min: Int = Int.min,
-        max: Int = Int.max,
+        min: Int = IntegerConstraint.min,
+        max: Int = IntegerConstraint.max,
         minMessage: String = IntegerConstraint.minMessage,
         maxMessage: String = IntegerConstraint.maxMessage,
         exactMessage: String = IntegerConstraint.exactMessage
