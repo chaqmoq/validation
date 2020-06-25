@@ -8,8 +8,8 @@ public enum ConstraintType {
         exactMessage: String = IntegerConstraint.exactMessage
     )
     case length(
-        min: UInt = 1,
-        max: UInt = UInt.max,
+        min: UInt = LengthConstraint.min,
+        max: UInt = LengthConstraint.max,
         minMessage: String = LengthConstraint.minMessage,
         maxMessage: String = LengthConstraint.maxMessage,
         exactMessage: String = LengthConstraint.exactMessage

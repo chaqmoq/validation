@@ -1,4 +1,6 @@
 public struct LengthConstraint: Constraint {
+    public static let min: UInt = 1
+    public static let max: UInt = UInt.max
     public static let minMessage = "This value is too short. It must have %d characters or more."
     public static let maxMessage = "This value is too long. It must have %d characters or less."
     public static let exactMessage = "This value must have %d characters."
@@ -20,8 +22,8 @@ public struct LengthConstraint: Constraint {
     }
 
     public init(
-        min: UInt = 1,
-        max: UInt = UInt.max,
+        min: UInt = min,
+        max: UInt = max,
         minMessage: String = minMessage,
         maxMessage: String = maxMessage,
         exactMessage: String = exactMessage
