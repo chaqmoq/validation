@@ -1,3 +1,3 @@
-public struct Validator: ConstraintValidator {
+public final class Validator: ConstraintValidator {
     public init() {}
 }
