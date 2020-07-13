@@ -7,7 +7,7 @@ final class BlankConstraintTests: XCTestCase {
         let constraint = BlankConstraint()
 
         // Assert
-        XCTAssertEqual(constraint.message, "This value must be blank.")
+        XCTAssertEqual(constraint.message, BlankConstraint.message)
     }
 
     func testInitWithCustomMessage() {

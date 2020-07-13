@@ -7,7 +7,7 @@ final class EmailConstraintTests: XCTestCase {
         let constraint = EmailConstraint()
 
         // Assert
-        XCTAssertEqual(constraint.message, "This value must be a valid email address.")
+        XCTAssertEqual(constraint.message, EmailConstraint.message)
     }
 
     func testInitWithCustomMessage() {

@@ -12,9 +12,9 @@ final class IntegerConstraintTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.min, value)
         XCTAssertEqual(constraint.max, value)
-        XCTAssertEqual(constraint.minMessage, "This value is too small. It must be greater than or equal to \(value).")
-        XCTAssertEqual(constraint.maxMessage, "This value is too big. It must be less than or equal to \(value).")
-        XCTAssertEqual(constraint.exactMessage, "This value must be \(value).")
+        XCTAssertEqual(constraint.minMessage, String(format: IntegerConstraint.minMessage, value))
+        XCTAssertEqual(constraint.maxMessage, String(format: IntegerConstraint.maxMessage, value))
+        XCTAssertEqual(constraint.exactMessage, String(format: IntegerConstraint.exactMessage, value))
     }
 
     func testInitWhenMinValueIsLessThanMaxValue() {
@@ -28,9 +28,9 @@ final class IntegerConstraintTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.min, min)
         XCTAssertEqual(constraint.max, max)
-        XCTAssertEqual(constraint.minMessage, "This value is too small. It must be greater than or equal to \(min).")
-        XCTAssertEqual(constraint.maxMessage, "This value is too big. It must be less than or equal to \(max).")
-        XCTAssertEqual(constraint.exactMessage, "This value must be %d.")
+        XCTAssertEqual(constraint.minMessage, String(format: IntegerConstraint.minMessage, min))
+        XCTAssertEqual(constraint.maxMessage, String(format: IntegerConstraint.maxMessage, max))
+        XCTAssertEqual(constraint.exactMessage, IntegerConstraint.exactMessage)
     }
 
     func testInitWhenMinValueIsMoreThanMaxValue() {
@@ -44,9 +44,9 @@ final class IntegerConstraintTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.min, min)
         XCTAssertEqual(constraint.max, max)
-        XCTAssertEqual(constraint.minMessage, "This value is too small. It must be greater than or equal to \(min).")
-        XCTAssertEqual(constraint.maxMessage, "This value is too big. It must be less than or equal to \(max).")
-        XCTAssertEqual(constraint.exactMessage, "This value must be %d.")
+        XCTAssertEqual(constraint.minMessage, String(format: IntegerConstraint.minMessage, min))
+        XCTAssertEqual(constraint.maxMessage, String(format: IntegerConstraint.maxMessage, max))
+        XCTAssertEqual(constraint.exactMessage, IntegerConstraint.exactMessage)
     }
 
     func testInitWhenMinValueIsEqualToMaxValue() {
@@ -60,9 +60,9 @@ final class IntegerConstraintTests: XCTestCase {
         // Assert
         XCTAssertEqual(constraint.min, min)
         XCTAssertEqual(constraint.max, max)
-        XCTAssertEqual(constraint.minMessage, "This value is too small. It must be greater than or equal to \(min).")
-        XCTAssertEqual(constraint.maxMessage, "This value is too big. It must be less than or equal to \(max).")
-        XCTAssertEqual(constraint.exactMessage, "This value must be \(min).")
+        XCTAssertEqual(constraint.minMessage, String(format: IntegerConstraint.minMessage, min))
+        XCTAssertEqual(constraint.maxMessage, String(format: IntegerConstraint.maxMessage, max))
+        XCTAssertEqual(constraint.exactMessage, String(format: IntegerConstraint.exactMessage, min))
     }
 
     func testInitWithCustomMessages() {
