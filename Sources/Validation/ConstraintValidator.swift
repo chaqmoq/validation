@@ -6,9 +6,7 @@ public protocol ConstraintValidator {
 
 extension ConstraintValidator {
     public func validate(_ value: String, against constraints: [Constraint]) throws {
-        for constraint in constraints {
-            try constraint.validator.validate(value, against: constraint)
-        }
+        for constraint in constraints { try constraint.validator.validate(value, against: constraint) }
     }
 
     public func validate(_ value: String, against constraints: Constraint...) throws {

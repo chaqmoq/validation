@@ -4,10 +4,7 @@ extension String {
     }
 
     func firstIntIndex(of character: Character) -> Int? {
-        if let index = firstIndex(of: character) {
-            return distance(from: startIndex, to: index)
-        }
-
+        if let index = firstIndex(of: character) { return distance(from: startIndex, to: index) }
         return nil
     }
 }
