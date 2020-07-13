@@ -1,10 +1,16 @@
 public protocol ConstraintValidator {
-    func validate(_ value: String, against constraints: Constraint...) throws
     func validate(_ value: String, against constraints: [Constraint]) throws
+    func validate(_ value: String, against constraints: Constraint...) throws
     func validate(_ value: String, against constraintTypes: [ConstraintType]) throws
 }
 
 extension ConstraintValidator {
+    public func validate(_ value: String, against constraints: [Constraint]) throws {
+        for constraint in constraints {
+            try constraint.validator.validate(value, against: constraint)
+        }
+    }
+
     public func validate(_ value: String, against constraints: Constraint...) throws {
         try validate(value, against: constraints)
     }
