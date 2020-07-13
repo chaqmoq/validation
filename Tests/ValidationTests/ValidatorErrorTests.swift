@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import enum Validation.ValidatorError
 
 final class ValidatorErrorTests: XCTestCase {
     func testInvalidArgumentError() {

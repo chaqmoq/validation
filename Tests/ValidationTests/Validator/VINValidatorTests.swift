@@ -1,5 +1,5 @@
-import XCTest
 @testable import Validation
+import XCTest
 
 final class VINValidatorTests: XCTestCase {
     var validator: VINValidator!

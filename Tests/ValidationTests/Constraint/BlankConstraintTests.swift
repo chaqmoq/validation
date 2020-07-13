@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import struct Validation.BlankConstraint
 
 final class BlankConstraintTests: XCTestCase {
     func testInit() {

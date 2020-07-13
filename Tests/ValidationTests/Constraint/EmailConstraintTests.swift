@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import struct Validation.EmailConstraint
 
 final class EmailConstraintTests: XCTestCase {
     func testInit() {

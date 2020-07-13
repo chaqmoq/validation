@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import struct Validation.IntegerConstraint
 
 final class IntegerConstraintTests: XCTestCase {
     func testInitWithExactValue() {

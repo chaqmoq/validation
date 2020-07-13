@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import struct Validation.LengthConstraint
 
 final class LengthConstraintTests: XCTestCase {
     func testInitWithExactLength() {

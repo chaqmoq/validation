@@ -1,4 +1,4 @@
-import protocol Foundation.LocalizedError
+import Foundation
 
 public enum ValidatorError: LocalizedError {
     case invalidArgument(_ message: String?)

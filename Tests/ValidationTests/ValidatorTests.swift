@@ -1,5 +1,5 @@
-import XCTest
 @testable import Validation
+import XCTest
 
 final class ValidatorTests: XCTestCase {
     var validator: Validator!

@@ -1,4 +1,4 @@
-import protocol Foundation.LocalizedError
+import Foundation
 
 public struct ConstraintViolation: LocalizedError {
     public let message: String

@@ -1,5 +1,5 @@
+@testable import Validation
 import XCTest
-@testable import struct Validation.VINConstraint
 
 final class VINConstraintTests: XCTestCase {
     func testInit() {

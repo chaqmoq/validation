@@ -1,5 +1,4 @@
-import struct Foundation.NSRange
-import class Foundation.NSRegularExpression
+import Foundation
 
 struct EmailValidator: ConstraintValidator {
     static let pattern = "(?:[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}" +
