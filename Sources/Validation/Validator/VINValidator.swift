@@ -9,15 +9,11 @@ struct VINValidator: ConstraintValidator {
 extension VINValidator {
     func validate(_ value: String, against constraints: [Constraint]) throws {
         var constraints = constraints
-
-        if constraints.isEmpty {
-            constraints.append(VINConstraint())
-        }
+        if constraints.isEmpty { constraints.append(VINConstraint()) }
 
         guard let constraint = constraints.first(where: { $0 is VINConstraint }) as? VINConstraint else {
-            throw ValidatorError.invalidArgument(
-                "The constraint must be of \(String(describing: VINConstraint.self)) type."
-            )
+            let message = "The constraint must be of \(String(describing: VINConstraint.self)) type."
+            throw ValidatorError.invalidArgument(message)
         }
 
         let vin = normalize(vin: value)
@@ -29,10 +25,7 @@ extension VINValidator {
 
     func normalize(vin: String) -> String {
         var vin = vin
-
-        if vin.starts(with: "I") && vin.count == VINValidator.vinMaxLength {
-            vin.removeFirst()
-        }
+        if vin.starts(with: "I") && vin.count == VINValidator.vinMaxLength { vin.removeFirst() }
 
         return vin
     }
@@ -40,13 +33,8 @@ extension VINValidator {
 
 extension VINValidator {
     private func transliterate(character: Character) -> Int? {
-        if character == "." {
-            return nil
-        }
-
-        if let value = VINValidator.allowedCharacters.firstIntIndex(of: character) {
-            return value % 10
-        }
+        if character == "." { return nil }
+        if let value = VINValidator.allowedCharacters.firstIntIndex(of: character) { return value % 10 }
 
         return nil
     }
