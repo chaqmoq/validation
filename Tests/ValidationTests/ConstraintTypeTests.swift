@@ -2,6 +2,17 @@
 import XCTest
 
 final class ConstraintTypeTests: XCTestCase {
+    func testBlankType() {
+        // Arrange
+        let message = "This value must be empty."
+
+        // Act
+        let constraint = ConstraintType.blank(message: message).constraint as! BlankConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testEmailType() {
         // Arrange
         let message = "This value is not a valid email address."

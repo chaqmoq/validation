@@ -1,5 +1,10 @@
 /// A simplified API for the existing `Constraint`s.
 public enum ConstraintType {
+    /// Creates a `BlankConstraint` type with a custom error message.
+    ///
+    /// - Parameter message: A custom error message. Defaults to a default error message.
+    case blank(message: String = BlankConstraint.message)
+
     /// Creates an `EmailConstraint`type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -37,12 +42,12 @@ public enum ConstraintType {
         exactMessage: String = LengthConstraint.exactMessage
     )
 
-    /// Creates an `NotBlankConstraint` type with a custom error message.
+    /// Creates a `NotBlankConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
     case notBlank(message: String = NotBlankConstraint.message)
 
-    /// Creates an `VINConstraint` with a custom error message.
+    /// Creates a `VINConstraint` with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
     case vin(message: String = VINConstraint.message)
@@ -50,6 +55,8 @@ public enum ConstraintType {
     /// A matching `Constraint` for the `ConstraintType`.
     public var constraint: Constraint {
         switch self {
+        case .blank(let message):
+            return BlankConstraint(message: message)
         case .email(let message):
             return EmailConstraint(message: message)
         case .integer(let min, let max, let minMessage, let maxMessage, let exactMessage):
