@@ -6,14 +6,13 @@
 Download and install [Swift](https://swift.org/download)
 
 ### Swift Package
-#### Shell
 ```shell
 mkdir MyApp
 cd MyApp
 swift package init --type executable // Creates an executable app named "MyApp"
 ```
 
-#### Package.swift
+### Package.swift
 ```swift
 // swift-tools-version:5.1
 
@@ -29,4 +28,19 @@ let package = Package(
         .testTarget(name: "MyAppTests", dependencies: ["MyApp"])
     ]
 )
+```
+
+### Build
+```shell
+swift build -c release
+```
+
+### Run
+```shell
+swift run
+```
+
+### Tests
+```shell
+swift test --enable-test-discovery --sanitize=thread
 ```
