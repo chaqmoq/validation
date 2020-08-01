@@ -45,9 +45,15 @@ let password = "12345"
 let validator = Validator()
 
 // An array of constraints
-try validator.validate(password, against: [NotBlankConstraint(), LengthConstraint(min: 6, max: 16)])
+try validator.validate(
+    password,
+    against: [NotBlankConstraint(), LengthConstraint(min: 6, max: 16)]
+)
 // A variadic list of constraints
-try validator.validate(password, against: NotBlankConstraint(), LengthConstraint(min: 6, max: 16))
+try validator.validate(
+    password,
+    against: NotBlankConstraint(), LengthConstraint(min: 6, max: 16)
+)
 // A convenience API for the existing constraints
 try validator.validate(password, against: [.notBlank(), .length(min: 6, max: 16)])
 
