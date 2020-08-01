@@ -35,6 +35,46 @@ let package = Package(
 swift build -c release
 ```
 
+## Usage
+### main.swift
+
+```swift
+import Validation
+
+let password = "12345"
+let validator = Validator()
+
+// An array of constraints
+try validator.validate(password, against: [NotBlankConstraint(), LengthConstraint(min: 6, max: 16)])
+// A variadic list of constraints
+try validator.validate(password, against: NotBlankConstraint(), LengthConstraint(min: 6, max: 16))
+// A convenience API for the existing constraints
+try validator.validate(password, against: [.notBlank(), .length(min: 6, max: 16)])
+
+// A custom validator
+struct CustomValidator: ConstraintValidator {
+    func validate(_ value: String, against constraints: [Constraint]) throws {
+        // A validation logic here.
+    }
+}
+
+// A custom constraint
+struct CustomConstraint: Constraint {
+    let validator: ConstraintValidator = CustomValidator()
+}
+
+// An array of constraints
+try validator.validate(
+    password,
+    against: [NotBlankConstraint(), LengthConstraint(min: 6, max: 16), CustomConstraint()]
+)
+// A variadic list of constraints
+try validator.validate(
+    password,
+    against: NotBlankConstraint(), LengthConstraint(min: 6, max: 16), CustomConstraint()
+)
+```
+
 ### Run
 ```shell
 swift run
