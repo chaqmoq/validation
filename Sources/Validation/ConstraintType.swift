@@ -26,6 +26,11 @@ public enum ConstraintType {
         exactMessage: String = IntegerConstraint.exactMessage
     )
 
+    /// Creates a `JSONConstraint` type with a custom error message.
+    ///
+    /// - Parameter message: A custom error message. Defaults to a default error message.
+    case json(message: String = JSONConstraint.message)
+
     /// Creates a `LengthConstraint` type with minimum/maximum values and custom minimum/maximum error messages.
     ///
     /// - Parameters:
@@ -67,6 +72,8 @@ public enum ConstraintType {
                 maxMessage: maxMessage,
                 exactMessage: exactMessage
             )
+        case .json(let message):
+            return JSONConstraint(message: message)
         case .length(let min, let max, let minMessage, let maxMessage, let exactMessage):
             return LengthConstraint(
                 min: min,

@@ -49,6 +49,17 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.exactMessage, exactMessage)
     }
 
+    func testJSONType() {
+        // Arrange
+        let message = "This value is not a valid JSON string."
+
+        // Act
+        let constraint = ConstraintType.json(message: message).constraint as! JSONConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testLengthType() {
         // Arrange
         let min: UInt = 1
