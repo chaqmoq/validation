@@ -96,6 +96,17 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.message, message)
     }
 
+    func testUUIDType() {
+        // Arrange
+        let message = "This value is not a valid UUID."
+
+        // Act
+        let constraint = ConstraintType.uuid(message: message).constraint as! UUIDConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testVINType() {
         // Arrange
         let message = "This value is not a valid VIN."
