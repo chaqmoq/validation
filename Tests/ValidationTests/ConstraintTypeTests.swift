@@ -49,6 +49,17 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.exactMessage, exactMessage)
     }
 
+    func testIPType() {
+        // Arrange
+        let message = "This value is not a valid IP address."
+
+        // Act
+        let constraint = ConstraintType.ip(message: message).constraint as! IPConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testJSONType() {
         // Arrange
         let message = "This value is not a valid JSON string."

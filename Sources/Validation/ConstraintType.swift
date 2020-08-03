@@ -26,6 +26,11 @@ public enum ConstraintType {
         exactMessage: String = IntegerConstraint.exactMessage
     )
 
+    /// Creates an `IPConstraint`type with a custom error message.
+    ///
+    /// - Parameter message: A custom error message. Defaults to a default error message.
+    case ip(message: String = IPConstraint.message)
+
     /// Creates a `JSONConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -77,6 +82,8 @@ public enum ConstraintType {
                 maxMessage: maxMessage,
                 exactMessage: exactMessage
             )
+        case .ip(let message):
+            return IPConstraint(message: message)
         case .json(let message):
             return JSONConstraint(message: message)
         case .length(let min, let max, let minMessage, let maxMessage, let exactMessage):
