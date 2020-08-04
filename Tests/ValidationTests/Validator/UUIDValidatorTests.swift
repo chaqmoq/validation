@@ -25,7 +25,7 @@ final class UUIDValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(value, against: UUIDConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
     }

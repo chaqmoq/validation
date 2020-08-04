@@ -25,7 +25,7 @@ final class JSONValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(value, against: JSONConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
