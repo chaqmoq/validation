@@ -57,6 +57,11 @@ public enum ConstraintType {
     /// - Parameter message: A custom error message. Defaults to a default error message.
     case notBlank(message: String = NotBlankConstraint.message)
 
+    /// Creates a `RegexConstraint` type with a custom error message.
+    ///
+    /// - Parameter message: A custom error message. Defaults to a default error message.
+    case regex(message: String = RegexConstraint.message)
+
     /// Creates a `UUIDConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -96,6 +101,8 @@ public enum ConstraintType {
             )
         case .notBlank(let message):
             return NotBlankConstraint(message: message)
+        case .regex(let message):
+            return RegexConstraint(message: message)
         case .uuid(let message):
             return UUIDConstraint(message: message)
         case .vin(let message):

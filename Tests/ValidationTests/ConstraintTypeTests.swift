@@ -107,6 +107,17 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.message, message)
     }
 
+    func testRegexType() {
+        // Arrange
+        let message = "This value is not a valid regular expression."
+
+        // Act
+        let constraint = ConstraintType.regex(message: message).constraint as! RegexConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testUUIDType() {
         // Arrange
         let message = "This value is not a valid UUID."
