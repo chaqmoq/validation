@@ -62,6 +62,13 @@ public enum ConstraintType {
     /// - Parameter message: A custom error message. Defaults to a default error message.
     case regex(message: String = RegexConstraint.message)
 
+    /// Creates a `URLConstraint` type with a file URL flag and a custom error message.
+    ///
+    /// - Parameters:
+    ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
+    ///   - message: A custom error message. Defaults to a default error message.
+    case url(isFileURL: Bool, message: String = URLConstraint.message)
+
     /// Creates a `UUIDConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -103,6 +110,8 @@ public enum ConstraintType {
             return NotBlankConstraint(message: message)
         case .regex(let message):
             return RegexConstraint(message: message)
+        case .url(let isFileURL, let message):
+            return URLConstraint(isFileURL: isFileURL, message: message)
         case .uuid(let message):
             return UUIDConstraint(message: message)
         case .vin(let message):

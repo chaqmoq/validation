@@ -118,6 +118,17 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.message, message)
     }
 
+    func testURLType() {
+        // Arrange
+        let message = "This value is not a valid URL."
+
+        // Act
+        let constraint = ConstraintType.url(isFileURL: true, message: message).constraint as! URLConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testUUIDType() {
         // Arrange
         let message = "This value is not a valid UUID."
