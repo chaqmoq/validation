@@ -3,7 +3,7 @@ public struct OrConstraint: Constraint {
     /// A default error message to show if no custom error message is provided.
     public static let message = "This value must satisfy at least one of the constraints."
 
-    /// A list of child constraints.
+    /// An array of child constraints.
     public let constraints: [Constraint]
 
     /// A custom error message.
