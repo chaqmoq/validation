@@ -107,6 +107,20 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.message, message)
     }
 
+    func testOrType() {
+        // Arrange
+        let notBlank = NotBlankConstraint()
+        let length = LengthConstraint()
+        let message = "This value doesn't satisfy any of the constraints."
+
+        // Act
+        let constraint = ConstraintType.or([notBlank, length], message: message).constraint as! OrConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.constraints.count, 2)
+        XCTAssertEqual(constraint.message, message)
+    }
+
     func testRegexType() {
         // Arrange
         let message = "This value is not a valid regular expression."

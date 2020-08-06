@@ -57,6 +57,13 @@ public enum ConstraintType {
     /// - Parameter message: A custom error message. Defaults to a default error message.
     case notBlank(message: String = NotBlankConstraint.message)
 
+    /// Creates a `OrConstraint` type with an array of child constraints and a custom error message.
+    ///
+    /// - Parameters:
+    ///   - constraints: An array of child constraints.
+    ///   - message: A custom error message. Defaults to a default error message.
+    case or(_ constraints: [Constraint], message: String = OrConstraint.message)
+
     /// Creates a `RegexConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -108,6 +115,8 @@ public enum ConstraintType {
             )
         case .notBlank(let message):
             return NotBlankConstraint(message: message)
+        case .or(let constraints, let message):
+            return OrConstraint(constraints, message: message)
         case .regex(let message):
             return RegexConstraint(message: message)
         case .url(let isFileURL, let message):
