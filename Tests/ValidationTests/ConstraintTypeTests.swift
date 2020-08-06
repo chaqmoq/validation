@@ -126,6 +126,7 @@ final class ConstraintTypeTests: XCTestCase {
         let constraint = ConstraintType.url(isFileURL: true, message: message).constraint as! URLConstraint
 
         // Assert
+        XCTAssertTrue(constraint.isFileURL)
         XCTAssertEqual(constraint.message, message)
     }
 

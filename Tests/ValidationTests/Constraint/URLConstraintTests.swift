@@ -7,17 +7,19 @@ final class URLConstraintTests: XCTestCase {
         let constraint = URLConstraint()
 
         // Assert
+        XCTAssertFalse(constraint.isFileURL)
         XCTAssertEqual(constraint.message, URLConstraint.message)
     }
 
-    func testInitWithCustomMessage() {
+    func testInitWithIsFileFlagAndCustomMessage() {
         // Arrange
         let message = "This value is not a valid URL."
 
         // Act
-        let constraint = URLConstraint(message: message)
+        let constraint = URLConstraint(isFileURL: true, message: message)
 
         // Assert
+        XCTAssertTrue(constraint.isFileURL)
         XCTAssertEqual(constraint.message, message)
     }
 }
