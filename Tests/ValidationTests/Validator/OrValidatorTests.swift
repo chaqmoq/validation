@@ -58,7 +58,7 @@ final class OrValidatorTests: XCTestCase {
         XCTAssertNoThrow(
             try validator.validate(
                 value,
-                against: OrConstraint(IntegerConstraint(), LengthConstraint(min: 1, max: 2))
+                against: OrConstraint([IntegerConstraint(), LengthConstraint(min: 1, max: 2)])
             )
         )
     }
@@ -71,7 +71,7 @@ final class OrValidatorTests: XCTestCase {
         XCTAssertThrowsError(
             try validator.validate(
                 value,
-                against: OrConstraint(IntegerConstraint(), LengthConstraint(min: 1, max: 2))
+                against: OrConstraint([IntegerConstraint(), LengthConstraint(min: 1, max: 2)])
             )
         ) { error in
             XCTAssertTrue(error is ConstraintViolation)

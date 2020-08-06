@@ -18,7 +18,7 @@ final class OrConstraintTests: XCTestCase {
         let message = "This value doesn't satisfy any of the constraints."
 
         // Act
-        let constraint = OrConstraint(notBlank, length, message: message)
+        let constraint = OrConstraint([notBlank, length], message: message)
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)

@@ -12,12 +12,12 @@ public struct OrConstraint: Constraint {
     /// A validator named `OrValidator` to validate a value.
     public let validator: ConstraintValidator = OrValidator()
 
-    /// Initializes a new instance with a list of child constraints and a custom error message.
+    /// Initializes a new instance with an array of child constraints and a custom error message.
     ///
     /// - Parameters:
-    ///   - constraints: A list of child constraints.
+    ///   - constraints: An array of child constraints.
     ///   - message: A custom error message. Defaults to a default error message.
-    public init(_ constraints: Constraint..., message: String = message) {
+    public init(_ constraints: [Constraint] = .init(), message: String = message) {
         self.constraints = constraints
         self.message = message
     }
