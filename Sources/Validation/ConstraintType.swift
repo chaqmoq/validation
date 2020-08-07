@@ -1,5 +1,10 @@
 /// A simplified API for the existing `Constraint`s.
 public enum ConstraintType {
+    /// Creates a `AndConstraint` type with an array of child constraints.
+    ///
+    /// - Parameter constraints: An array of child constraints.
+    case and(_ constraints: [Constraint])
+
     /// Creates a `BlankConstraint` type with a custom error message.
     ///
     /// - Parameter message: A custom error message. Defaults to a default error message.
@@ -89,6 +94,8 @@ public enum ConstraintType {
     /// A matching `Constraint` for the `ConstraintType`.
     public var constraint: Constraint {
         switch self {
+        case .and(let constraints):
+            return AndConstraint(constraints)
         case .blank(let message):
             return BlankConstraint(message: message)
         case .email(let message):

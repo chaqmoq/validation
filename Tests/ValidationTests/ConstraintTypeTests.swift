@@ -2,6 +2,18 @@
 import XCTest
 
 final class ConstraintTypeTests: XCTestCase {
+    func testAndType() {
+        // Arrange
+        let notBlank = NotBlankConstraint()
+        let length = LengthConstraint()
+
+        // Act
+        let constraint = ConstraintType.and([notBlank, length]).constraint as! AndConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.constraints.count, 2)
+    }
+
     func testBlankType() {
         // Arrange
         let message = "This value must be empty."
