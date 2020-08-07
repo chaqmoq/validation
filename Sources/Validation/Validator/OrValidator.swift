@@ -8,7 +8,7 @@ struct OrValidator: ConstraintValidator {
             throw ValidatorError.invalidArgument(message)
         }
 
-        var isValid = false
+        var isValid = constraint.constraints.isEmpty
 
         for childConstraint in constraint.constraints {
             do {

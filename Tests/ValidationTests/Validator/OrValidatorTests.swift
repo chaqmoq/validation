@@ -15,9 +15,7 @@ final class OrValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
+        XCTAssertNoThrow(try validator.validate(value))
     }
 
     func testEmptyValueWithExplicitConstraint() {
@@ -25,29 +23,7 @@ final class OrValidatorTests: XCTestCase {
         let value = ""
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: OrConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testInvalidValueWithImplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testInvalidValueWithExplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: OrConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
+        XCTAssertNoThrow(try validator.validate(value, against: OrConstraint()))
     }
 
     func testValueWithChildConstraints() {
@@ -80,7 +56,7 @@ final class OrValidatorTests: XCTestCase {
 
     func testValueWithInvalidConstraint() {
         // Arrange
-        let value = "123"
+        let value = "abc"
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
