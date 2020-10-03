@@ -12,10 +12,10 @@ struct IntegerValidator: ConstraintValidator {
             let message = """
             The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max).
             """
-            throw ValidatorError.invalidArgument(message)
+            throw ConstraintViolation(message: message)
         }
 
-        guard let intValue = Int(value) else { throw ValidatorError.invalidArgument("The value must be an integer.") }
+        guard let intValue = Int(value) else { throw ConstraintViolation(message: "The value must be an integer.") }
 
         if constraint.min == constraint.max && intValue != constraint.min {
             throw ConstraintViolation(message: constraint.exactMessage)

@@ -40,7 +40,7 @@ final class IntegerValidatorTests: XCTestCase {
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(exact: 1))) { error in
-            XCTAssertTrue(error is ValidatorError)
+            XCTAssertTrue(error is ConstraintViolation)
         }
     }
 
@@ -112,7 +112,7 @@ final class IntegerValidatorTests: XCTestCase {
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(min: 2, max: 1))) { error in
-            XCTAssertTrue(error is ValidatorError)
+            XCTAssertTrue(error is ConstraintViolation)
         }
     }
 }
