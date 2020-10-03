@@ -8,7 +8,8 @@ struct OrValidator: ConstraintValidator {
             throw ValidatorError.invalidArgument(message)
         }
 
-        var isValid = constraint.constraints.isEmpty
+        var isValid = constraints.isEmpty
+        var firstError: Error?
 
         for childConstraint in constraint.constraints {
             do {
@@ -16,10 +17,11 @@ struct OrValidator: ConstraintValidator {
                 isValid = true
                 break
             } catch {
+                if firstError == nil { firstError = error }
                 continue
             }
         }
 
-        if !isValid { throw ConstraintViolation(message: constraint.message) }
+        if let error = firstError, !isValid { throw error }
     }
 }
