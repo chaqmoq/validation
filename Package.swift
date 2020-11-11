@@ -9,7 +9,9 @@ let package = Package(
     ],
     targets: [
         .target(name: "Validation"),
-        .testTarget(name: "ValidationTests", dependencies: ["Validation"])
+        .testTarget(name: "ValidationTests", dependencies: [
+            .target(name: "Validation")
+        ])
     ],
     swiftLanguageVersions: [.v5]
 )

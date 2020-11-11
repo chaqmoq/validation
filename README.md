@@ -24,8 +24,12 @@ let package = Package(
         .package(url: "https://github.com/chaqmoq/validation.git", .branch("master"))
     ],
     targets: [
-        .target(name: "MyApp", dependencies: ["Validation"]),
-        .testTarget(name: "MyAppTests", dependencies: ["MyApp"])
+        .target(name: "MyApp", dependencies: [
+            .product(name: "Validation", package: "chaqmoq-validation"),
+        ]),
+        .testTarget(name: "MyAppTests", dependencies: [
+            .target(name: "MyApp")
+        ])
     ]
 )
 ```
