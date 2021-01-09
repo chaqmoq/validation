@@ -16,7 +16,7 @@ final class NotBlankConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = NotBlankConstraint(message: message, groups: groups)
+        let constraint = NotBlankConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

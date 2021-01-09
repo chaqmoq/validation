@@ -16,7 +16,7 @@ final class VINConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = VINConstraint(message: message, groups: groups)
+        let constraint = VINConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

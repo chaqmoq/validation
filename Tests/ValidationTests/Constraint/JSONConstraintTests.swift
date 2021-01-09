@@ -16,7 +16,7 @@ final class JSONConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = JSONConstraint(message: message, groups: groups)
+        let constraint = JSONConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

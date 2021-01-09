@@ -22,7 +22,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.blank(message: message, groups: groups).constraint as! BlankConstraint
+        let constraint = ConstraintType.blank(message, groups: groups).constraint as! BlankConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -35,7 +35,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.email(message: message, groups: groups).constraint as! EmailConstraint
+        let constraint = ConstraintType.email(message, groups: groups).constraint as! EmailConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -76,7 +76,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.ip(message: message, groups: groups).constraint as! IPConstraint
+        let constraint = ConstraintType.ip(message, groups: groups).constraint as! IPConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -89,7 +89,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.json(message: message, groups: groups).constraint as! JSONConstraint
+        let constraint = ConstraintType.json(message, groups: groups).constraint as! JSONConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -130,7 +130,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.notBlank(message: message, groups: groups).constraint as! NotBlankConstraint
+        let constraint = ConstraintType.notBlank(message, groups: groups).constraint as! NotBlankConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -157,7 +157,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.regex(message: message, groups: groups).constraint as! RegexConstraint
+        let constraint = ConstraintType.regex(message, groups: groups).constraint as! RegexConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -170,7 +170,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.url(isFileURL: true, message: message, groups: groups).constraint as! URLConstraint
+        let constraint = ConstraintType.url(message, isFileURL: true, groups: groups).constraint as! URLConstraint
 
         // Assert
         XCTAssertTrue(constraint.isFileURL)
@@ -184,7 +184,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.uuid(message: message, groups: groups).constraint as! UUIDConstraint
+        let constraint = ConstraintType.uuid(message, groups: groups).constraint as! UUIDConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
@@ -197,7 +197,7 @@ final class ConstraintTypeTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.vin(message: message, groups: groups).constraint as! VINConstraint
+        let constraint = ConstraintType.vin(message, groups: groups).constraint as! VINConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)

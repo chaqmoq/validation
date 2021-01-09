@@ -16,7 +16,7 @@ final class BlankConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = BlankConstraint(message: message, groups: groups)
+        let constraint = BlankConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

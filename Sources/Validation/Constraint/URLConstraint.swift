@@ -18,12 +18,12 @@ public struct URLConstraint: Constraint {
     /// Initializes a new instance with a file URL flag, a custom error message, and validation groups to be applied.
     ///
     /// - Parameters:
-    ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - message: A custom error message. Defaults to a default error message.
+    ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    public init(isFileURL: Bool = false, message: String = message, groups: Set<Group> = .init()) {
-        self.isFileURL = isFileURL
+    public init(_ message: String = message, isFileURL: Bool = false, groups: Set<Group> = .init()) {
         self.message = message
+        self.isFileURL = isFileURL
         self.groups = groups
     }
 }

@@ -17,7 +17,7 @@ final class URLConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = URLConstraint(isFileURL: true, message: message, groups: groups)
+        let constraint = URLConstraint(message, isFileURL: true, groups: groups)
 
         // Assert
         XCTAssertTrue(constraint.isFileURL)

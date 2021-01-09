@@ -16,7 +16,7 @@ final class RegexConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = RegexConstraint(message: message, groups: groups)
+        let constraint = RegexConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

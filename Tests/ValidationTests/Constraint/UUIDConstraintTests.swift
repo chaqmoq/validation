@@ -16,7 +16,7 @@ final class UUIDConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = UUIDConstraint(message: message, groups: groups)
+        let constraint = UUIDConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

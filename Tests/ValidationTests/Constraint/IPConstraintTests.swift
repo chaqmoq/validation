@@ -16,7 +16,7 @@ final class IPConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = IPConstraint(message: message, groups: groups)
+        let constraint = IPConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

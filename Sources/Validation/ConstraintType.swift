@@ -12,14 +12,14 @@ public enum ConstraintType {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case blank(message: String = BlankConstraint.message, groups: Set<Group> = .init())
+    case blank(_ message: String = BlankConstraint.message, groups: Set<Group> = .init())
 
     /// Creates an `EmailConstraint`type with a custom error message and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case email(message: String = EmailConstraint.message, groups: Set<Group> = .init())
+    case email(_ message: String = EmailConstraint.message, groups: Set<Group> = .init())
 
     /// Creates an `IntegerConstraint`type with minimum/maximum values, custom minimum/maximum error messages,
     /// and validation groups to be applied.
@@ -45,14 +45,14 @@ public enum ConstraintType {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case ip(message: String = IPConstraint.message, groups: Set<Group> = .init())
+    case ip(_ message: String = IPConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `JSONConstraint` type with a custom error message and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case json(message: String = JSONConstraint.message, groups: Set<Group> = .init())
+    case json(_ message: String = JSONConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `LengthConstraint` type with minimum/maximum values, custom minimum/maximum error messages,
     /// and validation groups to be applied.
@@ -78,7 +78,7 @@ public enum ConstraintType {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case notBlank(message: String = NotBlankConstraint.message, groups: Set<Group> = .init())
+    case notBlank(_ message: String = NotBlankConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `OrConstraint` type with an array of child constraints and validation groups to be applied.
     ///
@@ -92,29 +92,29 @@ public enum ConstraintType {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case regex(message: String = RegexConstraint.message, groups: Set<Group> = .init())
+    case regex(_ message: String = RegexConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `URLConstraint` type with a file URL flag, a custom error message, and validation groups to be applied.
     ///
     /// - Parameters:
-    ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - message: A custom error message. Defaults to a default error message.
+    ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case url(isFileURL: Bool, message: String = URLConstraint.message, groups: Set<Group> = .init())
+    case url(_ message: String = URLConstraint.message, isFileURL: Bool, groups: Set<Group> = .init())
 
     /// Creates a `UUIDConstraint` type with a custom error message and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case uuid(message: String = UUIDConstraint.message, groups: Set<Group> = .init())
+    case uuid(_ message: String = UUIDConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `VINConstraint` with a custom error message and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    case vin(message: String = VINConstraint.message, groups: Set<Group> = .init())
+    case vin(_ message: String = VINConstraint.message, groups: Set<Group> = .init())
 
     /// A matching `Constraint` for a `ConstraintType`.
     public var constraint: Constraint {
@@ -122,9 +122,9 @@ public enum ConstraintType {
         case .and(let constraints, let groups):
             return AndConstraint(constraints, groups: groups)
         case .blank(let message, let groups):
-            return BlankConstraint(message: message, groups: groups)
+            return BlankConstraint(message, groups: groups)
         case .email(let message, let groups):
-            return EmailConstraint(message: message, groups: groups)
+            return EmailConstraint(message, groups: groups)
         case .integer(let min, let max, let minMessage, let maxMessage, let exactMessage, let groups):
             return IntegerConstraint(
                 min: min,
@@ -135,9 +135,9 @@ public enum ConstraintType {
                 groups: groups
             )
         case .ip(let message, let groups):
-            return IPConstraint(message: message, groups: groups)
+            return IPConstraint(message, groups: groups)
         case .json(let message, let groups):
-            return JSONConstraint(message: message, groups: groups)
+            return JSONConstraint(message, groups: groups)
         case .length(let min, let max, let minMessage, let maxMessage, let exactMessage, let groups):
             return LengthConstraint(
                 min: min,
@@ -148,17 +148,17 @@ public enum ConstraintType {
                 groups: groups
             )
         case .notBlank(let message, let groups):
-            return NotBlankConstraint(message: message, groups: groups)
+            return NotBlankConstraint(message, groups: groups)
         case .or(let constraints, let groups):
             return OrConstraint(constraints, groups: groups)
         case .regex(let message, let groups):
-            return RegexConstraint(message: message, groups: groups)
-        case .url(let isFileURL, let message, let groups):
-            return URLConstraint(isFileURL: isFileURL, message: message, groups: groups)
+            return RegexConstraint(message, groups: groups)
+        case .url(let message, let isFileURL, let groups):
+            return URLConstraint(message, isFileURL: isFileURL, groups: groups)
         case .uuid(let message, let groups):
-            return UUIDConstraint(message: message, groups: groups)
+            return UUIDConstraint(message, groups: groups)
         case .vin(let message, let groups):
-            return VINConstraint(message: message, groups: groups)
+            return VINConstraint(message, groups: groups)
         }
     }
 }

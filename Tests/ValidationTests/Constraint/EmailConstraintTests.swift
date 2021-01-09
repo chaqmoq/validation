@@ -16,7 +16,7 @@ final class EmailConstraintTests: XCTestCase {
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = EmailConstraint(message: message, groups: groups)
+        let constraint = EmailConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)

@@ -17,7 +17,7 @@ public struct NotBlankConstraint: Constraint {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to a default error message.
     ///   - groups: Validation groups to be applied. Defaults to an empty array.
-    public init(message: String = message, groups: Set<Group> = .init()) {
+    public init(_ message: String = message, groups: Set<Group> = .init()) {
         self.message = message
         self.groups = groups
     }
