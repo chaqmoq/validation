@@ -16,7 +16,7 @@ extension VINValidator {
         let vin = normalize(vin: value)
 
         if vin.count != VINValidator.vinMinLength || getCheckDigit(for: vin) != vin[8] {
-            throw ConstraintViolation(message: constraint.message)
+            throw ConstraintViolation(constraint.message)
         }
     }
 

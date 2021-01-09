@@ -11,7 +11,7 @@ struct JSONValidator: ConstraintValidator {
             do {
                 _ = try JSONSerialization.jsonObject(with: data)
             } catch {
-                throw ConstraintViolation(message: constraint.message)
+                throw ConstraintViolation(constraint.message)
             }
         }
     }

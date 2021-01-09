@@ -8,7 +8,7 @@ struct RegexValidator: ConstraintValidator {
         }
 
         if (try? NSRegularExpression(pattern: value)) == nil {
-            throw ConstraintViolation(message: constraint.message)
+            throw ConstraintViolation(constraint.message)
         }
     }
 

@@ -5,7 +5,7 @@ struct BlankValidator: ConstraintValidator {
             throw ValidatorError.invalidArgument(message)
         }
 
-        if !value.isEmpty { throw ConstraintViolation(message: constraint.message) }
+        if !value.isEmpty { throw ConstraintViolation(constraint.message) }
     }
 
     func validate(_ value: String) throws {

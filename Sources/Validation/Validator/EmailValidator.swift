@@ -17,7 +17,7 @@ struct EmailValidator: ConstraintValidator {
 
         guard let regex = try? NSRegularExpression(pattern: EmailValidator.pattern) else { return }
         let range = NSRange(location: 0, length: value.utf8.count)
-        if regex.firstMatch(in: value, range: range) == nil { throw ConstraintViolation(message: constraint.message) }
+        if regex.firstMatch(in: value, range: range) == nil { throw ConstraintViolation(constraint.message) }
     }
 
     func validate(_ value: String) throws {

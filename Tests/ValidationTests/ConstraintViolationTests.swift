@@ -7,7 +7,7 @@ final class ConstraintViolationTests: XCTestCase {
         let message = "This value is required."
 
         // Act
-        let violation = ConstraintViolation(message: message)
+        let violation = ConstraintViolation(message)
 
         // Assert
         XCTAssertEqual(violation.message, message)

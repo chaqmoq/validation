@@ -9,19 +9,19 @@ struct IntegerValidator: ConstraintValidator {
             let message = """
             The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max).
             """
-            throw ConstraintViolation(message: message)
+            throw ConstraintViolation(message)
         }
 
-        guard let intValue = Int(value) else { throw ConstraintViolation(message: "The value must be an integer.") }
+        guard let intValue = Int(value) else { throw ConstraintViolation("The value must be an integer.") }
 
         if constraint.min == constraint.max && intValue != constraint.min {
-            throw ConstraintViolation(message: constraint.exactMessage)
+            throw ConstraintViolation(constraint.exactMessage)
         }
 
         if intValue < constraint.min {
-            throw ConstraintViolation(message: constraint.minMessage)
+            throw ConstraintViolation(constraint.minMessage)
         } else if intValue > constraint.max {
-            throw ConstraintViolation(message: constraint.maxMessage)
+            throw ConstraintViolation(constraint.maxMessage)
         }
     }
 

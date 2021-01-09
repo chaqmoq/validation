@@ -11,7 +11,7 @@ public struct ConstraintViolation: LocalizedError {
     /// Initializes a new instance with a custom error message.
     ///
     /// - Parameter message: A custom error message.
-    public init(message: String) {
+    public init(_ message: String) {
         self.message = message
     }
 }

@@ -7,7 +7,7 @@ struct UUIDValidator: ConstraintValidator {
             throw ValidatorError.invalidArgument(message)
         }
 
-        if UUID(uuidString: value) == nil { throw ConstraintViolation(message: constraint.message) }
+        if UUID(uuidString: value) == nil { throw ConstraintViolation(constraint.message) }
     }
 
     func validate(_ value: String) throws {

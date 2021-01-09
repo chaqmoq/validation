@@ -10,15 +10,15 @@ struct URLValidator: ConstraintValidator {
         if let url = URL(string: value) {
             if constraint.isFileURL {
                 if !url.isFileURL {
-                    throw ConstraintViolation(message: constraint.message)
+                    throw ConstraintViolation(constraint.message)
                 }
             } else {
                 if url.scheme == nil || url.host == nil {
-                    throw ConstraintViolation(message: constraint.message)
+                    throw ConstraintViolation(constraint.message)
                 }
             }
         } else {
-            throw ConstraintViolation(message: constraint.message)
+            throw ConstraintViolation(constraint.message)
         }
     }
 

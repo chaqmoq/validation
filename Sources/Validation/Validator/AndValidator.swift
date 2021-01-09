@@ -9,7 +9,7 @@ struct AndValidator: ConstraintValidator {
             do {
                 try childConstraint.validator.validate(value, against: childConstraint)
             } catch {
-                throw ConstraintViolation(message: error.localizedDescription)
+                throw ConstraintViolation(error.localizedDescription)
             }
         }
     }
