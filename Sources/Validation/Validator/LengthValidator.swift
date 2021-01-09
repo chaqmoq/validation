@@ -1,6 +1,6 @@
 struct LengthValidator: ConstraintValidator {
-    func validate(_ value: String, against constraints: [Constraint]) throws {
-        guard let constraint = constraints.first(where: { $0 is LengthConstraint }) as? LengthConstraint else {
+    func validate(_ value: String, against constraint: Constraint) throws {
+        guard let constraint = constraint as? LengthConstraint else {
             let message = "The constraint must be of \(String(describing: LengthConstraint.self)) type."
             throw ValidatorError.invalidArgument(message)
         }
@@ -23,5 +23,9 @@ struct LengthValidator: ConstraintValidator {
         } else if length > constraint.max {
             throw ConstraintViolation(message: constraint.maxMessage)
         }
+    }
+
+    func validate(_ value: String) throws {
+        try validate(value, against: LengthConstraint())
     }
 }

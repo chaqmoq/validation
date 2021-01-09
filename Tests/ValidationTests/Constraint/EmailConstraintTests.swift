@@ -13,11 +13,13 @@ final class EmailConstraintTests: XCTestCase {
     func testInitWithCustomMessage() {
         // Arrange
         let message = "This value is not a valid email address."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = EmailConstraint(message: message)
+        let constraint = EmailConstraint(message: message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

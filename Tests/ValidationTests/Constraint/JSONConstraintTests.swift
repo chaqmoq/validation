@@ -13,11 +13,13 @@ final class JSONConstraintTests: XCTestCase {
     func testInitWithCustomMessage() {
         // Arrange
         let message = "This value is not a valid JSON string."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = JSONConstraint(message: message)
+        let constraint = JSONConstraint(message: message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

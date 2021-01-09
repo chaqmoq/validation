@@ -13,11 +13,13 @@ final class RegexConstraintTests: XCTestCase {
     func testInitWithCustomMessage() {
         // Arrange
         let message = "This value is not a valid regular expression."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = RegexConstraint(message: message)
+        let constraint = RegexConstraint(message: message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

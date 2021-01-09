@@ -1,11 +1,8 @@
 import Foundation
 
 struct JSONValidator: ConstraintValidator {
-    func validate(_ value: String, against constraints: [Constraint]) throws {
-        var constraints = constraints
-        if constraints.isEmpty { constraints.append(JSONConstraint()) }
-
-        guard let constraint = constraints.first(where: { $0 is JSONConstraint }) as? JSONConstraint else {
+    func validate(_ value: String, against constraint: Constraint) throws {
+        guard let constraint = constraint as? JSONConstraint else {
             let message = "The constraint must be of \(String(describing: JSONConstraint.self)) type."
             throw ValidatorError.invalidArgument(message)
         }
@@ -17,5 +14,9 @@ struct JSONValidator: ConstraintValidator {
                 throw ConstraintViolation(message: constraint.message)
             }
         }
+    }
+
+    func validate(_ value: String) throws {
+        try validate(value, against: JSONConstraint())
     }
 }

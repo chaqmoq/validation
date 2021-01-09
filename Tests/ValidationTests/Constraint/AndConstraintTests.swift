@@ -14,11 +14,13 @@ final class AndConstraintTests: XCTestCase {
         // Arrange
         let notBlank = NotBlankConstraint()
         let length = LengthConstraint()
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = AndConstraint([notBlank, length])
+        let constraint = AndConstraint([notBlank, length], groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

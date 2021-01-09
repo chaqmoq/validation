@@ -10,7 +10,7 @@ final class ValidatorTests: XCTestCase {
         validator = Validator()
     }
 
-    func testValueWithImplicitConstraint() {
+    func testEmptyValueWithImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -18,7 +18,7 @@ final class ValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValueWithOneConstraint() {
+    func testEmptyValueWithOneConstraint() {
         // Arrange
         let value = ""
 
@@ -28,24 +28,29 @@ final class ValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithMultipleConstraints() {
+    func testValueWithMultipleConstraintTypesAndGroups() {
         // Arrange
         let value = "a"
+        let groups: Set<Group> = ["custom"]
 
         // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: [.notBlank(), .length(min: 1)]))
+        XCTAssertNoThrow(try validator.validate(value, against: [.notBlank(), .length(min: 1)], on: groups))
     }
 
-    func testInvalidValueWithMultipleConstraints() {
+    func testInvalidValueWithMultipleConstraintsAndValidationGroups() {
         // Arrange
         let value = "ab"
+        let max: UInt = 1
+        let groups: Set<Group> = ["custom"]
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(
             value,
-            against: NotBlankConstraint(), LengthConstraint(max: 1)
+            against: NotBlankConstraint(), LengthConstraint(max: max, groups: groups),
+            on: groups
         )) { error in
             XCTAssertTrue(error is ConstraintViolation)
+            XCTAssertEqual(error.localizedDescription, String(format: LengthConstraint.maxMessage, max))
         }
     }
 }

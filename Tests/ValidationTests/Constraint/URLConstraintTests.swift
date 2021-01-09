@@ -14,12 +14,14 @@ final class URLConstraintTests: XCTestCase {
     func testInitWithIsFileFlagAndCustomMessage() {
         // Arrange
         let message = "This value is not a valid URL."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = URLConstraint(isFileURL: true, message: message)
+        let constraint = URLConstraint(isFileURL: true, message: message, groups: groups)
 
         // Assert
         XCTAssertTrue(constraint.isFileURL)
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

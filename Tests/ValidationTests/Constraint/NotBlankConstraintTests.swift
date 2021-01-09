@@ -13,11 +13,13 @@ final class NotBlankConstraintTests: XCTestCase {
     func testInitWithCustomMessage() {
         // Arrange
         let message = "This value is required."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = NotBlankConstraint(message: message)
+        let constraint = NotBlankConstraint(message: message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

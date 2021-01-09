@@ -9,16 +9,21 @@ public struct URLConstraint: Constraint {
     /// A custom error message.
     public let message: String
 
+    /// See `Constraint`.
+    public let groups: Set<Group>
+
     /// A validator named `URLValidator` to validate a value.
     public let validator: ConstraintValidator = URLValidator()
 
-    /// Initializes a new instance with a file URL flag and a custom error message.
+    /// Initializes a new instance with a file URL flag, a custom error message, and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - message: A custom error message. Defaults to a default error message.
-    public init(isFileURL: Bool = false, message: String = message) {
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    public init(isFileURL: Bool = false, message: String = message, groups: Set<Group> = .init()) {
         self.isFileURL = isFileURL
         self.message = message
+        self.groups = groups
     }
 }

@@ -1,7 +1,7 @@
 /// A constraint to validate if a value is with a valid length.
 public struct LengthConstraint: Constraint {
     /// A default minimum value to set if no minimum value is provided.
-    public static let min: UInt = 1
+    public static let min: UInt = UInt.min
 
     /// A default maximum value to set if no maximum value is provided.
     public static let max: UInt = UInt.max
@@ -30,25 +30,30 @@ public struct LengthConstraint: Constraint {
     /// A custom error message to show for an exact value violation.
     public let exactMessage: String
 
+    /// See `Constraint`.
+    public let groups: Set<Group>
+
     /// A validator named `LengthValidator` to validate a value.
     public let validator: ConstraintValidator = LengthValidator()
 
-    /// Initializes a new instance with an exact value and custom error message.
+    /// Initializes a new instance with an exact value, custom error message, and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - exact: An exact value.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    public init(exact: UInt, exactMessage: String = exactMessage) {
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    public init(exact: UInt, exactMessage: String = exactMessage, groups: Set<Group> = .init()) {
         self.init(
             min: exact,
             max: exact,
             minMessage: LengthConstraint.minMessage,
             maxMessage: LengthConstraint.maxMessage,
-            exactMessage: exactMessage
+            exactMessage: exactMessage,
+            groups: groups
         )
     }
 
-    /// Initializes a new instance with minimum/maximum values and custom minimum/maximum error messages.
+    /// Initializes a new instance with minimum/maximum values, custom minimum/maximum error messages, and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - min: A custom minimum value. Defaults to a default minimum value.
@@ -56,17 +61,20 @@ public struct LengthConstraint: Constraint {
     ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to a default minimum value violation error message.
     ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to a default maximum value violation error message.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
     public init(
         min: UInt = min,
         max: UInt = max,
         minMessage: String = minMessage,
         maxMessage: String = maxMessage,
-        exactMessage: String = exactMessage
+        exactMessage: String = exactMessage,
+        groups: Set<Group> = .init()
     ) {
         self.min = min
         self.max = max
         self.minMessage = String(format: minMessage, min)
         self.maxMessage = String(format: maxMessage, max)
         self.exactMessage = self.min == self.max ? String(format: exactMessage, self.min) : exactMessage
+        self.groups = groups
     }
 }

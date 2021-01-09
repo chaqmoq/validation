@@ -30,25 +30,30 @@ public struct IntegerConstraint: Constraint {
     /// A custom error message to show for an exact value violation.
     public let exactMessage: String
 
+    /// See `Constraint`.
+    public let groups: Set<Group>
+
     /// A validator named `IntegerValidator` to validate a value.
     public let validator: ConstraintValidator = IntegerValidator()
 
-    /// Initializes a new instance with an exact value and custom error message.
+    /// Initializes a new instance with an exact value, custom error message, and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - exact: An exact value.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    public init(exact: Int, exactMessage: String = exactMessage) {
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    public init(exact: Int, exactMessage: String = exactMessage, groups: Set<Group> = .init()) {
         self.init(
             min: exact,
             max: exact,
             minMessage: IntegerConstraint.minMessage,
             maxMessage: IntegerConstraint.maxMessage,
-            exactMessage: exactMessage
+            exactMessage: exactMessage,
+            groups: groups
         )
     }
 
-    /// Initializes a new instance with minimum/maximum values and custom minimum/maximum error messages.
+    /// Initializes a new instance with minimum/maximum values, custom minimum/maximum error messages, and validation groups to be applied.
     ///
     /// - Parameters:
     ///   - min: A custom minimum value. Defaults to a default minimum value.
@@ -56,17 +61,20 @@ public struct IntegerConstraint: Constraint {
     ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to a default minimum value violation error message.
     ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to a default maximum value violation error message.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
     public init(
         min: Int = min,
         max: Int = max,
         minMessage: String = minMessage,
         maxMessage: String = maxMessage,
-        exactMessage: String = exactMessage
+        exactMessage: String = exactMessage,
+        groups: Set<Group> = .init()
     ) {
         self.min = min
         self.max = max
         self.minMessage = String(format: minMessage, min)
         self.maxMessage = String(format: maxMessage, max)
         self.exactMessage = self.min == self.max ? String(format: exactMessage, self.min) : exactMessage
+        self.groups = groups
     }
 }

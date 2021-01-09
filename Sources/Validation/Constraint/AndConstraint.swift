@@ -3,13 +3,19 @@ public struct AndConstraint: Constraint {
     /// An array of child constraints.
     public let constraints: [Constraint]
 
+    /// See `Constraint`.
+    public let groups: Set<Group>
+
     /// A validator named `AndValidator` to validate a value.
     public let validator: ConstraintValidator = AndValidator()
 
-    /// Initializes a new instance with an array of child constraints.
+    /// Initializes a new instance with an array of child constraints and validation groups to be applied.
     ///
-    /// - Parameter constraints: An array of child constraints.
-    public init(_ constraints: [Constraint] = .init()) {
+    /// - Parameters:
+    ///   - constraints: An array of child constraints.
+    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    public init(_ constraints: [Constraint] = .init(), groups: Set<Group> = .init()) {
         self.constraints = constraints
+        self.groups = groups
     }
 }

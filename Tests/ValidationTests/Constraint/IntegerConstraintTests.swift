@@ -72,6 +72,7 @@ final class IntegerConstraintTests: XCTestCase {
         let minMessage = "This value must have \(min) characters or more."
         let maxMessage = "This value must have \(max) characters or less."
         let exactMessage = "This value must exactly have 2 characters."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
         let constraint = IntegerConstraint(
@@ -79,12 +80,14 @@ final class IntegerConstraintTests: XCTestCase {
             max: max,
             minMessage: minMessage,
             maxMessage: maxMessage,
-            exactMessage: exactMessage
+            exactMessage: exactMessage,
+            groups: groups
         )
 
         // Assert
         XCTAssertEqual(constraint.minMessage, minMessage)
         XCTAssertEqual(constraint.maxMessage, maxMessage)
         XCTAssertEqual(constraint.exactMessage, exactMessage)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

@@ -6,34 +6,40 @@ final class ConstraintTypeTests: XCTestCase {
         // Arrange
         let notBlank = NotBlankConstraint()
         let length = LengthConstraint()
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.and([notBlank, length]).constraint as! AndConstraint
+        let constraint = ConstraintType.and([notBlank, length], groups: groups).constraint as! AndConstraint
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testBlankType() {
         // Arrange
         let message = "This value must be empty."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.blank(message: message).constraint as! BlankConstraint
+        let constraint = ConstraintType.blank(message: message, groups: groups).constraint as! BlankConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testEmailType() {
         // Arrange
         let message = "This value is not a valid email address."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.email(message: message).constraint as! EmailConstraint
+        let constraint = ConstraintType.email(message: message, groups: groups).constraint as! EmailConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testIntegerType() {
@@ -43,6 +49,7 @@ final class ConstraintTypeTests: XCTestCase {
         let minMessage = "This value must have \(min) characters or more."
         let maxMessage = "This value must have \(max) characters or less."
         let exactMessage = "This value must exactly have 2 characters."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
         let constraint = ConstraintType.integer(
@@ -50,7 +57,8 @@ final class ConstraintTypeTests: XCTestCase {
             max: max,
             minMessage: minMessage,
             maxMessage: maxMessage,
-            exactMessage: exactMessage
+            exactMessage: exactMessage,
+            groups: groups
         ).constraint as! IntegerConstraint
 
         // Assert
@@ -59,28 +67,33 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, minMessage)
         XCTAssertEqual(constraint.maxMessage, maxMessage)
         XCTAssertEqual(constraint.exactMessage, exactMessage)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testIPType() {
         // Arrange
         let message = "This value is not a valid IP address."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.ip(message: message).constraint as! IPConstraint
+        let constraint = ConstraintType.ip(message: message, groups: groups).constraint as! IPConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testJSONType() {
         // Arrange
         let message = "This value is not a valid JSON string."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.json(message: message).constraint as! JSONConstraint
+        let constraint = ConstraintType.json(message: message, groups: groups).constraint as! JSONConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testLengthType() {
@@ -90,6 +103,7 @@ final class ConstraintTypeTests: XCTestCase {
         let minMessage = "This value must have \(min) characters or more."
         let maxMessage = "This value must have \(max) characters or less."
         let exactMessage = "This value must exactly have 2 characters."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
         let constraint = ConstraintType.length(
@@ -97,7 +111,8 @@ final class ConstraintTypeTests: XCTestCase {
             max: max,
             minMessage: minMessage,
             maxMessage: maxMessage,
-            exactMessage: exactMessage
+            exactMessage: exactMessage,
+            groups: groups
         ).constraint as! LengthConstraint
 
         // Assert
@@ -106,73 +121,86 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, minMessage)
         XCTAssertEqual(constraint.maxMessage, maxMessage)
         XCTAssertEqual(constraint.exactMessage, exactMessage)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testNotBlankType() {
         // Arrange
         let message = "This value is required."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.notBlank(message: message).constraint as! NotBlankConstraint
+        let constraint = ConstraintType.notBlank(message: message, groups: groups).constraint as! NotBlankConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testOrType() {
         // Arrange
         let notBlank = NotBlankConstraint()
         let length = LengthConstraint()
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.or([notBlank, length]).constraint as! OrConstraint
+        let constraint = ConstraintType.or([notBlank, length], groups: groups).constraint as! OrConstraint
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testRegexType() {
         // Arrange
         let message = "This value is not a valid regular expression."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.regex(message: message).constraint as! RegexConstraint
+        let constraint = ConstraintType.regex(message: message, groups: groups).constraint as! RegexConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testURLType() {
         // Arrange
         let message = "This value is not a valid URL."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.url(isFileURL: true, message: message).constraint as! URLConstraint
+        let constraint = ConstraintType.url(isFileURL: true, message: message, groups: groups).constraint as! URLConstraint
 
         // Assert
         XCTAssertTrue(constraint.isFileURL)
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testUUIDType() {
         // Arrange
         let message = "This value is not a valid UUID."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.uuid(message: message).constraint as! UUIDConstraint
+        let constraint = ConstraintType.uuid(message: message, groups: groups).constraint as! UUIDConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 
     func testVINType() {
         // Arrange
         let message = "This value is not a valid VIN."
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.vin(message: message).constraint as! VINConstraint
+        let constraint = ConstraintType.vin(message: message, groups: groups).constraint as! VINConstraint
 
         // Assert
         XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }

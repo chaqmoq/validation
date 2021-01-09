@@ -9,11 +9,8 @@ struct EmailValidator: ConstraintValidator {
     "9][0-9]?|[\\p{L}0-9-]*[\\p{L}0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21" +
     "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
 
-    func validate(_ value: String, against constraints: [Constraint]) throws {
-        var constraints = constraints
-        if constraints.isEmpty { constraints.append(EmailConstraint()) }
-
-        guard let constraint = constraints.first(where: { $0 is EmailConstraint }) as? EmailConstraint else {
+    func validate(_ value: String, against constraint: Constraint) throws {
+        guard let constraint = constraint as? EmailConstraint else {
             let message = "The constraint must be of \(String(describing: EmailConstraint.self)) type."
             throw ValidatorError.invalidArgument(message)
         }
@@ -21,5 +18,9 @@ struct EmailValidator: ConstraintValidator {
         guard let regex = try? NSRegularExpression(pattern: EmailValidator.pattern) else { return }
         let range = NSRange(location: 0, length: value.utf8.count)
         if regex.firstMatch(in: value, range: range) == nil { throw ConstraintViolation(message: constraint.message) }
+    }
+
+    func validate(_ value: String) throws {
+        try validate(value, against: EmailConstraint())
     }
 }

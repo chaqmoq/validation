@@ -15,9 +15,7 @@ final class LengthValidatorTests: XCTestCase {
         let value = "a"
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ValidatorError)
-        }
+        XCTAssertNoThrow(try validator.validate(value))
     }
 
     func testValueAgainstInvalidConstraint() {

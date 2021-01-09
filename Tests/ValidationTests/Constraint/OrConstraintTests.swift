@@ -14,11 +14,13 @@ final class OrConstraintTests: XCTestCase {
         // Arrange
         let notBlank = NotBlankConstraint()
         let length = LengthConstraint()
+        let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = OrConstraint([notBlank, length])
+        let constraint = OrConstraint([notBlank, length], groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)
+        XCTAssertEqual(constraint.groups, groups)
     }
 }
