@@ -4,7 +4,7 @@ struct URLValidator: ConstraintValidator {
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? URLConstraint else {
             let message = "The constraint must be of \(String(describing: URLConstraint.self)) type."
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         if let url = URL(string: value) {

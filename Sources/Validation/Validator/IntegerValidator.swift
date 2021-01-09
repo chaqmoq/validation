@@ -2,7 +2,7 @@ struct IntegerValidator: ConstraintValidator {
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? IntegerConstraint else {
             let message = "The constraint must be of \(String(describing: IntegerConstraint.self)) type."
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         if constraint.min > constraint.max {

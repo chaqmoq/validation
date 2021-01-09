@@ -10,7 +10,7 @@ extension VINValidator {
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? VINConstraint else {
             let message = "The constraint must be of \(String(describing: VINConstraint.self)) type."
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         let vin = normalize(vin: value)

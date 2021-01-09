@@ -12,7 +12,7 @@ struct EmailValidator: ConstraintValidator {
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? EmailConstraint else {
             let message = "The constraint must be of \(String(describing: EmailConstraint.self)) type."
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         guard let regex = try? NSRegularExpression(pattern: EmailValidator.pattern) else { return }

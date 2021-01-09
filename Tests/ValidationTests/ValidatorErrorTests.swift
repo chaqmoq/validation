@@ -7,7 +7,7 @@ final class ValidatorErrorTests: XCTestCase {
         let message = "The argument is not valid."
 
         // Act
-        let error: ValidatorError = .invalidArgument(message)
+        let error: Validator.Error = .invalidArgument(message)
 
         // Assert
         XCTAssertEqual(error.errorDescription, message)

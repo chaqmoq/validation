@@ -60,7 +60,7 @@ final class AndValidatorTests: XCTestCase {
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
-            XCTAssertTrue(error is ValidatorError)
+            XCTAssertTrue(error is Validator.Error)
         }
     }
 }

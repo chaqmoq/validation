@@ -2,14 +2,14 @@ struct LengthValidator: ConstraintValidator {
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? LengthConstraint else {
             let message = "The constraint must be of \(String(describing: LengthConstraint.self)) type."
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         if constraint.min > constraint.max {
             let message = """
             The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max).
             """
-            throw ValidatorError.invalidArgument(message)
+            throw Validator.Error.invalidArgument(message)
         }
 
         let length = value.count
