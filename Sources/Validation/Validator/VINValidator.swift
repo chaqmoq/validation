@@ -7,6 +7,10 @@ struct VINValidator: ConstraintValidator {
 }
 
 extension VINValidator {
+    func validate(_ value: String) throws {
+        try validate(value, against: VINConstraint())
+    }
+
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? VINConstraint else {
             let message = "The constraint must be of \(String(describing: VINConstraint.self)) type."
@@ -18,10 +22,6 @@ extension VINValidator {
         if vin.count != VINValidator.vinMinLength || getCheckDigit(for: vin) != vin[8] {
             throw ConstraintViolation(constraint.message)
         }
-    }
-
-    func validate(_ value: String) throws {
-        try validate(value, against: VINConstraint())
     }
 
     func normalize(vin: String) -> String {

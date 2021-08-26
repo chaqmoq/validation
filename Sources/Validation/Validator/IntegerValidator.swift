@@ -1,4 +1,8 @@
 struct IntegerValidator: ConstraintValidator {
+    func validate(_ value: String) throws {
+        try validate(value, against: IntegerConstraint())
+    }
+
     func validate(_ value: String, against constraint: Constraint) throws {
         guard let constraint = constraint as? IntegerConstraint else {
             let message = "The constraint must be of \(String(describing: IntegerConstraint.self)) type."
@@ -23,9 +27,5 @@ struct IntegerValidator: ConstraintValidator {
         } else if intValue > constraint.max {
             throw ConstraintViolation(constraint.maxMessage)
         }
-    }
-
-    func validate(_ value: String) throws {
-        try validate(value, against: IntegerConstraint())
     }
 }
