@@ -1,5 +1,5 @@
 /// A default `Validator` class to validate a value against multiple types of `Constraint`s on `Group`s.
-public final class Validator {
+open class Validator {
     /// Initializes a new instance.
     public init() {}
 
