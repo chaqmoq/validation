@@ -18,7 +18,7 @@ struct LengthValidator: ConstraintValidator {
 
         let length = value.count
 
-        if constraint.min == constraint.max && length != constraint.min {
+        if constraint.min == constraint.max, length != constraint.min {
             throw ConstraintViolation(constraint.exactMessage)
         }
 

@@ -26,7 +26,7 @@ extension VINValidator {
 
     func normalize(vin: String) -> String {
         var vin = vin
-        if vin.starts(with: "I") && vin.count == VINValidator.vinMaxLength { vin.removeFirst() }
+        if vin.starts(with: "I"), vin.count == VINValidator.vinMaxLength { vin.removeFirst() }
 
         return vin
     }

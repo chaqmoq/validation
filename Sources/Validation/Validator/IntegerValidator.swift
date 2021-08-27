@@ -18,7 +18,7 @@ struct IntegerValidator: ConstraintValidator {
 
         guard let intValue = Int(value) else { throw ConstraintViolation("The value must be an integer.") }
 
-        if constraint.min == constraint.max && intValue != constraint.min {
+        if constraint.min == constraint.max, intValue != constraint.min {
             throw ConstraintViolation(constraint.exactMessage)
         }
 
