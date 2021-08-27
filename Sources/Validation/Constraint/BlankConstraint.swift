@@ -12,11 +12,11 @@ public struct BlankConstraint: Constraint {
     /// A validator named `BlankValidator` to validate a value.
     public let validator: ConstraintValidator = BlankValidator()
 
-    /// Initializes a new instance with a custom error message and validation groups to be applied.
+    /// Initializes a new instance with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     public init(_ message: String = message, groups: Set<Group> = .init()) {
         self.message = message
         self.groups = groups

@@ -3,7 +3,7 @@ public struct Group: ExpressibleByStringLiteral, Hashable {
     /// A default validation group.
     public static let `default`: Group = "default"
 
-    /// A name for a validation group.
+    /// A name of a validation group.
     public let name: String
 
     /// See `ExpressibleByStringLiteral`.

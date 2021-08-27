@@ -1,36 +1,36 @@
 /// A simplified API for the existing `Constraint`s.
 public enum ConstraintType {
-    /// Creates a `AndConstraint` type with an array of child constraints and validation groups to be applied.
+    /// Creates a `AndConstraint` type with an array of child constraints and validation groups to group by.
     ///
     /// - Parameters:
     ///   - constraints: An array of child constraints.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case and(_ constraints: [Constraint], groups: Set<Group> = .init())
 
-    /// Creates a `BlankConstraint` type with a custom error message and validation groups to be applied.
+    /// Creates a `BlankConstraint` type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case blank(_ message: String = BlankConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates an `EmailConstraint`type with a custom error message and validation groups to be applied.
+    /// Creates an `EmailConstraint`type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case email(_ message: String = EmailConstraint.message, groups: Set<Group> = .init())
 
     /// Creates an `IntegerConstraint`type with minimum/maximum values, custom minimum/maximum error messages,
-    /// and validation groups to be applied.
+    /// and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - min: A custom minimum value. Defaults to a default minimum value.
-    ///   - max: A custom maximum value. Defaults to a default maximum value.
-    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to a default minimum value violation error message.
-    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to a default maximum value violation error message.
-    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - min: A custom minimum value. Defaults to the default minimum value.
+    ///   - max: A custom maximum value. Defaults to the default maximum value.
+    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to the default minimum value violation error message.
+    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to the default maximum value violation error message.
+    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case integer(
         min: Int = IntegerConstraint.min,
         max: Int = IntegerConstraint.max,
@@ -40,30 +40,30 @@ public enum ConstraintType {
         groups: Set<Group> = .init()
     )
 
-    /// Creates an `IPConstraint`type with a custom error message and validation groups to be applied.
+    /// Creates an `IPConstraint`type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case ip(_ message: String = IPConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates a `JSONConstraint` type with a custom error message and validation groups to be applied.
+    /// Creates a `JSONConstraint` type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case json(_ message: String = JSONConstraint.message, groups: Set<Group> = .init())
 
     /// Creates a `LengthConstraint` type with minimum/maximum values, custom minimum/maximum error messages,
-    /// and validation groups to be applied.
+    /// and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - min: A custom minimum value. Defaults to a default minimum value.
-    ///   - max: A custom maximum value. Defaults to a default maximum value.
-    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to a default minimum value violation error message.
-    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to a default maximum value violation error message.
-    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - min: A custom minimum value. Defaults to the default minimum value.
+    ///   - max: A custom maximum value. Defaults to the default maximum value.
+    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to the default minimum value violation error message.
+    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to the default maximum value violation error message.
+    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case length(
         min: UInt = LengthConstraint.min,
         max: UInt = LengthConstraint.max,
@@ -73,47 +73,47 @@ public enum ConstraintType {
         groups: Set<Group> = .init()
     )
 
-    /// Creates a `NotBlankConstraint` type with a custom error message and validation groups to be applied.
+    /// Creates a `NotBlankConstraint` type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case notBlank(_ message: String = NotBlankConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates a `OrConstraint` type with an array of child constraints and validation groups to be applied.
+    /// Creates a `OrConstraint` type with an array of child constraints and validation groups to group by.
     ///
     /// - Parameters:
     ///   - constraints: An array of child constraints.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case or(_ constraints: [Constraint], groups: Set<Group> = .init())
 
-    /// Creates a `RegexConstraint` type with a custom error message and validation groups to be applied.
+    /// Creates a `RegexConstraint` type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case regex(_ message: String = RegexConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates a `URLConstraint` type with a file URL flag, a custom error message, and validation groups to be applied.
+    /// Creates a `URLConstraint` type with a file URL flag, a custom error message, and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
+    ///   - message: A custom error message. Defaults to the default error message.
     ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case url(_ message: String = URLConstraint.message, isFileURL: Bool, groups: Set<Group> = .init())
 
-    /// Creates a `UUIDConstraint` type with a custom error message and validation groups to be applied.
+    /// Creates a `UUIDConstraint` type with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case uuid(_ message: String = UUIDConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates a `VINConstraint` with a custom error message and validation groups to be applied.
+    /// Creates a `VINConstraint` with a custom error message and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - message: A custom error message. Defaults to a default error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     case vin(_ message: String = VINConstraint.message, groups: Set<Group> = .init())
 
     /// A matching `Constraint` for a `ConstraintType`.

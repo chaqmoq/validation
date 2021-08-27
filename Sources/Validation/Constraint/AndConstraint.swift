@@ -9,11 +9,11 @@ public struct AndConstraint: Constraint {
     /// A validator named `AndValidator` to validate a value.
     public let validator: ConstraintValidator = AndValidator()
 
-    /// Initializes a new instance with an array of child constraints and validation groups to be applied.
+    /// Initializes a new instance with an array of child constraints and validation groups to group by.
     ///
     /// - Parameters:
     ///   - constraints: An array of child constraints.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     public init(_ constraints: [Constraint] = .init(), groups: Set<Group> = .init()) {
         self.constraints = constraints
         self.groups = groups

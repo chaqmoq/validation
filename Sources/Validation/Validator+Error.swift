@@ -1,7 +1,8 @@
 import Foundation
 
 extension Validator {
-    /// A common error type to throw when an invalid `Constraint` is provided to a `ConstraintValidator`.
+    /// A common error type to throw when an invalid `Constraint` is provided to the `validate(_:against:)` method of the
+    /// `ConstraintValidator`.
     public enum Error: LocalizedError {
         /// An error type for an invalid argument.
         ///

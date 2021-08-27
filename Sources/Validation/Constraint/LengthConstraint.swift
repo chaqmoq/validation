@@ -36,12 +36,12 @@ public struct LengthConstraint: Constraint {
     /// A validator named `LengthValidator` to validate a value.
     public let validator: ConstraintValidator = LengthValidator()
 
-    /// Initializes a new instance with an exact value, custom error message, and validation groups to be applied.
+    /// Initializes a new instance with an exact value, custom error message, and validation groups to group by.
     ///
     /// - Parameters:
     ///   - exact: An exact value.
-    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     public init(exact: UInt, exactMessage: String = exactMessage, groups: Set<Group> = .init()) {
         self.init(
             min: exact,
@@ -53,15 +53,15 @@ public struct LengthConstraint: Constraint {
         )
     }
 
-    /// Initializes a new instance with minimum/maximum values, custom minimum/maximum error messages, and validation groups to be applied.
+    /// Initializes a new instance with minimum/maximum values, custom minimum/maximum error messages, and validation groups to group by.
     ///
     /// - Parameters:
-    ///   - min: A custom minimum value. Defaults to a default minimum value.
-    ///   - max: A custom maximum value. Defaults to a default maximum value.
-    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to a default minimum value violation error message.
-    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to a default maximum value violation error message.
-    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to a default exact value violation error message.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - min: A custom minimum value. Defaults to the default minimum value.
+    ///   - max: A custom maximum value. Defaults to the default maximum value.
+    ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to the default minimum value violation error message.
+    ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to the default maximum value violation error message.
+    ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     public init(
         min: UInt = min,
         max: UInt = max,

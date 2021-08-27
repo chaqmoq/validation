@@ -9,11 +9,11 @@ public struct OrConstraint: Constraint {
     /// A validator named `OrValidator` to validate a value.
     public let validator: ConstraintValidator = OrValidator()
 
-    /// Initializes a new instance with an array of child constraints and validation groups to be applied.
+    /// Initializes a new instance with an array of child constraints and validation groups to group by.
     ///
     /// - Parameters:
     ///   - constraints: An array of child constraints.
-    ///   - groups: Validation groups to be applied. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty array.
     public init(_ constraints: [Constraint] = .init(), groups: Set<Group> = .init()) {
         self.constraints = constraints
         self.groups = groups

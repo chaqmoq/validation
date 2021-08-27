@@ -1,14 +1,14 @@
-/// A default `Validator` class to validate a value with multiple types of `Constraint`s.
+/// A default `Validator` class to validate a value against multiple types of `Constraint`s on `Group`s.
 public final class Validator {
     /// Initializes a new instance.
     public init() {}
 
-    /// Validates a value against an array of `Constraint`s.
+    /// Validates a value against an array of `Constraint`s on `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: An array of `Constraint`s.
-    ///   - groups: Validation groups to run validation on. Defaults to an empty array.
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
     /// - Throws: An error type of `ConstraintViolation`.
     public func validate(_ value: String, against constraints: [Constraint], on groups: Set<Group> = .init()) throws {
         for constraint in constraints {
@@ -19,12 +19,12 @@ public final class Validator {
         }
     }
 
-    /// Validates a value against a variadic list of `Constraint`s.
+    /// Validates a value against a variadic list of `Constraint`s on `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
-    ///   - groups: Validation groups to run validation on. Defaults to an empty array.
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
     /// - Throws: An error type of `ConstraintViolation`.
     public func validate(
         _ value: String,
@@ -34,12 +34,12 @@ public final class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a value against an array of `ConstraintType`s.
+    /// Validates a value against an array of `ConstraintType`s on `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
-    ///   - groups: Validation groups to run validation on. Defaults to an empty array.
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
     /// - Throws: An error type of `ConstraintViolation`.
     public func validate(
         _ value: String,
