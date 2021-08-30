@@ -10,4 +10,11 @@ public struct Group: ExpressibleByStringLiteral, Hashable {
     public init(stringLiteral name: String) {
         self.name = name
     }
+
+    /// Initializes a new instance of `Group`.
+    ///
+    /// - Parameter name: A name of `Group`.
+    public init(_ name: String) {
+        self.name = name
+    }
 }

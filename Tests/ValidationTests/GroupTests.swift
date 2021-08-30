@@ -12,9 +12,21 @@ final class GroupTests: XCTestCase {
         let name = "custom"
 
         // Act
-        let group = Group(stringLiteral: name)
+        let group1 = Group(stringLiteral: name)
 
         // Assert
-        XCTAssertEqual(group.name, name)
+        XCTAssertEqual(group1.name, name)
+
+        // Act
+        let group2: Group = "custom"
+
+        // Assert
+        XCTAssertEqual(group2.name, name)
+
+        // Act
+        let group3 = Group(name)
+
+        // Assert
+        XCTAssertEqual(group3.name, name)
     }
 }
