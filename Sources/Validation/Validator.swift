@@ -13,7 +13,8 @@ open class Validator {
     public func validate(_ value: String, against constraints: [Constraint], on groups: Set<Group> = .init()) throws {
         for constraint in constraints {
             if ((groups.isEmpty || groups.contains(.default)) && constraint.groups.isEmpty) ||
-                !groups.isDisjoint(with: constraint.groups) {
+                !groups.isDisjoint(with: constraint.groups)
+            {
                 try constraint.validator.validate(value, against: constraint)
             }
         }

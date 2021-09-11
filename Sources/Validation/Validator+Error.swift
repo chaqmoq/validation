@@ -12,7 +12,7 @@ extension Validator {
         /// See `LocalizedError`.
         public var errorDescription: String? {
             switch self {
-            case .invalidArgument(let message): return message
+            case let .invalidArgument(message): return message
             }
         }
     }

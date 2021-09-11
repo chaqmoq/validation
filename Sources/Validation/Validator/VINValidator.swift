@@ -44,12 +44,13 @@ extension VINValidator {
         let map = VINValidator.map
         var sum = 0
 
-        for index in 0..<VINValidator.vinMinLength {
+        for index in 0 ..< VINValidator.vinMinLength {
             let vinCharacter = vin[index]
             let weightCharacter = VINValidator.weights[index]
 
             if let characterIndex = transliterate(character: vinCharacter),
-                let value = map.firstIntIndex(of: weightCharacter) {
+               let value = map.firstIntIndex(of: weightCharacter)
+            {
                 sum += characterIndex * value
             } else {
                 return nil

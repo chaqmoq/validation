@@ -119,10 +119,10 @@ public enum ConstraintType {
     /// A matching `Constraint` for a `ConstraintType`.
     public var constraint: Constraint {
         switch self {
-        case .and(let constraints, let groups): return AndConstraint(constraints, groups: groups)
-        case .blank(let message, let groups): return BlankConstraint(message, groups: groups)
-        case .email(let message, let groups): return EmailConstraint(message, groups: groups)
-        case .integer(let min, let max, let minMessage, let maxMessage, let exactMessage, let groups):
+        case let .and(constraints, groups): return AndConstraint(constraints, groups: groups)
+        case let .blank(message, groups): return BlankConstraint(message, groups: groups)
+        case let .email(message, groups): return EmailConstraint(message, groups: groups)
+        case let .integer(min, max, minMessage, maxMessage, exactMessage, groups):
             return IntegerConstraint(
                 min: min,
                 max: max,
@@ -131,9 +131,9 @@ public enum ConstraintType {
                 exactMessage: exactMessage,
                 groups: groups
             )
-        case .ip(let message, let groups): return IPConstraint(message, groups: groups)
-        case .json(let message, let groups): return JSONConstraint(message, groups: groups)
-        case .length(let min, let max, let minMessage, let maxMessage, let exactMessage, let groups):
+        case let .ip(message, groups): return IPConstraint(message, groups: groups)
+        case let .json(message, groups): return JSONConstraint(message, groups: groups)
+        case let .length(min, max, minMessage, maxMessage, exactMessage, groups):
             return LengthConstraint(
                 min: min,
                 max: max,
@@ -142,13 +142,13 @@ public enum ConstraintType {
                 exactMessage: exactMessage,
                 groups: groups
             )
-        case .notBlank(let message, let groups): return NotBlankConstraint(message, groups: groups)
-        case .or(let constraints, let groups): return OrConstraint(constraints, groups: groups)
-        case .regex(let message, let groups): return RegexConstraint(message, groups: groups)
-        case .url(let message, let isFileURL, let groups):
+        case let .notBlank(message, groups): return NotBlankConstraint(message, groups: groups)
+        case let .or(constraints, groups): return OrConstraint(constraints, groups: groups)
+        case let .regex(message, groups): return RegexConstraint(message, groups: groups)
+        case let .url(message, isFileURL, groups):
             return URLConstraint(message, isFileURL: isFileURL, groups: groups)
-        case .uuid(let message, let groups): return UUIDConstraint(message, groups: groups)
-        case .vin(let message, let groups): return VINConstraint(message, groups: groups)
+        case let .uuid(message, groups): return UUIDConstraint(message, groups: groups)
+        case let .vin(message, groups): return VINConstraint(message, groups: groups)
         }
     }
 }

@@ -1,10 +1,10 @@
 /// A constraint to validate if a value is with a valid length.
 public struct LengthConstraint: Constraint {
     /// A default minimum value to set if no minimum value is provided.
-    public static let min: UInt = UInt.min
+    public static let min = UInt.min
 
     /// A default maximum value to set if no maximum value is provided.
-    public static let max: UInt = UInt.max
+    public static let max = UInt.max
 
     /// A default error message to show for a minimum value violation.
     public static let minMessage = "This value is too short. It must have %d characters or more."

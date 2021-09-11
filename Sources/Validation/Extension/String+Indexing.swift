@@ -1,5 +1,5 @@
 extension String {
-    subscript (index: Int) -> Character {
+    subscript(index: Int) -> Character {
         return self[self.index(startIndex, offsetBy: index)]
     }
 
