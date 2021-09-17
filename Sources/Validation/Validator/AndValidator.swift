@@ -1,9 +1,9 @@
 struct AndValidator: ConstraintValidator {
-    func validate(_ value: String) throws {
+    func validate(_ value: Any?) throws {
         try validate(value, against: AndConstraint())
     }
 
-    func validate(_ value: String, against constraint: Constraint) throws {
+    func validate(_ value: Any?, against constraint: Constraint) throws {
         guard let constraint = constraint as? AndConstraint else {
             let message = "The constraint must be of \(String(describing: AndConstraint.self)) type."
             throw Validator.Error.invalidArgument(message)

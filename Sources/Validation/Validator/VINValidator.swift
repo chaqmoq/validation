@@ -7,17 +7,17 @@ struct VINValidator: ConstraintValidator {
 }
 
 extension VINValidator {
-    func validate(_ value: String) throws {
+    func validate(_ value: Any?) throws {
         try validate(value, against: VINConstraint())
     }
 
-    func validate(_ value: String, against constraint: Constraint) throws {
+    func validate(_ value: Any?, against constraint: Constraint) throws {
         guard let constraint = constraint as? VINConstraint else {
             let message = "The constraint must be of \(String(describing: VINConstraint.self)) type."
             throw Validator.Error.invalidArgument(message)
         }
 
-        let vin = normalize(vin: value)
+        let vin = normalize(vin: "\(value ?? "")")
 
         if vin.count != VINValidator.vinMinLength || getCheckDigit(for: vin) != vin[8] {
             throw ConstraintViolation(constraint.message)
