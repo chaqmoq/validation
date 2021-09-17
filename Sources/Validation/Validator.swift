@@ -8,9 +8,13 @@ open class Validator {
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: An array of `Constraint`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
-    /// - Throws: An error type of `ConstraintViolation`.
-    public func validate(_ value: String, against constraints: [Constraint], on groups: Set<Group> = .init()) throws {
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    /// - Throws: A `ConstraintViolation` error.
+    public func validate(
+        _ value: Any?,
+        against constraints: [Constraint],
+        on groups: Set<Group> = .init()
+    ) throws {
         for constraint in constraints {
             if ((groups.isEmpty || groups.contains(.default)) && constraint.groups.isEmpty) ||
                 !groups.isDisjoint(with: constraint.groups)
@@ -25,10 +29,10 @@ open class Validator {
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
-    /// - Throws: An error type of `ConstraintViolation`.
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    /// - Throws: A `ConstraintViolation` error.
     public func validate(
-        _ value: String,
+        _ value: Any?,
         against constraints: Constraint...,
         on groups: Set<Group> = .init()
     ) throws {
@@ -40,10 +44,10 @@ open class Validator {
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty array.
-    /// - Throws: An error type of `ConstraintViolation`.
+    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    /// - Throws: A `ConstraintViolation` error.
     public func validate(
-        _ value: String,
+        _ value: Any?,
         against constraintTypes: [ConstraintType],
         on groups: Set<Group> = .init()
     ) throws {
