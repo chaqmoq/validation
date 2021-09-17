@@ -53,4 +53,26 @@ final class ValidatorTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, String(format: LengthConstraint.maxMessage, max))
         }
     }
+
+    func testDictionaryAgainstConstraintTypes() {
+        // Arrange
+        let dictionary: [String: Any] = [
+            "firstName": "",
+            "lastName": ""
+        ]
+        let constraints: [String: [ConstraintType]] = [
+            "firstName": [.notBlank(), .length(min: 2)],
+            "lastName": [.notBlank(), .length(min: 2)],
+            "age": [.notBlank(), .integer(min: 16)]
+        ]
+
+        // Act
+        let constraintViolations = validator.validate(dictionary, against: constraints)
+
+        // Assert
+        XCTAssertEqual(constraintViolations.count, 3)
+        XCTAssertEqual(constraintViolations["firstName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["lastName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["age"]?.count, 2)
+    }
 }
