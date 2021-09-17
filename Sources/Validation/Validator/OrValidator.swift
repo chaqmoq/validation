@@ -19,7 +19,6 @@ struct OrValidator: ConstraintValidator {
                 break
             } catch {
                 if firstError == nil { firstError = error }
-                continue
             }
         }
 
