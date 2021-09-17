@@ -16,7 +16,7 @@ public struct JSONConstraint: Constraint {
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to the default error message.
-    ///   - groups: Validation groups to group by. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty set.
     public init(_ message: String = message, groups: Set<Group> = .init()) {
         self.message = message
         self.groups = groups

@@ -20,7 +20,7 @@ public struct URLConstraint: Constraint {
     /// - Parameters:
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
-    ///   - groups: Validation groups to group by. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty set.
     public init(_ message: String = message, isFileURL: Bool = false, groups: Set<Group> = .init()) {
         self.message = message
         self.isFileURL = isFileURL

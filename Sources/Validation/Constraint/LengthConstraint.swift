@@ -41,7 +41,7 @@ public struct LengthConstraint: Constraint {
     /// - Parameters:
     ///   - exact: An exact value.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
-    ///   - groups: Validation groups to group by. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty set.
     public init(exact: UInt, exactMessage: String = exactMessage, groups: Set<Group> = .init()) {
         self.init(
             min: exact,
@@ -61,7 +61,7 @@ public struct LengthConstraint: Constraint {
     ///   - minMessage: A custom error message to show for a minimum value violation. Defaults to the default minimum value violation error message.
     ///   - maxMessage: A custom error message to show for a maximum value violation. Defaults to the default maximum value violation error message.
     ///   - exactMessage: A custom error message to show for an exact value violation. Defaults to the default exact value violation error message.
-    ///   - groups: Validation groups to group by. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty set.
     public init(
         min: UInt = min,
         max: UInt = max,

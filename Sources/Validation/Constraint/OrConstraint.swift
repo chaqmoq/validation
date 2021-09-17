@@ -13,7 +13,7 @@ public struct OrConstraint: Constraint {
     ///
     /// - Parameters:
     ///   - constraints: An array of child constraints.
-    ///   - groups: Validation groups to group by. Defaults to an empty array.
+    ///   - groups: Validation groups to group by. Defaults to an empty set.
     public init(_ constraints: [Constraint] = .init(), groups: Set<Group> = .init()) {
         self.constraints = constraints
         self.groups = groups
