@@ -75,4 +75,29 @@ final class ValidatorTests: XCTestCase {
         XCTAssertEqual(constraintViolations["lastName"]?.count, 2)
         XCTAssertEqual(constraintViolations["age"]?.count, 2)
     }
+
+    func testEncodableDataAgainstConstraintTypes() {
+        // Arrange
+        struct User: Encodable {
+            var firstName: String
+            var lastName: String
+            var age: Int
+        }
+
+        let encodable = User(firstName: "S", lastName: "K", age: 15)
+        let constraints: [String: [ConstraintType]] = [
+            "firstName": [.notBlank(), .length(min: 2)],
+            "lastName": [.notBlank(), .length(min: 2)],
+            "age": [.notBlank(), .integer(min: 16)]
+        ]
+
+        // Act
+        let constraintViolations = try! validator.validate(encodable, against: constraints)
+
+        // Assert
+        XCTAssertEqual(constraintViolations.count, 3)
+        XCTAssertEqual(constraintViolations["firstName"]?.count, 1)
+        XCTAssertEqual(constraintViolations["lastName"]?.count, 1)
+        XCTAssertEqual(constraintViolations["age"]?.count, 1)
+    }
 }
