@@ -54,4 +54,39 @@ open class Validator {
         let constraints = constraintTypes.map { $0.constraint }
         try validate(value, against: constraints, on: groups)
     }
+
+    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on `Group`s.
+    ///
+    /// - Parameters:
+    ///   - dictionary: A dictionary of keys and values to be validated.
+    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
+    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
+    public func validate(
+        _ dictionary: [String: Any],
+        against constraints: [String: [Constraint]],
+        on groups: Set<Group> = .init()
+    ) -> [String: [ConstraintViolation]] {
+        var constraintViolations: [String: [ConstraintViolation]] = .init()
+
+        for (key, keyConstraints) in constraints {
+            let value = dictionary[key] ?? ""
+
+            for keyConstraint in keyConstraints {
+                do {
+                    try validate(value, against: [keyConstraint], on: groups)
+                } catch {
+                    let constraintViolation = error as! ConstraintViolation
+
+                    if constraintViolations[key] == nil {
+                        constraintViolations[key] = [constraintViolation]
+                    } else {
+                        constraintViolations[key]?.append(constraintViolation)
+                    }
+                }
+            }
+        }
+
+        return constraintViolations
+    }
 }
