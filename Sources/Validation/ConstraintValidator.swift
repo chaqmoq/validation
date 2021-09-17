@@ -4,14 +4,14 @@ public protocol ConstraintValidator {
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
-    /// - Throws: An error type of `ConstraintViolation`.
-    func validate(_ value: String) throws
+    /// - Throws: A `ConstraintViolation` error.
+    func validate(_ value: Any?) throws
 
     /// Validates a value against a`Constraint` with custom values.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraint: An instance of `Constraint`.
-    /// - Throws: An error type of `ConstraintViolation`.
-    func validate(_ value: String, against constraint: Constraint) throws
+    /// - Throws: A `ConstraintViolation` error.
+    func validate(_ value: Any?, against constraint: Constraint) throws
 }
