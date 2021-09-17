@@ -10,7 +10,7 @@ final class ValidatorTests: XCTestCase {
         validator = Validator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 

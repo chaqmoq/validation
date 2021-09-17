@@ -10,7 +10,27 @@ final class IPValidatorTests: XCTestCase {
         validator = IPValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IPConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class IPValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class IPValidatorTests: XCTestCase {
         }
     }
 
-    func testValuesWithImplicitConstraint() {
+    func testValuesAgainstImplicitConstraint() {
         // Arrange
         let values: [String] = [
             "1.1.1.1",
@@ -48,7 +68,7 @@ final class IPValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let values: [String] = [
             "1.1.1.1",
@@ -66,7 +86,7 @@ final class IPValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValuesWithImplicitConstraint() {
+    func testInvalidValuesAgainstImplicitConstraint() {
         // Arrange
         let values: [String] = [
             "10.10.10",
@@ -89,7 +109,7 @@ final class IPValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValuesWithExplicitConstraint() {
+    func testInvalidValuesAgainstExplicitConstraint() {
         // Arrange
         let values: [String] = [
             "10.10.10",

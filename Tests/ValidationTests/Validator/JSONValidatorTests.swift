@@ -10,7 +10,27 @@ final class JSONValidatorTests: XCTestCase {
         validator = JSONValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: JSONConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class JSONValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class JSONValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithImplicitConstraint() {
+    func testInvalidValueAgainstImplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -40,7 +60,7 @@ final class JSONValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithExplicitConstraint() {
+    func testInvalidValueAgainstExplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -50,7 +70,7 @@ final class JSONValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "{\"title\": \"New post\", \"likesCount\": 100}"
 
@@ -58,7 +78,7 @@ final class JSONValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let value = "{\"title\": \"New post\", \"likesCount\": 100}"
 

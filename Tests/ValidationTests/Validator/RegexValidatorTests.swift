@@ -10,7 +10,27 @@ final class RegexValidatorTests: XCTestCase {
         validator = RegexValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: RegexConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class RegexValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class RegexValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithImplicitConstraint() {
+    func testInvalidValueAgainstImplicitConstraint() {
         // Arrange
         let value = "["
 
@@ -40,7 +60,7 @@ final class RegexValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithExplicitConstraint() {
+    func testInvalidValueAgainstExplicitConstraint() {
         // Arrange
         let value = "["
 
@@ -50,7 +70,7 @@ final class RegexValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "[a-zA-Z0-9]"
 
@@ -58,7 +78,7 @@ final class RegexValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let value = "[a-zA-Z0-9]"
 

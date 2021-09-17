@@ -10,6 +10,26 @@ final class VINValidatorTests: XCTestCase {
         validator = VINValidator()
     }
 
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: VINConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
     func testValidVINs() {
         // Arrange
         let vins = [

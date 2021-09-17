@@ -10,7 +10,27 @@ final class EmailValidatorTests: XCTestCase {
         validator = EmailValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: EmailConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class EmailValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class EmailValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "contact@chaqmoq.dev"
 
@@ -38,7 +58,7 @@ final class EmailValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let value = "contact@chaqmoq.dev"
 
@@ -46,7 +66,7 @@ final class EmailValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value, against: EmailConstraint()))
     }
 
-    func testInvalidValueWithImplicitConstraint() {
+    func testInvalidValueAgainstImplicitConstraint() {
         // Arrange
         let value = "contact.chaqmoq.dev"
 
@@ -56,7 +76,7 @@ final class EmailValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithExplicitConstraint() {
+    func testInvalidValueAgainstExplicitConstraint() {
         // Arrange
         let value = "contact@chaqmoq"
 

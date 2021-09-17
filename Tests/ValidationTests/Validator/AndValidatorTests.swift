@@ -10,7 +10,7 @@ final class AndValidatorTests: XCTestCase {
         validator = AndValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -18,7 +18,7 @@ final class AndValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 

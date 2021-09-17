@@ -10,7 +10,27 @@ final class UUIDValidatorTests: XCTestCase {
         validator = UUIDValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: UUIDConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class UUIDValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class UUIDValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithImplicitConstraint() {
+    func testInvalidValueAgainstImplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -40,7 +60,7 @@ final class UUIDValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithExplicitConstraint() {
+    func testInvalidValueAgainstExplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -50,7 +70,7 @@ final class UUIDValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "2a8fc0a9-9b86-4a95-b9bf-6b42eb7e69d5"
 
@@ -58,7 +78,7 @@ final class UUIDValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let value = "2a8fc0a9-9b86-4a95-b9bf-6b42eb7e69d5"
 

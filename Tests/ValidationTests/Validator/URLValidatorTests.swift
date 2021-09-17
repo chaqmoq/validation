@@ -10,7 +10,27 @@ final class URLValidatorTests: XCTestCase {
         validator = URLValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: URLConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -20,7 +40,7 @@ final class URLValidatorTests: XCTestCase {
         }
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -30,7 +50,7 @@ final class URLValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithImplicitConstraint() {
+    func testInvalidValueAgainstImplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -40,7 +60,7 @@ final class URLValidatorTests: XCTestCase {
         }
     }
 
-    func testInvalidValueWithExplicitConstraint() {
+    func testInvalidValueAgainstExplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -50,7 +70,7 @@ final class URLValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "http://chaqmoq.dev"
 
@@ -58,7 +78,7 @@ final class URLValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testValuesWithExplicitConstraint() {
+    func testValuesAgainstExplicitConstraint() {
         // Arrange
         var value = "http://chaqmoq.dev"
 

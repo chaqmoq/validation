@@ -10,6 +10,16 @@ final class LengthValidatorTests: XCTestCase {
         validator = LengthValidator()
     }
 
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: LengthConstraint(exact: 2))) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
     func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "a"

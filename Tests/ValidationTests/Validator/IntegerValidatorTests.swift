@@ -10,6 +10,26 @@ final class IntegerValidatorTests: XCTestCase {
         validator = IntegerValidator()
     }
 
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+    }
+
     func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "1"

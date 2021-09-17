@@ -10,7 +10,7 @@ final class OrValidatorTests: XCTestCase {
         validator = OrValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -18,7 +18,7 @@ final class OrValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 

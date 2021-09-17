@@ -10,7 +10,23 @@ final class BlankValidatorTests: XCTestCase {
         validator = BlankValidator()
     }
 
-    func testEmptyValueWithImplicitConstraint() {
+    func testNilValueAgainstImplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value))
+    }
+
+    func testNilValueAgainstExplicitConstraint() {
+        // Arrange
+        let value: String? = nil
+
+        // Act/Assert
+        XCTAssertNoThrow(try validator.validate(value, against: BlankConstraint()))
+    }
+
+    func testEmptyValueAgainstImplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -18,7 +34,7 @@ final class BlankValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value))
     }
 
-    func testEmptyValueWithExplicitConstraint() {
+    func testEmptyValueAgainstExplicitConstraint() {
         // Arrange
         let value = ""
 
@@ -26,7 +42,7 @@ final class BlankValidatorTests: XCTestCase {
         XCTAssertNoThrow(try validator.validate(value, against: BlankConstraint()))
     }
 
-    func testValueWithImplicitConstraint() {
+    func testValueAgainstImplicitConstraint() {
         // Arrange
         let value = "a"
 
@@ -36,7 +52,7 @@ final class BlankValidatorTests: XCTestCase {
         }
     }
 
-    func testValueWithExplicitConstraint() {
+    func testValueAgainstExplicitConstraint() {
         // Arrange
         let value = "a"
 
