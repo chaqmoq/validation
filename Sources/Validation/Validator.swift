@@ -105,4 +105,21 @@ open class Validator {
         let constraints = constraintTypes.mapValues { $0.map { $0.constraint }}
         return validate(dictionary, against: constraints, on: groups)
     }
+
+    /// Validates an `Encodable` value against a dictionary of keys and an array of `Constraint`s as values on `Group`s.
+    ///
+    /// - Parameters:
+    ///   - encodable: An `Encodable` value to be validated.
+    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
+    /// - Throws: An error if it can't decode the encoded value.
+    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
+    public func validate(
+        _ encodable: Encodable,
+        against constraints: [String: [Constraint]],
+        on groups: Set<Group> = .init()
+    ) throws -> [String: [ConstraintViolation]] {
+        guard let dictionary = try encodable.asDictionary() else { return .init() }
+        return validate(dictionary, against: constraints, on: groups)
+    }
 }
