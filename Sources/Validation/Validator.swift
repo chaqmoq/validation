@@ -63,7 +63,7 @@ open class Validator {
     ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
-        _ dictionary: [String: Any],
+        _ dictionary: [String: Any?],
         against constraints: [String: [Constraint]],
         on groups: Set<Group> = .init()
     ) -> [String: [ConstraintViolation]] {
@@ -98,7 +98,7 @@ open class Validator {
     ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
-        _ dictionary: [String: Any],
+        _ dictionary: [String: Any?],
         against constraintTypes: [String: [ConstraintType]],
         on groups: Set<Group> = .init()
     ) -> [String: [ConstraintViolation]] {

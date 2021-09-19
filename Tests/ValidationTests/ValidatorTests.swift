@@ -56,7 +56,7 @@ final class ValidatorTests: XCTestCase {
 
     func testDictionaryAgainstConstraintTypes() {
         // Arrange
-        let dictionary: [String: Any] = [
+        let dictionary: [String: Any?] = [
             "firstName": "",
             "lastName": ""
         ]
