@@ -17,8 +17,7 @@ open class Validator {
     ) throws {
         for constraint in constraints {
             if ((groups.isEmpty || groups.contains(.default)) && constraint.groups.isEmpty) ||
-                !groups.isDisjoint(with: constraint.groups)
-            {
+                !groups.isDisjoint(with: constraint.groups) {
                 try constraint.validator.validate(value, against: constraint)
             }
         }
