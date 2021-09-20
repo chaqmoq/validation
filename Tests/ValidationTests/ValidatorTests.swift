@@ -60,20 +60,102 @@ final class ValidatorTests: XCTestCase {
             "firstName": "",
             "lastName": ""
         ]
-        let constraints: [String: [ConstraintType]] = [
-            "firstName": [.notBlank(), .length(min: 2)],
-            "lastName": [.notBlank(), .length(min: 2)],
+        let min: UInt = 2
+        let constraintTypes: [String: [ConstraintType]] = [
+            "firstName": [.notBlank(), .length(min: min)],
+            "lastName": [.notBlank(), .length(min: min)],
             "age": [.notBlank(), .integer(min: 16)]
         ]
 
         // Act
-        let constraintViolations = validator.validate(dictionary, against: constraints)
+        var constraintViolations = validator.validate(dictionary, against: constraintTypes)
+
+        // Assert
+        XCTAssertEqual(constraintViolations.count, 2)
+        XCTAssertEqual(constraintViolations["firstName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["firstName"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(
+            constraintViolations["firstName"]?.last?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
+        XCTAssertEqual(constraintViolations["lastName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["lastName"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(
+            constraintViolations["lastName"]?.last?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
+
+        // Act
+        constraintViolations = validator.validate(dictionary, against: constraintTypes, with: [.strict])
 
         // Assert
         XCTAssertEqual(constraintViolations.count, 3)
         XCTAssertEqual(constraintViolations["firstName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["firstName"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(
+            constraintViolations["firstName"]?.last?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
         XCTAssertEqual(constraintViolations["lastName"]?.count, 2)
+        XCTAssertEqual(constraintViolations["lastName"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(
+            constraintViolations["lastName"]?.last?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
         XCTAssertEqual(constraintViolations["age"]?.count, 2)
+        XCTAssertEqual(constraintViolations["age"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(constraintViolations["age"]?.last?.message, "The value must be an integer.")
+    }
+
+    func testDictionaryAgainstConstraintTypesOnGroupSequence() {
+        // Arrange
+        let dictionary: [String: Any?] = [
+            "email": "s",
+            "password": ""
+        ]
+        let min: UInt = 2
+        let constraintTypes: [String: [ConstraintType]] = [
+            "email": [.notBlank(groups: ["first"]), .length(min: min, groups: ["first"]), .email(groups: ["second"])],
+            "username": [.notBlank(groups: ["first"])],
+            "password": [.notBlank(groups: ["first"]), .length(min: min, groups: ["second"])]
+        ]
+
+        // Act
+        var constraintViolations = validator.validate(
+            dictionary,
+            against: constraintTypes,
+            on: GroupSequence(["first", "second"]),
+            with: [.strict]
+        )
+
+        // Assert
+        XCTAssertEqual(constraintViolations.count, 3)
+        XCTAssertEqual(constraintViolations["email"]?.count, 1)
+        XCTAssertEqual(
+            constraintViolations["email"]?.first?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
+        XCTAssertEqual(constraintViolations["username"]?.count, 1)
+        XCTAssertEqual(constraintViolations["username"]?.first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(constraintViolations["password"]?.count, 1)
+        XCTAssertEqual(constraintViolations["password"]?.first?.message, NotBlankConstraint.message)
+
+        // Act
+        constraintViolations = validator.validate(
+            dictionary,
+            against: constraintTypes,
+            on: GroupSequence(["second", "first"])
+        )
+
+        // Assert
+        XCTAssertEqual(constraintViolations.count, 2)
+        XCTAssertEqual(constraintViolations["email"]?.count, 1)
+        XCTAssertEqual(constraintViolations["email"]?.first?.message, EmailConstraint.message)
+        XCTAssertEqual(constraintViolations["password"]?.count, 1)
+        XCTAssertEqual(
+            constraintViolations["password"]?.first?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
     }
 
     func testEncodableDataAgainstConstraintTypes() {
@@ -85,23 +167,36 @@ final class ValidatorTests: XCTestCase {
         }
 
         let encodable = User(firstName: "S", lastName: "K", age: 15)
-        let constraints: [String: [ConstraintType]] = [
-            "firstName": [.notBlank(), .length(min: 2)],
-            "lastName": [.notBlank(), .length(min: 2)],
+        let min: UInt = 2
+        let constraintTypes: [String: [ConstraintType]] = [
+            "firstName": [.notBlank(), .length(min: min)],
+            "lastName": [.notBlank(), .length(min: min)],
             "age": [.notBlank(), .integer(min: 16)]
         ]
 
         // Act
-        let constraintViolations = try! validator.validate(encodable, against: constraints)
+        let constraintViolations = try! validator.validate(encodable, against: constraintTypes)
 
         // Assert
         XCTAssertEqual(constraintViolations.count, 3)
         XCTAssertEqual(constraintViolations["firstName"]?.count, 1)
+        XCTAssertEqual(
+            constraintViolations["firstName"]?.first?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
         XCTAssertEqual(constraintViolations["lastName"]?.count, 1)
+        XCTAssertEqual(
+            constraintViolations["lastName"]?.first?.message,
+            String(format: LengthConstraint.minMessage, min)
+        )
         XCTAssertEqual(constraintViolations["age"]?.count, 1)
+        XCTAssertEqual(
+            constraintViolations["age"]?.first?.message,
+            String(format: IntegerConstraint.minMessage, 16)
+        )
     }
 
-    func testEncodableAndDictionaryAgainstConstraintTypesOnGroupSequence() {
+    func testEncodableDataAgainstConstraintTypesOnGroupSequence() {
         // Arrange
         struct User: Encodable {
             var email: String
@@ -110,12 +205,8 @@ final class ValidatorTests: XCTestCase {
         }
 
         let encodable = User(email: "", username: "", password: "")
-        let dictionary: [String: Any?] = [
-            "email": "s",
-            "password": ""
-        ]
         let min: UInt = 2
-        let constraints: [String: [ConstraintType]] = [
+        let constraintTypes: [String: [ConstraintType]] = [
             "email": [.notBlank(groups: ["first"]), .length(min: min, groups: ["first"]), .email(groups: ["second"])],
             "username": [.notBlank(groups: ["first"])],
             "password": [.notBlank(groups: ["first"]), .length(min: min, groups: ["second"])]
@@ -124,7 +215,7 @@ final class ValidatorTests: XCTestCase {
         // Act
         var constraintViolations = try! validator.validate(
             encodable,
-            against: constraints,
+            against: constraintTypes,
             on: GroupSequence(["first", "second"])
         )
 
@@ -144,44 +235,9 @@ final class ValidatorTests: XCTestCase {
         // Act
         constraintViolations = try! validator.validate(
             encodable,
-            against: constraints,
-            on: GroupSequence(["second", "first"])
-        )
-
-        // Assert
-        XCTAssertEqual(constraintViolations.count, 2)
-        XCTAssertEqual(constraintViolations["email"]?.count, 1)
-        XCTAssertEqual(constraintViolations["email"]?.first?.message, EmailConstraint.message)
-        XCTAssertEqual(constraintViolations["password"]?.count, 1)
-        XCTAssertEqual(
-            constraintViolations["password"]?.first?.message,
-            String(format: LengthConstraint.minMessage, min)
-        )
-
-        // Act
-        constraintViolations = validator.validate(
-            dictionary,
-            against: constraints,
-            on: GroupSequence(["first", "second"])
-        )
-
-        // Assert
-        XCTAssertEqual(constraintViolations.count, 3)
-        XCTAssertEqual(constraintViolations["email"]?.count, 1)
-        XCTAssertEqual(
-            constraintViolations["email"]?.first?.message,
-            String(format: LengthConstraint.minMessage, min)
-        )
-        XCTAssertEqual(constraintViolations["username"]?.count, 1)
-        XCTAssertEqual(constraintViolations["username"]?.first?.message, NotBlankConstraint.message)
-        XCTAssertEqual(constraintViolations["password"]?.count, 1)
-        XCTAssertEqual(constraintViolations["password"]?.first?.message, NotBlankConstraint.message)
-
-        // Act
-        constraintViolations = validator.validate(
-            dictionary,
-            against: constraints,
-            on: GroupSequence(["second", "first"])
+            against: constraintTypes,
+            on: GroupSequence(["second", "first"]),
+            with: [.strict]
         )
 
         // Assert
