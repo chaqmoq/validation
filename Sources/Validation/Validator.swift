@@ -1,14 +1,14 @@
-/// A default `Validator` class to validate a value against multiple types of `Constraint`s on `Group`s.
+/// Validates values against an array of `Constraint`s on a set of `Group`s or `GroupSequence` with `Validator.Options`.
 open class Validator {
     /// Initializes a new instance.
     public init() {}
 
-    /// Validates a value against an array of `Constraint`s on `Group`s.
+    /// Validates a value against an array of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: An array of `Constraint`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
         _ value: Any?,
@@ -23,12 +23,12 @@ open class Validator {
         }
     }
 
-    /// Validates a value against a variadic list of `Constraint`s on `Group`s.
+    /// Validates a value against a variadic list of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
         _ value: Any?,
@@ -38,12 +38,12 @@ open class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a value against an array of `ConstraintType`s on `Group`s.
+    /// Validates a value against an array of `ConstraintType`s on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - value: A value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
-    ///   - groups: Validation groups to run validation on a value. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
         _ value: Any?,
@@ -54,13 +54,13 @@ open class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on `Group`s.
+    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - dictionary: A dictionary of keys and values to be validated.
     ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
-    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ dictionary: [String: Any?],
@@ -93,13 +93,13 @@ open class Validator {
         return constraintViolations
     }
 
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `ConstraintType`s as values on `Group`s.
+    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `ConstraintType`s as values on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - dictionary: A dictionary of keys and values to be validated.
     ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ dictionary: [String: Any?],
@@ -117,7 +117,7 @@ open class Validator {
     ///   - dictionary: A dictionary of keys and values to be validated.
     ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
     ///   - groupSequence: A list of groups.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ dictionary: [String: Any?],
@@ -160,7 +160,7 @@ open class Validator {
     ///   - dictionary: A dictionary of keys and values to be validated.
     ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
     ///   - groupSequence: A list of groups.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ dictionary: [String: Any?],
@@ -172,13 +172,13 @@ open class Validator {
         return validate(dictionary, against: constraints, on: groupSequence, with: options)
     }
 
-    /// Validates an `Encodable` value against a dictionary of keys and an array of `Constraint`s as values on `Group`s.
+    /// Validates an `Encodable` value against a dictionary of keys and an array of `Constraint`s as values on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - encodable: An `Encodable` value to be validated.
     ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
-    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
@@ -191,13 +191,13 @@ open class Validator {
         return validate(dictionary, against: constraints, on: groups, with: options)
     }
 
-    /// Validates an `Encodable` value against a dictionary of keys and an array of `ConstraintType`s as values on `Group`s.
+    /// Validates an `Encodable` value against a dictionary of keys and an array of `ConstraintType`s as values on a set of `Group`s.
     ///
     /// - Parameters:
     ///   - encodable: An `Encodable` value to be validated.
     ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groups: Validation groups to run validation on values. Defaults to an empty set.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
@@ -216,7 +216,7 @@ open class Validator {
     ///   - encodable: An `Encodable` value to be validated.
     ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
     ///   - groupSequence: A list of groups.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
@@ -235,7 +235,7 @@ open class Validator {
     ///   - encodable: An `Encodable` value to be validated.
     ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
     ///   - groupSequence: A list of groups.
-    ///   - options: A list of options. Defaults to an empty array.
+    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
