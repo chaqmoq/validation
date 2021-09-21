@@ -1,9 +1,9 @@
-/// A validation group is used to group constraints and apply validation based on validation groups provided by `Validator`.
+/// Groups constraints and `Validator` runs validations based on them.
 public struct Group: ExpressibleByStringLiteral, Hashable {
-    /// A default validation group.
+    /// The default `Group`.
     public static let `default`: Group = "default"
 
-    /// A name of a validation group.
+    /// The name of `Group`.
     public let name: String
 
     /// See `ExpressibleByStringLiteral`.
@@ -11,9 +11,9 @@ public struct Group: ExpressibleByStringLiteral, Hashable {
         self.name = name
     }
 
-    /// Initializes a new instance of `Group`.
+    /// Initializes a new instance.
     ///
-    /// - Parameter name: A name of `Group`.
+    /// - Parameter name: The name of `Group`.
     public init(_ name: String) {
         self.name = name
     }
