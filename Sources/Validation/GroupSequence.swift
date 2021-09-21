@@ -1,18 +1,18 @@
-/// Enables to validate values against constraints on groups step by step and raise constraint violations for one group at a time.
+/// Validates values against constraints on `Group`s step by step and raises constraint violations for one `Group` at a time.
 public struct GroupSequence: ExpressibleByArrayLiteral {
-    /// A list of groups to run validation on.
+    /// An array of `Group`'s.
     public let groups: [Group]
 
-    /// Initializes a new instance with a list of groups.
+    /// Initializes a new instance with an array of `Group`s.
     ///
-    /// - Parameter groups: A list of groups.
-    public init(_ groups: [Group] = .init()) {
+    /// - Parameter groups: An array of `Group`s.
+    public init(_ groups: [Group]) {
         self.groups = groups.unique
     }
 
-    /// Initializes a new instance with a list of group names.
+    /// Initializes a new instance with an array of `Group` names.
     ///
-    /// - Parameter groupNames: A list of group names.
+    /// - Parameter groupNames: An array of `Group` names.
     public init(_ groupNames: [String]) {
         self.init(groupNames.map { Group($0) })
     }
