@@ -12,11 +12,11 @@ public struct EmailConstraint: Constraint {
     /// A validator named `EmailValidator` to validate a value.
     public let validator: ConstraintValidator = EmailValidator()
 
-    /// Initializes a new instance with a custom error message and validation groups to group by.
+    /// Initializes a new instance with a custom error message and a set of validation groups to group by.
     ///
     /// - Parameters:
     ///   - message: A custom error message. Defaults to the default error message.
-    ///   - groups: Validation groups to group by. Defaults to an empty set.
+    ///   - groups: A set of validation groups to group by. Defaults to an empty set.
     public init(_ message: String = message, groups: Set<Group> = .init()) {
         self.message = message
         self.groups = groups
