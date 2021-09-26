@@ -39,4 +39,26 @@ final class FunctionTests: XCTestCase {
         XCTAssertEqual(primitive(bool), String(bool))
         XCTAssertNil(primitive(array))
     }
+
+    func testAssertPrimitive()  {
+        XCTAssertNoThrow(try assertPrimitive(nilValue))
+        XCTAssertNoThrow(try assertPrimitive(string))
+        XCTAssertNoThrow(try assertPrimitive(character))
+        XCTAssertNoThrow(try assertPrimitive(int))
+        XCTAssertNoThrow(try assertPrimitive(int8))
+        XCTAssertNoThrow(try assertPrimitive(int16))
+        XCTAssertNoThrow(try assertPrimitive(int32))
+        XCTAssertNoThrow(try assertPrimitive(int64))
+        XCTAssertNoThrow(try assertPrimitive(uint))
+        XCTAssertNoThrow(try assertPrimitive(uint8))
+        XCTAssertNoThrow(try assertPrimitive(uint16))
+        XCTAssertNoThrow(try assertPrimitive(uint32))
+        XCTAssertNoThrow(try assertPrimitive(uint64))
+        XCTAssertNoThrow(try assertPrimitive(float))
+        XCTAssertNoThrow(try assertPrimitive(double))
+        XCTAssertNoThrow(try assertPrimitive(bool))
+        XCTAssertThrowsError(try assertPrimitive(array)) { error in
+            XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
+        }
+    }
 }

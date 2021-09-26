@@ -35,3 +35,13 @@ public func primitive(_ value: Any?) -> String? {
 
     return nil
 }
+
+@discardableResult
+public func assertPrimitive(_ value: Any?) throws -> String {
+    guard let value = primitive(value) else {
+        let message = Validator.Error.Message.primitiveValue.text
+        throw Validator.Error.invalidArgument(message)
+    }
+
+    return value
+}
