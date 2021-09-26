@@ -1,14 +1,10 @@
 struct OrValidator: ConstraintValidator {
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: OrConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? OrConstraint else {
-            let message = "The constraint must be of \(String(describing: OrConstraint.self)) type."
-            throw Validator.Error.invalidArgument(message)
-        }
-
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let constraint = try assertConstraintType(OrConstraint.self, for: constraint)
         var isValid = constraint.constraints.isEmpty
         var firstError: Error?
 

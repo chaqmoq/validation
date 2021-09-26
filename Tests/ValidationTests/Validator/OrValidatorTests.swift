@@ -50,7 +50,7 @@ final class OrValidatorTests: XCTestCase {
                 against: OrConstraint([IntegerConstraint(), LengthConstraint(min: 1, max: 2)])
             )
         ) { error in
-            XCTAssertTrue(error is ConstraintViolation)
+            XCTAssertTrue(error is Validator.Error)
         }
     }
 

@@ -61,7 +61,7 @@ try validator.validate(password, against: [.notBlank(), .length(min: 6, max: 16)
 
 // A custom validator
 struct CustomValidator: ConstraintValidator {
-    func validate(_ value: Any?, against constraints: [Constraint]) throws {
+    func validate(_ value: Encodable?, against constraints: [Constraint]) throws {
         // A validation logic here.
     }
 }

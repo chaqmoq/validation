@@ -6,18 +6,14 @@ struct IPValidator: ConstraintValidator {
     ([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$
     """
 
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: IPConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? IPConstraint else {
-            let message = "The constraint must be of \(String(describing: IPConstraint.self)) type."
-            throw Validator.Error.invalidArgument(message)
-        }
-
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let value = try assertPrimitive(value)
+        let constraint = try assertConstraintType(IPConstraint.self, for: constraint)
         let regex = try NSRegularExpression(pattern: IPValidator.pattern)
-        let value = "\(value ?? "")"
         let range = NSRange(location: 0, length: value.utf8.count)
         if regex.firstMatch(in: value, range: range) == nil { throw ConstraintViolation(constraint.message) }
     }

@@ -1,17 +1,13 @@
 import Foundation
 
 struct URLValidator: ConstraintValidator {
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: URLConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? URLConstraint else {
-            let message = "The constraint must be of \(String(describing: URLConstraint.self)) type."
-            throw Validator.Error.invalidArgument(message)
-        }
-
-        let value = "\(value ?? "")"
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let value = try assertPrimitive(value)
+        let constraint = try assertConstraintType(URLConstraint.self, for: constraint)
 
         if let url = URL(string: value) {
             if constraint.isFileURL {

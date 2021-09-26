@@ -1,17 +1,17 @@
-/// Validates values against an array of `Constraint`s on a set of `Group`s or `GroupSequence` with `Validator.Options`.
+/// Validates values against `Constraint`s on `Group`s or `GroupSequence` with `Validator.Options`.
 open class Validator {
     /// Initializes a new instance.
     public init() {}
 
-    /// Validates a value against an array of `Constraint`s on a set of `Group`s.
+    /// Validates a single primitive `Encodable` value against an array of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A value to be validated.
+    ///   - value: A single primitive `Encodable` value to be validated.
     ///   - constraints: An array of `Constraint`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
-        _ value: Any?,
+        _ value: Encodable?,
         against constraints: [Constraint],
         on groups: Set<Group> = .init()
     ) throws {
@@ -23,30 +23,30 @@ open class Validator {
         }
     }
 
-    /// Validates a value against a variadic list of `Constraint`s on a set of `Group`s.
+    /// Validates a single primitive `Encodable` value against a variadic list of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A value to be validated.
+    ///   - value: A single primitive `Encodable` value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
-        _ value: Any?,
+        _ value: Encodable?,
         against constraints: Constraint...,
         on groups: Set<Group> = .init()
     ) throws {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a value against an array of `ConstraintType`s on a set of `Group`s.
+    /// Validates a single primitive `Encodable` value against an array of `ConstraintType`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A value to be validated.
+    ///   - value: A single primitive `Encodable` value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     /// - Throws: A `ConstraintViolation` error.
     public func validate(
-        _ value: Any?,
+        _ value: Encodable?,
         against constraintTypes: [ConstraintType],
         on groups: Set<Group> = .init()
     ) throws {
@@ -54,29 +54,31 @@ open class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on a set of `Group`s.
+    /// Validates a complex `Encodable` value against a `ConstraintCollection` on a set of `Group`s with a list of `Validator.Options`.
     ///
     /// - Parameters:
-    ///   - dictionary: A dictionary of keys and values to be validated.
-    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - value: A complex `Encodable` value to be validated.
+    ///   - constraintCollection: A dictionary of keys and an array of `Constraint`s as values.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
+    /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
-        _ dictionary: [String: Any?],
-        against constraints: [String: [Constraint]],
+        _ value: Encodable,
+        against constraintCollection: ConstraintCollection,
         on groups: Set<Group> = .init(),
         with options: Options = .init()
-    ) -> [String: [ConstraintViolation]] {
+    ) throws -> [String: [ConstraintViolation]] {
+        guard let dictionary = try value.asDictionary() else { return .init() }
         var constraintViolations: [String: [ConstraintViolation]] = .init()
 
-        for (key, keyConstraints) in constraints {
+        for (key, constraints) in constraintCollection {
             if options.contains(.strict) || dictionary.contains(where: { $0.key == key }) {
-                let value = dictionary[key] ?? ""
+                let value = primitive(dictionary[key] ?? nil)
 
-                for keyConstraint in keyConstraints {
+                for constraint in constraints {
                     do {
-                        try validate(value, against: [keyConstraint], on: groups)
+                        try validate(value, against: [constraint], on: groups)
                     } catch {
                         let constraintViolation = error as! ConstraintViolation
 
@@ -93,48 +95,32 @@ open class Validator {
         return constraintViolations
     }
 
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `ConstraintType`s as values on a set of `Group`s.
+    /// Validates a complex `Encodable` value against a `ConstraintCollection` on a `GroupSequence` with a list of `Validator.Options`.
     ///
     /// - Parameters:
-    ///   - dictionary: A dictionary of keys and values to be validated.
-    ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ dictionary: [String: Any?],
-        against constraintTypes: [String: [ConstraintType]],
-        on groups: Set<Group> = .init(),
-        with options: Options = .init()
-    ) -> [String: [ConstraintViolation]] {
-        let constraints = constraintTypes.mapValues { $0.map { $0.constraint }}
-        return validate(dictionary, against: constraints, on: groups, with: options)
-    }
-
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on `GroupSequence`.
-    ///
-    /// - Parameters:
-    ///   - dictionary: A dictionary of keys and values to be validated.
-    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - value: A complex `Encodable` value to be validated.
+    ///   - constraintCollection: A dictionary of keys and an array of `Constraint`s as values.
     ///   - groupSequence: A list of groups.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
+    /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
-        _ dictionary: [String: Any?],
-        against constraints: [String: [Constraint]],
+        _ value: Encodable,
+        against constraintCollection: ConstraintCollection,
         on groupSequence: GroupSequence,
         with options: Options = .init()
-    ) -> [String: [ConstraintViolation]] {
+    ) throws -> [String: [ConstraintViolation]] {
+        guard let dictionary = try value.asDictionary() else { return .init() }
         var constraintViolations: [String: [ConstraintViolation]] = .init()
 
         for group in groupSequence.groups {
-            for (key, keyConstraints) in constraints {
+            for (key, constraints) in constraintCollection {
                 if options.contains(.strict) || dictionary.contains(where: { $0.key == key }) {
-                    let value = dictionary[key] ?? ""
+                    let value = primitive(dictionary[key] ?? nil)
 
-                    for keyConstraint in keyConstraints {
+                    for constraint in constraints {
                         do {
-                            try validate(value, against: [keyConstraint], on: [group])
+                            try validate(value, against: [constraint], on: [group])
                         } catch {
                             let constraintViolation = error as! ConstraintViolation
 
@@ -152,99 +138,5 @@ open class Validator {
         }
 
         return constraintViolations
-    }
-
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `ConstraintType`s as values on `GroupSequence`.
-    ///
-    /// - Parameters:
-    ///   - dictionary: A dictionary of keys and values to be validated.
-    ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groupSequence: A list of groups.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ dictionary: [String: Any?],
-        against constraintTypes: [String: [ConstraintType]],
-        on groupSequence: GroupSequence,
-        with options: Options = .init()
-    ) -> [String: [ConstraintViolation]] {
-        let constraints = constraintTypes.mapValues { $0.map { $0.constraint }}
-        return validate(dictionary, against: constraints, on: groupSequence, with: options)
-    }
-
-    /// Validates an `Encodable` value against a dictionary of keys and an array of `Constraint`s as values on a set of `Group`s.
-    ///
-    /// - Parameters:
-    ///   - encodable: An `Encodable` value to be validated.
-    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ encodable: Encodable,
-        against constraints: [String: [Constraint]],
-        on groups: Set<Group> = .init(),
-        with options: Options = .init()
-    ) throws -> [String: [ConstraintViolation]] {
-        guard let dictionary = try encodable.asDictionary() else { return .init() }
-        return validate(dictionary, against: constraints, on: groups, with: options)
-    }
-
-    /// Validates an `Encodable` value against a dictionary of keys and an array of `ConstraintType`s as values on a set of `Group`s.
-    ///
-    /// - Parameters:
-    ///   - encodable: An `Encodable` value to be validated.
-    ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ encodable: Encodable,
-        against constraintTypes: [String: [ConstraintType]],
-        on groups: Set<Group> = .init(),
-        with options: Options = .init()
-    ) throws -> [String: [ConstraintViolation]] {
-        let constraints = constraintTypes.mapValues { $0.map { $0.constraint }}
-        return try validate(encodable, against: constraints, on: groups, with: options)
-    }
-
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `Constraint`s as values on `GroupSequence`.
-    ///
-    /// - Parameters:
-    ///   - encodable: An `Encodable` value to be validated.
-    ///   - constraints: A dictionary of keys and an array of `Constraint`s as values.
-    ///   - groupSequence: A list of groups.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ encodable: Encodable,
-        against constraints: [String: [Constraint]],
-        on groupSequence: GroupSequence,
-        with options: Options = .init()
-    ) throws -> [String: [ConstraintViolation]] {
-        guard let dictionary = try encodable.asDictionary() else { return .init() }
-        return validate(dictionary, against: constraints, on: groupSequence, with: options)
-    }
-
-    /// Validates a dictionary of keys and values against a dictionary of keys and an array of `ConstraintType`s as values on `GroupSequence`.
-    ///
-    /// - Parameters:
-    ///   - encodable: An `Encodable` value to be validated.
-    ///   - constraintTypes: A dictionary of keys and an array of `ConstraintType`s as values.
-    ///   - groupSequence: A list of groups.
-    ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
-    public func validate(
-        _ encodable: Encodable,
-        against constraintTypes: [String: [ConstraintType]],
-        on groupSequence: GroupSequence,
-        with options: Options = .init()
-    ) throws -> [String: [ConstraintViolation]] {
-        let constraints = constraintTypes.mapValues { $0.map { $0.constraint }}
-        return try validate(encodable, against: constraints, on: groupSequence, with: options)
     }
 }

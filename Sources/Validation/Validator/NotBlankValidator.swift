@@ -1,15 +1,11 @@
 struct NotBlankValidator: ConstraintValidator {
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: NotBlankConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? NotBlankConstraint else {
-            let message = "The constraint must be of \(String(describing: NotBlankConstraint.self)) type."
-            throw Validator.Error.invalidArgument(message)
-        }
-
-        let value = "\(value ?? "")"
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let value = try assertPrimitive(value)
+        let constraint = try assertConstraintType(NotBlankConstraint.self, for: constraint)
         if value.isEmpty { throw ConstraintViolation(constraint.message) }
     }
 }

@@ -1,29 +1,24 @@
 struct IntegerValidator: ConstraintValidator {
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: IntegerConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? IntegerConstraint else {
-            let message = "The constraint must be of \(String(describing: IntegerConstraint.self)) type."
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let value = try assertPrimitive(value)
+        guard let intValue = Int(value) else {
+            let message = Validator.Error.Message.integerType.text
+            throw Validator.Error.invalidArgument(message)
+        }
+        let constraint = try assertConstraintType(IntegerConstraint.self, for: constraint)
+
+        if constraint.min > constraint.max {
+            let message = Validator.Error.Message.integerRange(constraint.min, constraint.max).text
             throw Validator.Error.invalidArgument(message)
         }
 
-        if constraint.min > constraint.max {
-            let message = """
-            The minimum value of \(constraint.min) must be less than or equal to maximum value of \(constraint.max).
-            """
-            throw ConstraintViolation(message)
-        }
-
-        let value = "\(value ?? "")"
-        guard let intValue = Int(value) else { throw ConstraintViolation("The value must be an integer.") }
-
         if constraint.min == constraint.max, intValue != constraint.min {
             throw ConstraintViolation(constraint.exactMessage)
-        }
-
-        if intValue < constraint.min {
+        } else if intValue < constraint.min {
             throw ConstraintViolation(constraint.minMessage)
         } else if intValue > constraint.max {
             throw ConstraintViolation(constraint.maxMessage)

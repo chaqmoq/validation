@@ -1,17 +1,13 @@
 import Foundation
 
 struct RegexValidator: ConstraintValidator {
-    func validate(_ value: Any?) throws {
+    func validate(_ value: Encodable?) throws {
         try validate(value, against: RegexConstraint())
     }
 
-    func validate(_ value: Any?, against constraint: Constraint) throws {
-        guard let constraint = constraint as? RegexConstraint else {
-            let message = "The constraint must be of \(String(describing: RegexConstraint.self)) type."
-            throw Validator.Error.invalidArgument(message)
-        }
-
-        let value = "\(value ?? "")"
+    func validate(_ value: Encodable?, against constraint: Constraint) throws {
+        let value = try assertPrimitive(value)
+        let constraint = try assertConstraintType(RegexConstraint.self, for: constraint)
         if (try? NSRegularExpression(pattern: value)) == nil { throw ConstraintViolation(constraint.message) }
     }
 }
