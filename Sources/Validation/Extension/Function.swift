@@ -45,3 +45,13 @@ public func assertPrimitive(_ value: Any?) throws -> String {
 
     return value
 }
+
+@discardableResult
+public func assertConstraintType<T: Constraint>(_ type: T.Type, for constraint: Constraint) throws -> T {
+    guard let constraint = constraint as? T else {
+        let message = Validator.Error.Message.constraintType(type).text
+        throw Validator.Error.invalidArgument(message)
+    }
+
+    return constraint
+}

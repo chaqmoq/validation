@@ -61,4 +61,14 @@ final class FunctionTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
         }
     }
+
+    func testAssertConstraintType() {
+        XCTAssertNoThrow(try assertConstraintType(NotBlankConstraint.self, for: NotBlankConstraint()))
+        XCTAssertThrowsError(try assertConstraintType(NotBlankConstraint.self, for: EmailConstraint())) { error in
+            XCTAssertEqual(
+                error.localizedDescription,
+                Validator.Error.Message.constraintType(NotBlankConstraint.self).text
+            )
+        }
+    }
 }
