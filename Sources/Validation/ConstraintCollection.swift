@@ -1,17 +1,10 @@
-public struct ConstraintCollection: ExpressibleByDictionaryLiteral {
-    public typealias Key = String
-    public typealias Value = [Constraint]
-    public typealias DictionaryType = [Key: Value]
+public struct ConstraintCollection {
+    public typealias DictionaryType = [String: [Constraint]]
 
     private var constraintCollection: DictionaryType
 
     public init() {
         constraintCollection = .init()
-    }
-
-    public init(dictionaryLiteral elements: (String, [Constraint])...) {
-        self.init()
-        for element in elements { self[element.0] = element.1 }
     }
 }
 
