@@ -1,6 +1,6 @@
 extension String {
     subscript(index: Int) -> Character {
-        return self[self.index(startIndex, offsetBy: index)]
+        self[self.index(startIndex, offsetBy: index)]
     }
 
     func firstIntIndex(of character: Character) -> Int? {
