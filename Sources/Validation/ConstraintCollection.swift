@@ -6,6 +6,10 @@ public struct ConstraintCollection {
     public init() {
         constraintCollection = .init()
     }
+
+    public init(_ constraintCollection: DictionaryType) {
+        self.constraintCollection = constraintCollection
+    }
 }
 
 extension ConstraintCollection {
