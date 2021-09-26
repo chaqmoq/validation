@@ -17,3 +17,25 @@ extension Validator {
         }
     }
 }
+
+extension Validator.Error {
+    enum Message {
+        case constraintType(Constraint.Type)
+        case integerRange(Int, Int)
+        case integerType
+        case lengthRange(UInt, UInt)
+        case primitiveValue
+
+        var text: String {
+            switch self {
+            case .constraintType(let type): return "The constraint must be of \(String(describing: type)) type."
+            case .integerRange(let min, let max):
+                return "The minimum value of \(min) must be less than or equal to maximum value of \(max)."
+            case .integerType: return "The value must be an integer."
+            case .lengthRange(let min, let max):
+                return "The minimum value of \(min) must be less than or equal to maximum value of \(max)."
+            case .primitiveValue: return "The value must be of primitive type."
+            }
+        }
+    }
+}
