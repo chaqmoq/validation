@@ -54,15 +54,16 @@ open class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a complex `Encodable` value against a `ConstraintCollection` on a set of `Group`s with a list of `Validator.Options`.
+    /// Validates a complex `Encodable` value against a `DictionaryCollection<String, Constraint>` on a set of `Group`s with a list of
+    /// `Validator.Options`.
     ///
     /// - Parameters:
     ///   - value: A complex `Encodable` value to be validated.
-    ///   - constraintCollection: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - constraintCollection: A `DictionaryCollection<String, Constraint>`.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
+    /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
         _ value: Encodable,
         against constraintCollection: DictionaryCollection<String, Constraint>,
@@ -70,7 +71,7 @@ open class Validator {
         with options: Options = .init()
     ) throws -> DictionaryCollection<String, ConstraintViolation> {
         guard let dictionary = try value.asDictionary() else { return .init() }
-        var constraintViolations = DictionaryCollection<String, ConstraintViolation>()
+        var constraintViolationCollection = DictionaryCollection<String, ConstraintViolation>()
 
         for (key, constraints) in constraintCollection {
             if options.contains(.strict) || dictionary.contains(where: { $0.key == key }) {
@@ -81,24 +82,25 @@ open class Validator {
                         try validate(value, against: [constraint], on: groups)
                     } catch {
                         let constraintViolation = error as! ConstraintViolation
-                        constraintViolations[key].append(constraintViolation)
+                        constraintViolationCollection[key].append(constraintViolation)
                     }
                 }
             }
         }
 
-        return constraintViolations
+        return constraintViolationCollection
     }
 
-    /// Validates a complex `Encodable` value against a `ConstraintCollection` on a `GroupSequence` with a list of `Validator.Options`.
+    /// Validates a complex `Encodable` value against a `DictionaryCollection<String, Constraint>` on a `GroupSequence` with a list of
+    /// `Validator.Options`.
     ///
     /// - Parameters:
     ///   - value: A complex `Encodable` value to be validated.
-    ///   - constraintCollection: A dictionary of keys and an array of `Constraint`s as values.
+    ///   - constraintCollection: A `DictionaryCollection<String, Constraint>`.
     ///   - groupSequence: A list of groups.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: An error if it can't decode the encoded value.
-    /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
+    /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
         _ value: Encodable,
         against constraintCollection: DictionaryCollection<String, Constraint>,
@@ -106,7 +108,7 @@ open class Validator {
         with options: Options = .init()
     ) throws -> DictionaryCollection<String, ConstraintViolation> {
         guard let dictionary = try value.asDictionary() else { return .init() }
-        var constraintViolations = DictionaryCollection<String, ConstraintViolation>()
+        var constraintViolationCollection = DictionaryCollection<String, ConstraintViolation>()
 
         for group in groupSequence.groups {
             for (key, constraints) in constraintCollection {
@@ -118,15 +120,15 @@ open class Validator {
                             try validate(value, against: [constraint], on: [group])
                         } catch {
                             let constraintViolation = error as! ConstraintViolation
-                            constraintViolations[key].append(constraintViolation)
+                            constraintViolationCollection[key].append(constraintViolation)
                         }
                     }
                 }
             }
 
-            if !constraintViolations.isEmpty { break }
+            if !constraintViolationCollection.isEmpty { break }
         }
 
-        return constraintViolations
+        return constraintViolationCollection
     }
 }

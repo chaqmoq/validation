@@ -70,23 +70,23 @@ final class ValidatorTests: XCTestCase {
         constraintCollection["age"] = [NotBlankConstraint(), IntegerConstraint(min: 16)]
 
         // Act
-        let constraintViolations = try! validator.validate(encodable, against: constraintCollection)
+        let constraintViolationCollection = try! validator.validate(encodable, against: constraintCollection)
 
         // Assert
-        XCTAssertEqual(constraintViolations.count, 3)
-        XCTAssertEqual(constraintViolations["firstName"].count, 1)
+        XCTAssertEqual(constraintViolationCollection.count, 3)
+        XCTAssertEqual(constraintViolationCollection["firstName"].count, 1)
         XCTAssertEqual(
-            constraintViolations["firstName"].first?.message,
+            constraintViolationCollection["firstName"].first?.message,
             String(format: LengthConstraint.minMessage, 2)
         )
-        XCTAssertEqual(constraintViolations["lastName"].count, 1)
+        XCTAssertEqual(constraintViolationCollection["lastName"].count, 1)
         XCTAssertEqual(
-            constraintViolations["lastName"].first?.message,
+            constraintViolationCollection["lastName"].first?.message,
             String(format: LengthConstraint.minMessage, 3)
         )
-        XCTAssertEqual(constraintViolations["age"].count, 1)
+        XCTAssertEqual(constraintViolationCollection["age"].count, 1)
         XCTAssertEqual(
-            constraintViolations["age"].first?.message,
+            constraintViolationCollection["age"].first?.message,
             String(format: IntegerConstraint.minMessage, 16)
         )
     }
@@ -116,27 +116,27 @@ final class ValidatorTests: XCTestCase {
         ]
 
         // Act
-        var constraintViolations = try! validator.validate(
+        var constraintViolationCollection = try! validator.validate(
             encodable,
             against: constraintCollection,
             on: GroupSequence(["first", "second"])
         )
 
         // Assert
-        XCTAssertEqual(constraintViolations.count, 3)
-        XCTAssertEqual(constraintViolations["email"].count, 2)
-        XCTAssertEqual(constraintViolations["email"].first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(constraintViolationCollection.count, 3)
+        XCTAssertEqual(constraintViolationCollection["email"].count, 2)
+        XCTAssertEqual(constraintViolationCollection["email"].first?.message, NotBlankConstraint.message)
         XCTAssertEqual(
-            constraintViolations["email"].last?.message,
+            constraintViolationCollection["email"].last?.message,
             String(format: LengthConstraint.minMessage, 2)
         )
-        XCTAssertEqual(constraintViolations["username"].count, 1)
-        XCTAssertEqual(constraintViolations["username"].first?.message, NotBlankConstraint.message)
-        XCTAssertEqual(constraintViolations["password"].count, 1)
-        XCTAssertEqual(constraintViolations["password"].first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(constraintViolationCollection["username"].count, 1)
+        XCTAssertEqual(constraintViolationCollection["username"].first?.message, NotBlankConstraint.message)
+        XCTAssertEqual(constraintViolationCollection["password"].count, 1)
+        XCTAssertEqual(constraintViolationCollection["password"].first?.message, NotBlankConstraint.message)
 
         // Act
-        constraintViolations = try! validator.validate(
+        constraintViolationCollection = try! validator.validate(
             encodable,
             against: constraintCollection,
             on: GroupSequence(["second", "first"]),
@@ -144,12 +144,12 @@ final class ValidatorTests: XCTestCase {
         )
 
         // Assert
-        XCTAssertEqual(constraintViolations.count, 2)
-        XCTAssertEqual(constraintViolations["email"].count, 1)
-        XCTAssertEqual(constraintViolations["email"].first?.message, EmailConstraint.message)
-        XCTAssertEqual(constraintViolations["password"].count, 1)
+        XCTAssertEqual(constraintViolationCollection.count, 2)
+        XCTAssertEqual(constraintViolationCollection["email"].count, 1)
+        XCTAssertEqual(constraintViolationCollection["email"].first?.message, EmailConstraint.message)
+        XCTAssertEqual(constraintViolationCollection["password"].count, 1)
         XCTAssertEqual(
-            constraintViolations["password"].first?.message,
+            constraintViolationCollection["password"].first?.message,
             String(format: LengthConstraint.minMessage, 16)
         )
     }
