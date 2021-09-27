@@ -1,5 +1,5 @@
-/// Helps to create a custom dictionary of keys and values. E.g. `DictionaryCollection<Constraint>`,
-/// `DictionaryCollection<ConstraintViolation>`, etc.
+/// Helps to create a custom dictionary of keys and values. E.g. `DictionaryCollection<String, Constraint>`,
+/// `DictionaryCollection<String, ConstraintViolation>`, etc.
 public struct DictionaryCollection<T: Hashable, V> {
     /// A typealias for the underlying storage type.
     public typealias DictionaryType = [T: [V]]
@@ -11,9 +11,9 @@ public struct DictionaryCollection<T: Hashable, V> {
         collection = .init()
     }
 
-    /// Initializes a new instance with another `DictionaryCollection<T>`.
+    /// Initializes a new instance with another `DictionaryCollection<T, V>`.
     ///
-    /// - Parameter collection: Another `DictionaryCollection<T>`.
+    /// - Parameter collection: Another `DictionaryCollection<T, V>`.
     public init(_ collection: DictionaryType) {
         self.collection = collection
     }
