@@ -54,11 +54,12 @@ final class ValidatorTests: XCTestCase {
         }
     }
 
-    func testEncodableValueAgainstConstraintCollection() {
+    func testEncodableValueAgainstConstraintCollectionOnGroupsWithOptions() {
         // Arrange
         struct User: Encodable {
             var firstName: String
             var lastName: String
+            var email: String? = nil
             var age: Int
         }
 
@@ -67,10 +68,17 @@ final class ValidatorTests: XCTestCase {
         var constraintCollection = DictionaryCollection<String, Constraint>()
         constraintCollection["firstName"] = [NotBlankConstraint(), LengthConstraint(min: 2)]
         constraintCollection["lastName"] = [NotBlankConstraint(), LengthConstraint(min: 3)]
+        constraintCollection["email"] = [NotBlankConstraint(), EmailConstraint()]
         constraintCollection["age"] = [NotBlankConstraint(), IntegerConstraint(min: 16)]
 
         // Act
-        let constraintViolationCollection = try! validator.validate(encodable, against: constraintCollection)
+        var constraintViolationCollection = try! validator.validate(nil, against: constraintCollection)
+
+        // Assert
+        XCTAssertTrue(constraintViolationCollection.isEmpty)
+
+        // Act
+        constraintViolationCollection = try! validator.validate(encodable, against: constraintCollection)
 
         // Assert
         XCTAssertEqual(constraintViolationCollection.count, 3)
@@ -89,17 +97,51 @@ final class ValidatorTests: XCTestCase {
             constraintViolationCollection["age"].first?.message,
             String(format: IntegerConstraint.minMessage, 16)
         )
+
+        // Act
+        constraintViolationCollection = try! validator.validate(
+            encodable,
+            against: constraintCollection,
+            with: [.strict]
+        )
+
+        // Assert
+        XCTAssertEqual(constraintViolationCollection.count, 4)
+        XCTAssertEqual(constraintViolationCollection["firstName"].count, 1)
+        XCTAssertEqual(
+            constraintViolationCollection["firstName"].first?.message,
+            String(format: LengthConstraint.minMessage, 2)
+        )
+        XCTAssertEqual(constraintViolationCollection["lastName"].count, 1)
+        XCTAssertEqual(
+            constraintViolationCollection["lastName"].first?.message,
+            String(format: LengthConstraint.minMessage, 3)
+        )
+        XCTAssertEqual(constraintViolationCollection["email"].count, 2)
+        XCTAssertEqual(
+            constraintViolationCollection["email"].first?.message,
+            NotBlankConstraint.message
+        )
+        XCTAssertEqual(
+            constraintViolationCollection["email"].last?.message,
+            EmailConstraint.message
+        )
+        XCTAssertEqual(constraintViolationCollection["age"].count, 1)
+        XCTAssertEqual(
+            constraintViolationCollection["age"].first?.message,
+            String(format: IntegerConstraint.minMessage, 16)
+        )
     }
 
-    func testEncodableValueAgainstConstraintCollectionOnGroupSequence() {
+    func testEncodableValueAgainstConstraintCollectionOnGroupSequenceWithOptions() {
         // Arrange
         struct User: Encodable {
             var email: String
-            var username: String
+            var username: String? = nil
             var password: String
         }
 
-        let encodable = User(email: "", username: "", password: "")
+        let encodable = User(email: "", password: "")
 
         var constraintCollection = DictionaryCollection<String, Constraint>()
         constraintCollection["email"] = [
@@ -117,21 +159,39 @@ final class ValidatorTests: XCTestCase {
 
         // Act
         var constraintViolationCollection = try! validator.validate(
+            nil,
+            against: constraintCollection,
+            on: GroupSequence(["first", "second"])
+        )
+
+        // Assert
+        XCTAssertTrue(constraintViolationCollection.isEmpty)
+
+        // Act
+        constraintViolationCollection = try! validator.validate(
+            encodable,
+            against: .init(),
+            on: GroupSequence(["first", "second"])
+        )
+
+        // Assert
+        XCTAssertTrue(constraintViolationCollection.isEmpty)
+
+        // Act
+        constraintViolationCollection = try! validator.validate(
             encodable,
             against: constraintCollection,
             on: GroupSequence(["first", "second"])
         )
 
         // Assert
-        XCTAssertEqual(constraintViolationCollection.count, 3)
+        XCTAssertEqual(constraintViolationCollection.count, 2)
         XCTAssertEqual(constraintViolationCollection["email"].count, 2)
         XCTAssertEqual(constraintViolationCollection["email"].first?.message, NotBlankConstraint.message)
         XCTAssertEqual(
             constraintViolationCollection["email"].last?.message,
             String(format: LengthConstraint.minMessage, 2)
         )
-        XCTAssertEqual(constraintViolationCollection["username"].count, 1)
-        XCTAssertEqual(constraintViolationCollection["username"].first?.message, NotBlankConstraint.message)
         XCTAssertEqual(constraintViolationCollection["password"].count, 1)
         XCTAssertEqual(constraintViolationCollection["password"].first?.message, NotBlankConstraint.message)
 

@@ -62,7 +62,7 @@ open class Validator {
     ///   - constraintCollection: A `DictionaryCollection<String, Constraint>`.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
+    /// - Throws: A `Validator.Error` if it can't decode the encoded value.
     /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
         _ value: Encodable?,
@@ -99,7 +99,7 @@ open class Validator {
     ///   - constraintCollection: A `DictionaryCollection<String, Constraint>`.
     ///   - groupSequence: A list of groups.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
-    /// - Throws: An error if it can't decode the encoded value.
+    /// - Throws: A `Validator.Error` if it can't decode the encoded value.
     /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
         _ value: Encodable?,
