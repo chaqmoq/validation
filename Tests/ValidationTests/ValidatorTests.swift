@@ -64,7 +64,7 @@ final class ValidatorTests: XCTestCase {
 
         let encodable = User(firstName: "S", lastName: "K", age: 15)
 
-        var constraintCollection = DictionaryCollection<Constraint>()
+        var constraintCollection = DictionaryCollection<String, Constraint>()
         constraintCollection["firstName"] = [NotBlankConstraint(), LengthConstraint(min: 2)]
         constraintCollection["lastName"] = [NotBlankConstraint(), LengthConstraint(min: 3)]
         constraintCollection["age"] = [NotBlankConstraint(), IntegerConstraint(min: 16)]
@@ -101,7 +101,7 @@ final class ValidatorTests: XCTestCase {
 
         let encodable = User(email: "", username: "", password: "")
 
-        var constraintCollection = DictionaryCollection<Constraint>()
+        var constraintCollection = DictionaryCollection<String, Constraint>()
         constraintCollection["email"] = [
             NotBlankConstraint(groups: ["first"]),
             LengthConstraint(min: 2, groups: ["first"]),

@@ -65,12 +65,12 @@ open class Validator {
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ value: Encodable,
-        against constraintCollection: DictionaryCollection<Constraint>,
+        against constraintCollection: DictionaryCollection<String, Constraint>,
         on groups: Set<Group> = .init(),
         with options: Options = .init()
-    ) throws -> DictionaryCollection<ConstraintViolation> {
+    ) throws -> DictionaryCollection<String, ConstraintViolation> {
         guard let dictionary = try value.asDictionary() else { return .init() }
-        var constraintViolations = DictionaryCollection<ConstraintViolation>()
+        var constraintViolations = DictionaryCollection<String, ConstraintViolation>()
 
         for (key, constraints) in constraintCollection {
             if options.contains(.strict) || dictionary.contains(where: { $0.key == key }) {
@@ -101,12 +101,12 @@ open class Validator {
     /// - Returns: A dictionary of keys and an array of `ConstraintViolation`s as values.
     public func validate(
         _ value: Encodable,
-        against constraintCollection: DictionaryCollection<Constraint>,
+        against constraintCollection: DictionaryCollection<String, Constraint>,
         on groupSequence: GroupSequence,
         with options: Options = .init()
-    ) throws -> DictionaryCollection<ConstraintViolation> {
+    ) throws -> DictionaryCollection<String, ConstraintViolation> {
         guard let dictionary = try value.asDictionary() else { return .init() }
-        var constraintViolations = DictionaryCollection<ConstraintViolation>()
+        var constraintViolations = DictionaryCollection<String, ConstraintViolation>()
 
         for group in groupSequence.groups {
             for (key, constraints) in constraintCollection {

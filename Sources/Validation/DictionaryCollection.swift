@@ -1,19 +1,30 @@
-public struct DictionaryCollection<T> {
-    public typealias DictionaryType = [String: [T]]
+/// Helps to create a custom dictionary of keys and values. E.g. `DictionaryCollection<Constraint>`,
+/// `DictionaryCollection<ConstraintViolation>`, etc.
+public struct DictionaryCollection<T: Hashable, V> {
+    /// A typealias for the underlying storage type.
+    public typealias DictionaryType = [T: [V]]
 
     private var collection: DictionaryType
 
+    /// Initializes a new instance.
     public init() {
         collection = .init()
     }
 
+    /// Initializes a new instance with another `DictionaryCollection<T>`.
+    ///
+    /// - Parameter collection: Another `DictionaryCollection<T>`.
     public init(_ collection: DictionaryType) {
         self.collection = collection
     }
 }
 
 extension DictionaryCollection {
-    public subscript(key: String) -> [T] {
+    /// Gets or sets an array of `Route`s for a particular HTTP request method.
+    ///
+    /// - Parameter method: An HTTP request method.
+    /// - Returns: An array of `Route`s for a particular HTTP request method.
+    public subscript(key: T) -> [V] {
         get { collection[key] ?? .init() }
         set { collection[key] = newValue }
     }

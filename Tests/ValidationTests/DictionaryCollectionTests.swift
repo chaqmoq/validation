@@ -4,7 +4,7 @@ import XCTest
 final class DictionaryCollectionTests: XCTestCase {
     func testInit() {
         // Act
-        let constraintCollection = DictionaryCollection<Constraint>()
+        let constraintCollection = DictionaryCollection<String, Constraint>()
 
         // Assert
         XCTAssertTrue(constraintCollection.isEmpty)
@@ -12,7 +12,7 @@ final class DictionaryCollectionTests: XCTestCase {
 
     func testSetGet() {
         // Arrange
-        var constraintCollection = DictionaryCollection<Constraint>(
+        var constraintCollection = DictionaryCollection<String, Constraint>(
             [
                 "firstName": [NotBlankConstraint(), LengthConstraint(min: 2)]
             ]
