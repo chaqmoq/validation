@@ -65,12 +65,12 @@ open class Validator {
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
-        _ value: Encodable,
+        _ value: Encodable?,
         against constraintCollection: DictionaryCollection<String, Constraint>,
         on groups: Set<Group> = .init(),
         with options: Options = .init()
     ) throws -> DictionaryCollection<String, ConstraintViolation> {
-        guard let dictionary = try value.asDictionary() else { return .init() }
+        guard let dictionary = try value?.asDictionary() else { return .init() }
         var constraintViolationCollection = DictionaryCollection<String, ConstraintViolation>()
 
         for (key, constraints) in constraintCollection {
@@ -102,12 +102,12 @@ open class Validator {
     /// - Throws: An error if it can't decode the encoded value.
     /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
     public func validate(
-        _ value: Encodable,
+        _ value: Encodable?,
         against constraintCollection: DictionaryCollection<String, Constraint>,
         on groupSequence: GroupSequence,
         with options: Options = .init()
     ) throws -> DictionaryCollection<String, ConstraintViolation> {
-        guard let dictionary = try value.asDictionary() else { return .init() }
+        guard let dictionary = try value?.asDictionary() else { return .init() }
         var constraintViolationCollection = DictionaryCollection<String, ConstraintViolation>()
 
         for group in groupSequence.groups {
