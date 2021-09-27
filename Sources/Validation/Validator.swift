@@ -3,13 +3,14 @@ open class Validator {
     /// Initializes a new instance.
     public init() {}
 
-    /// Validates a single primitive `Encodable` value against an array of `Constraint`s on a set of `Group`s.
+    /// Validates a primitive `Encodable` value against an array of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A single primitive `Encodable` value to be validated.
+    ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraints: An array of `Constraint`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    /// - Throws: A `ConstraintViolation` error.
+    /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
+    /// on `Group`s.
     public func validate(
         _ value: Encodable?,
         against constraints: [Constraint],
@@ -23,13 +24,14 @@ open class Validator {
         }
     }
 
-    /// Validates a single primitive `Encodable` value against a variadic list of `Constraint`s on a set of `Group`s.
+    /// Validates a primitive `Encodable` value against a variadic list of `Constraint`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A single primitive `Encodable` value to be validated.
+    ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    /// - Throws: A `ConstraintViolation` error.
+    /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
+    /// on `Group`s.
     public func validate(
         _ value: Encodable?,
         against constraints: Constraint...,
@@ -38,13 +40,14 @@ open class Validator {
         try validate(value, against: constraints, on: groups)
     }
 
-    /// Validates a single primitive `Encodable` value against an array of `ConstraintType`s on a set of `Group`s.
+    /// Validates a primitive `Encodable` value against an array of `ConstraintType`s on a set of `Group`s.
     ///
     /// - Parameters:
-    ///   - value: A single primitive `Encodable` value to be validated.
+    ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
     ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
-    /// - Throws: A `ConstraintViolation` error.
+    /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
+    /// on `Group`s.
     public func validate(
         _ value: Encodable?,
         against constraintTypes: [ConstraintType],
