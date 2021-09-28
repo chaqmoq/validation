@@ -8,7 +8,7 @@ open class Validator {
     /// - Parameters:
     ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraints: An array of `Constraint`s.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations for. Defaults to an empty set.
     /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
     /// on `Group`s.
     public func validate(
@@ -29,7 +29,7 @@ open class Validator {
     /// - Parameters:
     ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraints: A variadic list of `Constraint`s.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations for. Defaults to an empty set.
     /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
     /// on `Group`s.
     public func validate(
@@ -45,7 +45,7 @@ open class Validator {
     /// - Parameters:
     ///   - value: A primitive `Encodable` value to be validated.
     ///   - constraintTypes: An array of `ConstraintType`s.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations for. Defaults to an empty set.
     /// - Throws: A `Validator.Error` if the value is not of primitive type or a `ConstraintViolation` if the value doesn't satisfy `Constraint`s
     /// on `Group`s.
     public func validate(
@@ -63,7 +63,7 @@ open class Validator {
     /// - Parameters:
     ///   - value: A complex `Encodable` value to be validated.
     ///   - constraintCollection: A `DictionaryCollection<String, Constraint>`.
-    ///   - groups: A set of `Group`s to run validations. Defaults to an empty set.
+    ///   - groups: A set of `Group`s to run validations for. Defaults to an empty set.
     ///   - options: A list of `Validator.Options`. Defaults to an empty array.
     /// - Throws: A `Validator.Error` if it can't decode the encoded value.
     /// - Returns: A `DictionaryCollection<String, ConstraintViolation>`.
@@ -84,8 +84,11 @@ open class Validator {
                     do {
                         try validate(value, against: [constraint], on: groups)
                     } catch {
-                        let constraintViolation = error as! ConstraintViolation
-                        constraintViolationCollection[key].append(constraintViolation)
+                        if let constraintViolation = error as? ConstraintViolation {
+                            constraintViolationCollection[key].append(constraintViolation)
+                        } else {
+                            throw error
+                        }
                     }
                 }
             }
@@ -122,8 +125,11 @@ open class Validator {
                         do {
                             try validate(value, against: [constraint], on: [group])
                         } catch {
-                            let constraintViolation = error as! ConstraintViolation
-                            constraintViolationCollection[key].append(constraintViolation)
+                            if let constraintViolation = error as? ConstraintViolation {
+                                constraintViolationCollection[key].append(constraintViolation)
+                            } else {
+                                throw error
+                            }
                         }
                     }
                 }
