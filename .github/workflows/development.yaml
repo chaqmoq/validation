@@ -1,9 +1,9 @@
 name: development
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 jobs:
   macos:
@@ -16,10 +16,10 @@ jobs:
     - name: Run tests
       run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
     - name: Generate documentation
-      uses: steven0351/publish-jazzy-docs@v1
+      uses: sukhrobkhakimov/publish-jazzy-docs@v1
       with:
         personal_access_token: ${{ secrets.ACCESS_TOKEN }}
-        args: "--theme fullwidth"
+        args: "--module Validation --theme fullwidth --root-url https://chaqmoq.dev/validation --source-host github --source-host-url https://github.com/chaqmoq/validation"
   ubuntu-bionic:
     runs-on: ubuntu-latest
     container:
