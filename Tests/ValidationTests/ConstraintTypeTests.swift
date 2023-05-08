@@ -153,13 +153,19 @@ final class ConstraintTypeTests: XCTestCase {
 
     func testRegexType() {
         // Arrange
-        let message = "This value is not a valid regular expression."
+        let pattern = "[a-zA-Z]"
+        let message = "This value is not valid."
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.regex(message, groups: groups).constraint as! RegexConstraint
+        let constraint = ConstraintType.regex(
+            pattern,
+            message: message,
+            groups: groups
+        ).constraint as! RegexConstraint
 
         // Assert
+        XCTAssertEqual(constraint.pattern, pattern)
         XCTAssertEqual(constraint.message, message)
         XCTAssertEqual(constraint.groups, groups)
     }

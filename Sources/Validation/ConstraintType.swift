@@ -87,12 +87,17 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case or(_ constraints: [Constraint], groups: Set<Group> = .init())
 
-    /// Creates a `RegexConstraint` type with a custom error message and a set of `Group`s to group by.
+    /// Creates a `RegexConstraint` type with a regular expression pattern, a custom error message and a set of `Group`s to group by.
     ///
     /// - Parameters:
+    ///   - pattern: A regular expression pattern. Matches to any character(s) or an empty string by default.
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
-    case regex(_ message: String = RegexConstraint.message, groups: Set<Group> = .init())
+    case regex(
+        _ pattern: String = RegexConstraint.pattern,
+        message: String = RegexConstraint.message,
+        groups: Set<Group> = .init()
+    )
 
     /// Creates a `URLConstraint` type with a file URL flag, a custom error message, and a set of `Group`s to group by.
     ///
@@ -144,7 +149,7 @@ public enum ConstraintType {
             )
         case let .notBlank(message, groups): return NotBlankConstraint(message, groups: groups)
         case let .or(constraints, groups): return OrConstraint(constraints, groups: groups)
-        case let .regex(message, groups): return RegexConstraint(message, groups: groups)
+        case let .regex(pattern, message, groups): return RegexConstraint(pattern, message: message, groups: groups)
         case let .url(message, isFileURL, groups):
             return URLConstraint(message, isFileURL: isFileURL, groups: groups)
         case let .uuid(message, groups): return UUIDConstraint(message, groups: groups)
