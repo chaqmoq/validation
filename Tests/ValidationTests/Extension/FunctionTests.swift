@@ -19,6 +19,7 @@ final class FunctionTests: XCTestCase {
     let double: Double = 12.5
     let bool = true
     let uuid = UUID()
+    let url = URL(string: "http://example.com")
     let array = [String]()
     let dictionary = [String: String]()
 
@@ -40,6 +41,7 @@ final class FunctionTests: XCTestCase {
         XCTAssertEqual(primitive(double), String(double))
         XCTAssertEqual(primitive(bool), String(bool))
         XCTAssertEqual(primitive(uuid), uuid.uuidString)
+        XCTAssertEqual(primitive(url), url?.absoluteString)
         XCTAssertNil(primitive(array))
         XCTAssertNil(primitive(dictionary))
     }
@@ -62,6 +64,7 @@ final class FunctionTests: XCTestCase {
         XCTAssertNoThrow(try assertPrimitive(double))
         XCTAssertNoThrow(try assertPrimitive(bool))
         XCTAssertNoThrow(try assertPrimitive(uuid))
+        XCTAssertNoThrow(try assertPrimitive(url))
         XCTAssertThrowsError(try assertPrimitive(array)) { error in
             XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
         }

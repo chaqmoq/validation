@@ -39,6 +39,8 @@ public func primitive(_ value: Any?) -> String? {
         return String(value)
     } else if let value = value as? UUID {
         return value.uuidString
+    } else if let value = value as? URL {
+        return value.absoluteString
     }
 
     return nil
