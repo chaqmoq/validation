@@ -105,7 +105,7 @@ public enum ConstraintType {
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - isFileURL: Indicates whether it is a file URL or not. Defaults to `false`.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
-    case url(_ message: String = URLConstraint.message, isFileURL: Bool, groups: Set<Group> = .init())
+    case url(_ message: String = URLConstraint.message, isFileURL: Bool = false, groups: Set<Group> = .init())
 
     /// Creates a `UUIDConstraint` type with a custom error message and a set of `Group`s to group by.
     ///
