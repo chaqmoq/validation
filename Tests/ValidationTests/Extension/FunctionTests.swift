@@ -44,7 +44,7 @@ final class FunctionTests: XCTestCase {
         XCTAssertEqual(primitive(bool), String(bool))
         XCTAssertEqual(primitive(uuid), uuid.uuidString)
         XCTAssertEqual(primitive(url), url?.absoluteString)
-        XCTAssertEqual(primitive(date), ISO8601DateFormatter().string(from: date))
+        XCTAssertEqual(primitive(date), DateFormatter.iso8601.string(from: date))
         XCTAssertEqual(primitive(date, dateFormatter: dateFormatter), dateFormatter.string(from: date))
         XCTAssertNil(primitive(array))
         XCTAssertNil(primitive(dictionary))

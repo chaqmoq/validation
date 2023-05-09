@@ -42,7 +42,7 @@ func primitive(_ value: Any?, dateFormatter: DateFormatter? = nil) -> String? {
             return dateFormatter.string(from: value)
         }
 
-        return ISO8601DateFormatter().string(from: value)
+        return DateFormatter.iso8601.string(from: value)
     }
 
     return nil

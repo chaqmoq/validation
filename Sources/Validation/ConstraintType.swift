@@ -1,3 +1,5 @@
+import Foundation
+
 /// A simplified API for the existing `Constraint`s.
 public enum ConstraintType {
     /// Creates a `AndConstraint` type with an array of child constraints and a set of `Group`s to group by.
@@ -13,6 +15,18 @@ public enum ConstraintType {
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case blank(_ message: String = BlankConstraint.message, groups: Set<Group> = .init())
+
+    /// Creates a `DateConstraint`type with a custom `DateFormatter`, a custom error message and a set of `Group`s to group by.
+    ///
+    /// - Parameters:
+    ///   - dateFormatter: A custom `DateFormatter`. Defaults to the "iso8601" `DateFormatter`.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
+    case date(
+        dateFormatter: DateFormatter? = nil,
+        message: String = IPConstraint.message,
+        groups: Set<Group> = .init()
+    )
 
     /// Creates an `EmailConstraint`type with a custom error message and a set of `Group`s to group by.
     ///
@@ -126,6 +140,8 @@ public enum ConstraintType {
         switch self {
         case let .and(constraints, groups): return AndConstraint(constraints, groups: groups)
         case let .blank(message, groups): return BlankConstraint(message, groups: groups)
+        case let .date(dateFormatter, message, groups):
+            return DateConstraint(dateFormatter, message: message, groups: groups)
         case let .email(message, groups): return EmailConstraint(message, groups: groups)
         case let .integer(min, max, minMessage, maxMessage, exactMessage, groups):
             return IntegerConstraint(
