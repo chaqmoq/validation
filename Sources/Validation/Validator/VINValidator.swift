@@ -23,7 +23,10 @@ extension VINValidator {
 
     func normalize(vin: String) -> String {
         var vin = vin
-        if vin.starts(with: "I"), vin.count == VINValidator.vinMaxLength { vin.removeFirst() }
+
+        if vin.starts(with: "I"), vin.count == VINValidator.vinMaxLength {
+            vin.removeFirst()
+        }
 
         return vin
     }
@@ -31,8 +34,13 @@ extension VINValidator {
 
 extension VINValidator {
     private func transliterate(character: Character) -> Int? {
-        if character == "." { return nil }
-        if let value = VINValidator.allowedCharacters.firstIntIndex(of: character) { return value % 10 }
+        if character == "." {
+            return nil
+        }
+
+        if let value = VINValidator.allowedCharacters.firstIntIndex(of: character) {
+            return value % 10
+        }
 
         return nil
     }

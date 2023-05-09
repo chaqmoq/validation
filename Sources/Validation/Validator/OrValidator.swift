@@ -14,10 +14,14 @@ struct OrValidator: ConstraintValidator {
                 isValid = true
                 break
             } catch {
-                if firstError == nil { firstError = error }
+                if firstError == nil {
+                    firstError = error
+                }
             }
         }
 
-        if let error = firstError, !isValid { throw error }
+        if let error = firstError, !isValid {
+            throw error
+        }
     }
 }

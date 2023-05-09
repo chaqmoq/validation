@@ -11,9 +11,13 @@ struct URLValidator: ConstraintValidator {
 
         if let url = URL(string: value) {
             if constraint.isFileURL {
-                if !url.isFileURL { throw ConstraintViolation(constraint.message) }
+                if !url.isFileURL {
+                    throw ConstraintViolation(constraint.message)
+                }
             } else {
-                if url.scheme == nil || url.host == nil { throw ConstraintViolation(constraint.message) }
+                if url.scheme == nil || url.host == nil {
+                    throw ConstraintViolation(constraint.message)
+                }
             }
         } else {
             throw ConstraintViolation(constraint.message)

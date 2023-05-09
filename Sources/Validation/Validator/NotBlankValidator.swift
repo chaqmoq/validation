@@ -6,6 +6,9 @@ struct NotBlankValidator: ConstraintValidator {
     func validate(_ value: Encodable?, against constraint: Constraint) throws {
         let value = try assertPrimitive(value)
         let constraint = try assertConstraintType(NotBlankConstraint.self, for: constraint)
-        if value.isEmpty { throw ConstraintViolation(constraint.message) }
+
+        if value.isEmpty {
+            throw ConstraintViolation(constraint.message)
+        }
     }
 }

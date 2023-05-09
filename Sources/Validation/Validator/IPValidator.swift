@@ -15,6 +15,9 @@ struct IPValidator: ConstraintValidator {
         let constraint = try assertConstraintType(IPConstraint.self, for: constraint)
         let regex = try NSRegularExpression(pattern: IPValidator.pattern)
         let range = NSRange(location: 0, length: value.utf8.count)
-        if regex.firstMatch(in: value, range: range) == nil { throw ConstraintViolation(constraint.message) }
+
+        if regex.firstMatch(in: value, range: range) == nil {
+            throw ConstraintViolation(constraint.message)
+        }
     }
 }
