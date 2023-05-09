@@ -20,8 +20,10 @@ final class FunctionTests: XCTestCase {
     let bool = true
     let uuid = UUID()
     let url = URL(string: "http://example.com")
+    let date = Date()
     let array = [String]()
     let dictionary = [String: String]()
+    let dateFormatter = DateFormatter()
 
     func testPrimitive() {
         XCTAssertEqual(primitive(nilValue), "")
@@ -42,6 +44,8 @@ final class FunctionTests: XCTestCase {
         XCTAssertEqual(primitive(bool), String(bool))
         XCTAssertEqual(primitive(uuid), uuid.uuidString)
         XCTAssertEqual(primitive(url), url?.absoluteString)
+        XCTAssertEqual(primitive(date), ISO8601DateFormatter().string(from: date))
+        XCTAssertEqual(primitive(date, dateFormatter: dateFormatter), dateFormatter.string(from: date))
         XCTAssertNil(primitive(array))
         XCTAssertNil(primitive(dictionary))
     }
@@ -65,6 +69,8 @@ final class FunctionTests: XCTestCase {
         XCTAssertNoThrow(try assertPrimitive(bool))
         XCTAssertNoThrow(try assertPrimitive(uuid))
         XCTAssertNoThrow(try assertPrimitive(url))
+        XCTAssertNoThrow(try assertPrimitive(date))
+        XCTAssertNoThrow(try assertPrimitive(date, dateFormatter: dateFormatter))
         XCTAssertThrowsError(try assertPrimitive(array)) { error in
             XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
         }

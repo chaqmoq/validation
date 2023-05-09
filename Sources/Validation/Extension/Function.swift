@@ -1,6 +1,6 @@
 import Foundation
 
-func primitive(_ value: Any?) -> String? {
+func primitive(_ value: Any?, dateFormatter: DateFormatter? = nil) -> String? {
     if value == nil {
         return ""
     } else if let value = value as? String {
@@ -37,14 +37,20 @@ func primitive(_ value: Any?) -> String? {
         return value.uuidString
     } else if let value = value as? URL {
         return value.absoluteString
+    } else if let value = value as? Date {
+        if let dateFormatter {
+            return dateFormatter.string(from: value)
+        }
+
+        return ISO8601DateFormatter().string(from: value)
     }
 
     return nil
 }
 
 @discardableResult
-func assertPrimitive(_ value: Any?) throws -> String {
-    guard let value = primitive(value) else {
+func assertPrimitive(_ value: Any?, dateFormatter: DateFormatter? = nil) throws -> String {
+    guard let value = primitive(value, dateFormatter: dateFormatter) else {
         let message = Validator.Error.Message.primitiveValue.text
         throw Validator.Error.invalidArgument(message)
     }
