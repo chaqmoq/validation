@@ -1,3 +1,5 @@
+import Foundation
+
 /// Converts a primitive value to its `String` representation.
 ///
 /// - Parameter value: A primitive value.
@@ -35,6 +37,8 @@ public func primitive(_ value: Any?) -> String? {
         return String(value)
     } else if let value = value as? Bool {
         return String(value)
+    } else if let value = value as? UUID {
+        return value.uuidString
     }
 
     return nil

@@ -18,7 +18,9 @@ final class FunctionTests: XCTestCase {
     let float: Float = 11.5
     let double: Double = 12.5
     let bool = true
-    let array: [String] = .init()
+    let uuid = UUID()
+    let array = [String]()
+    let dictionary = [String: String]()
 
     func testPrimitive() {
         XCTAssertEqual(primitive(nilValue), "")
@@ -37,7 +39,9 @@ final class FunctionTests: XCTestCase {
         XCTAssertEqual(primitive(float), String(float))
         XCTAssertEqual(primitive(double), String(double))
         XCTAssertEqual(primitive(bool), String(bool))
+        XCTAssertEqual(primitive(uuid), uuid.uuidString)
         XCTAssertNil(primitive(array))
+        XCTAssertNil(primitive(dictionary))
     }
 
     func testAssertPrimitive()  {
@@ -57,7 +61,11 @@ final class FunctionTests: XCTestCase {
         XCTAssertNoThrow(try assertPrimitive(float))
         XCTAssertNoThrow(try assertPrimitive(double))
         XCTAssertNoThrow(try assertPrimitive(bool))
+        XCTAssertNoThrow(try assertPrimitive(uuid))
         XCTAssertThrowsError(try assertPrimitive(array)) { error in
+            XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
+        }
+        XCTAssertThrowsError(try assertPrimitive(dictionary)) { error in
             XCTAssertEqual(error.localizedDescription, Validator.Error.Message.primitiveValue.text)
         }
     }
