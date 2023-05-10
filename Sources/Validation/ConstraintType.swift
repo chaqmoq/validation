@@ -16,6 +16,18 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case blank(_ message: String = BlankConstraint.message, groups: Set<Group> = .init())
 
+    /// Creates a `ChoiceConstraint` type  with a list of choices, a custom error message and a set of `Group`s to group by.
+    ///
+    /// - Parameters:
+    ///   - choices: A list of choices. Defaults to an empty array.
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
+    case choice(
+        _ choices: [any Encodable & Equatable] = .init(),
+        message: String = ChoiceConstraint.message,
+        groups: Set<Group> = .init()
+    )
+
     /// Creates a `DateConstraint`type with a custom `DateFormatter`, a custom error message and a set of `Group`s to group by.
     ///
     /// - Parameters:
@@ -140,6 +152,7 @@ public enum ConstraintType {
         switch self {
         case let .and(constraints, groups): return AndConstraint(constraints, groups: groups)
         case let .blank(message, groups): return BlankConstraint(message, groups: groups)
+        case let .choice(choices, message, groups): return ChoiceConstraint(choices, message: message, groups: groups)
         case let .date(dateFormatter, message, groups):
             return DateConstraint(dateFormatter, message: message, groups: groups)
         case let .email(message, groups): return EmailConstraint(message, groups: groups)

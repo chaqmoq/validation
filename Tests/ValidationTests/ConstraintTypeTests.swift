@@ -29,6 +29,25 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.groups, groups)
     }
 
+    func testChoiceType() {
+        // Arrange
+        let choices = ["first", "second", "third"]
+        let message = "This value is not a valid choice."
+        let groups: Set<Group> = [.default, "custom"]
+
+        // Act
+        let constraint = ConstraintType.choice(
+            choices,
+            message: message,
+            groups: groups
+        ).constraint as! ChoiceConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.choices as! [String], choices)
+        XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
+    }
+
     func testEmailType() {
         // Arrange
         let message = "This value is not a valid email address."
