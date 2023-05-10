@@ -48,6 +48,25 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.groups, groups)
     }
 
+    func testDateType() {
+        // Arrange
+        let dateFormatter = DateFormatter()
+        let message = "This value is not a valid date."
+        let groups: Set<Group> = [.default, "custom"]
+
+        // Act
+        let constraint = ConstraintType.date(
+            dateFormatter,
+            message: message,
+            groups: groups
+        ).constraint as! DateConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.dateFormatter, dateFormatter)
+        XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
+    }
+
     func testEmailType() {
         // Arrange
         let message = "This value is not a valid email address."
