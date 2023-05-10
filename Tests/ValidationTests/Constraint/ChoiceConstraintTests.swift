@@ -18,7 +18,7 @@ final class ChoiceConstraintTests: XCTestCase {
         constraint = ChoiceConstraint(choices, message: message, groups: groups)
 
         // Assert
-        XCTAssertEqual(constraint.choices as! [String], choices)
+        XCTAssertEqual(constraint.choices as? [String], choices)
         XCTAssertEqual(constraint.message, message)
         XCTAssertEqual(constraint.groups, groups)
     }

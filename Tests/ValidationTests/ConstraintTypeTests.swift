@@ -43,7 +43,7 @@ final class ConstraintTypeTests: XCTestCase {
         ).constraint as! ChoiceConstraint
 
         // Assert
-        XCTAssertEqual(constraint.choices as! [String], choices)
+        XCTAssertEqual(constraint.choices as? [String], choices)
         XCTAssertEqual(constraint.message, message)
         XCTAssertEqual(constraint.groups, groups)
     }
