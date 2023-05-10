@@ -36,7 +36,7 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case date(
         _ dateFormatter: DateFormatter? = nil,
-        message: String = IPConstraint.message,
+        message: String = DateConstraint.message,
         groups: Set<Group> = .init()
     )
 
