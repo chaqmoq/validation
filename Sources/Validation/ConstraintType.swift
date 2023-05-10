@@ -35,7 +35,7 @@ public enum ConstraintType {
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case date(
-        dateFormatter: DateFormatter? = nil,
+        _ dateFormatter: DateFormatter? = nil,
         message: String = IPConstraint.message,
         groups: Set<Group> = .init()
     )
