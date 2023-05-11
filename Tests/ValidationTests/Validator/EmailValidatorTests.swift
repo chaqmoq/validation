@@ -10,7 +10,7 @@ final class EmailValidatorTests: XCTestCase {
         validator = EmailValidator()
     }
 
-    func testInit() {
+    func testValidate() {
         // Arrange
         let nilValue: String? = nil
         let emptyValue = ""
