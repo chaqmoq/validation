@@ -10,87 +10,34 @@ final class JSONValidatorTests: XCTestCase {
         validator = JSONValidator()
     }
 
-    func testNilValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testNilValueAgainstExplicitConstraint() {
-        // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: JSONConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testEmptyValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testEmptyValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: JSONConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testInvalidValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testInvalidValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: JSONConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testValueAgainstImplicitConstraint() {
-        // Arrange
+        let nilValue: String? = nil
+        let emptyValue = ""
+        let invalidValue = "a"
         let value = "{\"title\": \"New post\", \"likesCount\": 100}"
 
         // Act/Assert
+        XCTAssertThrowsError(try validator.validate(nilValue)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(nilValue, against: JSONConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(emptyValue)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(emptyValue, against: JSONConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(invalidValue, against: JSONConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
         XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = "{\"title\": \"New post\", \"likesCount\": 100}"
-
-        // Act/Assert
         XCTAssertNoThrow(try validator.validate(value, against: JSONConstraint()))
-    }
-
-    func testValueWithInvalidConstraint() {
-        // Arrange
-        let value = "{\"title\": \"New post\", \"likesCount\": 100}"
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
