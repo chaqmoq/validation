@@ -15,6 +15,7 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, String(format: LengthConstraint.minMessage, value))
         XCTAssertEqual(constraint.maxMessage, String(format: LengthConstraint.maxMessage, value))
         XCTAssertEqual(constraint.exactMessage, String(format: LengthConstraint.exactMessage, value))
+        XCTAssertTrue(constraint.groups.isEmpty)
     }
 
     func testInitWhenMinLengthIsLessThanMaxLength() {
@@ -31,6 +32,7 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, String(format: LengthConstraint.minMessage, min))
         XCTAssertEqual(constraint.maxMessage, String(format: LengthConstraint.maxMessage, max))
         XCTAssertEqual(constraint.exactMessage, LengthConstraint.exactMessage)
+        XCTAssertTrue(constraint.groups.isEmpty)
     }
 
     func testInitWhenMinLengthIsGreaterThanMaxLength() {
@@ -47,6 +49,7 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, String(format: LengthConstraint.minMessage, min))
         XCTAssertEqual(constraint.maxMessage, String(format: LengthConstraint.maxMessage, max))
         XCTAssertEqual(constraint.exactMessage, LengthConstraint.exactMessage)
+        XCTAssertTrue(constraint.groups.isEmpty)
     }
 
     func testInitWhenMinLengthIsEqualToMaxLength() {
@@ -63,6 +66,7 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.minMessage, String(format: LengthConstraint.minMessage, min))
         XCTAssertEqual(constraint.maxMessage, String(format: LengthConstraint.maxMessage, max))
         XCTAssertEqual(constraint.exactMessage, String(format: LengthConstraint.exactMessage, min))
+        XCTAssertTrue(constraint.groups.isEmpty)
     }
 
     func testInitWithCustomMessages() {
