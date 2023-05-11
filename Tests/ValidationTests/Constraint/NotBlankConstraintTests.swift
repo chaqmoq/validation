@@ -3,20 +3,19 @@ import XCTest
 
 final class NotBlankConstraintTests: XCTestCase {
     func testInit() {
-        // Act
-        let constraint = NotBlankConstraint()
-
-        // Assert
-        XCTAssertEqual(constraint.message, NotBlankConstraint.message)
-    }
-
-    func testInitWithCustomMessage() {
         // Arrange
         let message = "This value is required."
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = NotBlankConstraint(message, groups: groups)
+        var constraint = NotBlankConstraint()
+
+        // Assert
+        XCTAssertEqual(constraint.message, NotBlankConstraint.message)
+        XCTAssertTrue(constraint.groups.isEmpty)
+
+        // Act
+        constraint = NotBlankConstraint(message, groups: groups)
 
         // Assert
         XCTAssertEqual(constraint.message, message)
