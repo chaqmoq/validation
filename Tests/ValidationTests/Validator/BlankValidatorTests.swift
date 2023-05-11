@@ -10,7 +10,7 @@ final class BlankValidatorTests: XCTestCase {
         validator = BlankValidator()
     }
 
-    func testNilValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
         let nilValue: String? = nil
         let emptyValue = ""
