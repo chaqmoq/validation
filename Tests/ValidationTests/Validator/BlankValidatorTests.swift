@@ -12,61 +12,21 @@ final class BlankValidatorTests: XCTestCase {
 
     func testNilValueAgainstImplicitConstraint() {
         // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testNilValueAgainstExplicitConstraint() {
-        // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: BlankConstraint()))
-    }
-
-    func testEmptyValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testEmptyValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: BlankConstraint()))
-    }
-
-    func testValueAgainstImplicitConstraint() {
-        // Arrange
+        let nilValue: String? = nil
+        let emptyValue = ""
         let value = "a"
 
         // Act/Assert
+        XCTAssertNoThrow(try validator.validate(nilValue))
+        XCTAssertNoThrow(try validator.validate(nilValue, against: BlankConstraint()))
+        XCTAssertNoThrow(try validator.validate(emptyValue))
+        XCTAssertNoThrow(try validator.validate(emptyValue, against: BlankConstraint()))
         XCTAssertThrowsError(try validator.validate(value)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: BlankConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueWithInvalidConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
