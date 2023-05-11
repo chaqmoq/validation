@@ -10,29 +10,10 @@ final class VINValidatorTests: XCTestCase {
         validator = VINValidator()
     }
 
-    func testNilValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testNilValueAgainstExplicitConstraint() {
-        // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: VINConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testValidVINs() {
-        // Arrange
-        let vins = [
+        let nilValue: String? = nil
+        let values = [
             "I1G1BE5SM4G7234868",
             "I1G1ZD5ST9JF145142",
             "WBANE53517CK92498",
@@ -52,31 +33,9 @@ final class VINValidatorTests: XCTestCase {
             "5NPDH4AE0DH396127",
             "JN1AZ0CP6CT023453"
         ]
-
-        // Act/Assert
-        for vin in vins {
-            XCTAssertNoThrow(try validator.validate(vin))
-        }
-    }
-
-    func testInvalidVINs() {
-        // Arrange
-        let vins = [
+        let invalidValues = [
             "1G1BE5SMXG7234868",
-            "1G1BE5SM4G7235868"
-        ]
-
-        // Act/Assert
-        for vin in vins {
-            XCTAssertThrowsError(try validator.validate(vin)) { error in
-                XCTAssertTrue(error is ConstraintViolation)
-            }
-        }
-    }
-
-    func testInvalidCharacterVINs() {
-        // Arrange
-        let vins = [
+            "1G1BE5SM4G7235868",
             "1G1BE5SM4GI234868",
             "1G1BE5SM4G7234O68",
             "1G1BQ5SM4G7234868",
@@ -85,39 +44,36 @@ final class VINValidatorTests: XCTestCase {
             "1G1BE5S-4G7234868",
             "INI503779(C0NTENT",
             "SEEHTTPS7ELLEN.WI",
-            "CAPTUREC0NNECTI0N"
-        ]
-
-        // Act/Assert
-        for vin in vins {
-            XCTAssertThrowsError(try validator.validate(vin)) { error in
-                XCTAssertTrue(error is ConstraintViolation)
-            }
-        }
-    }
-
-    func testInvalidLengthVINs() {
-        // Arrange
-        let vins = [
+            "CAPTUREC0NNECTI0N",
             "1G1BE5SM4G723486",
             "1G1BE5SM4G7234862828"
         ]
 
         // Act/Assert
-        for vin in vins {
-            XCTAssertThrowsError(try validator.validate(vin)) { error in
+        XCTAssertThrowsError(try validator.validate(nilValue)) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+        XCTAssertThrowsError(try validator.validate(nilValue, against: VINConstraint())) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        for value in values {
+            XCTAssertNoThrow(try validator.validate(value))
+        }
+
+        for invalidValue in invalidValues {
+            XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
                 XCTAssertTrue(error is ConstraintViolation)
             }
-        }
-    }
-
-    func testValueWithInvalidConstraint() {
-        // Arrange
-        let value = "I1G1BE5SM4G7234868"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
-            XCTAssertTrue(error is Validator.Error)
+            XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
+                XCTAssertTrue(error is ConstraintViolation)
+            }
+            XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
+                XCTAssertTrue(error is ConstraintViolation)
+            }
+            XCTAssertThrowsError(try validator.validate(invalidValue, against: IntegerConstraint())) { error in
+                XCTAssertTrue(error is Validator.Error)
+            }
         }
     }
 }
