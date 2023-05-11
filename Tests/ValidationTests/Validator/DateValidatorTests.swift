@@ -20,8 +20,6 @@ final class DateValidatorTests: XCTestCase {
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value))
         XCTAssertNoThrow(try validator.validate(value, against: DateConstraint()))
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(nilValue)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
@@ -40,8 +38,6 @@ final class DateValidatorTests: XCTestCase {
         XCTAssertThrowsError(try validator.validate(invalidValue, against: DateConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
