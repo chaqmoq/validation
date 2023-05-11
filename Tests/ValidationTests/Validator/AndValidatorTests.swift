@@ -10,57 +10,31 @@ final class AndValidatorTests: XCTestCase {
         validator = AndValidator()
     }
 
-    func testEmptyValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testEmptyValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: AndConstraint()))
-    }
-
-    func testValueWithChildConstraints() {
-        // Arrange
+        let emptyValue = ""
         let value = "12"
+        let invalidValue = "abc"
 
         // Act/Assert
+        XCTAssertNoThrow(try validator.validate(emptyValue))
+        XCTAssertNoThrow(try validator.validate(emptyValue, against: AndConstraint()))
         XCTAssertNoThrow(
             try validator.validate(
                 value,
                 against: AndConstraint([IntegerConstraint(), LengthConstraint(min: 1, max: 2)])
             )
         )
-    }
-
-    func testInvalidValueWithChildConstraints() {
-        // Arrange
-        let value = "abc"
-
-        // Act/Assert
+        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+            XCTAssertTrue(error is Validator.Error)
+        }
         XCTAssertThrowsError(
             try validator.validate(
-                value,
+                invalidValue,
                 against: AndConstraint([IntegerConstraint(), LengthConstraint(min: 1, max: 2)])
             )
         ) { error in
             XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testValueWithInvalidConstraint() {
-        // Arrange
-        let value = "123"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
-            XCTAssertTrue(error is Validator.Error)
         }
     }
 }
