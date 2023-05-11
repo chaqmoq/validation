@@ -10,129 +10,42 @@ final class IntegerValidatorTests: XCTestCase {
         validator = IntegerValidator()
     }
 
-    func testNilValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
-        let value: String? = nil
+        let nilValue: String? = nil
+        let values = [0, 1, 2]
+        let invalidValue = "a"
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(nilValue)) { error in
             XCTAssertTrue(error is Validator.Error)
         }
-    }
-
-    func testNilValueAgainstExplicitConstraint() {
-        // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+        XCTAssertThrowsError(try validator.validate(nilValue, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
-    }
-
-    func testValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = "1"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = "1"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint()))
-    }
-
-    func testValueAgainstInvalidConstraint() {
-        // Arrange
-        let value = "1"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint()))
-    }
-
-    func testInvalidValue() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(exact: 1))) { error in
+        XCTAssertThrowsError(try validator.validate(invalidValue, against: IntegerConstraint(exact: 1))) { error in
             XCTAssertTrue(error is Validator.Error)
         }
-    }
-
-    func testValueEqualToExactValue() {
-        // Arrange
-        let value = "1"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(exact: 1)))
-    }
-
-    func testValueNotEqualToExactValue() {
-        // Arrange
-        let value = "0"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(exact: 1))) { error in
+        XCTAssertThrowsError(try validator.validate(-1, against: IntegerConstraint(min: 0))) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueLessThanMinValue() {
-        // Arrange
-        let value = "-1"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(min: 0))) { error in
+        XCTAssertNoThrow(try validator.validate(0, against: IntegerConstraint(min: 0, max: 2)))
+        XCTAssertThrowsError(try validator.validate(0, against: IntegerConstraint(exact: 1))) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueEqualToMinValue() {
-        // Arrange
-        let value = "0"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
-    }
-
-    func testValueBetweenMinAndMaxValues() {
-        // Arrange
-        let value = "1"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
-    }
-
-    func testValueEqualToMaxValue() {
-        // Arrange
-        let value = "2"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
-    }
-
-    func testValueMoreThanMaxValue() {
-        // Arrange
-        let value = "3"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2))) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-    }
-
-    func testValueWhenMinValueIsMoreThanMaxValue() {
-        // Arrange
-        let value = "0"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint(min: 2, max: 1))) { error in
+        XCTAssertThrowsError(try validator.validate(0, against: IntegerConstraint(min: 2, max: 1))) { error in
             XCTAssertTrue(error is Validator.Error)
+        }
+        XCTAssertNoThrow(try validator.validate(1, against: IntegerConstraint(exact: 1)))
+        XCTAssertThrowsError(try validator.validate(3, against: IntegerConstraint(min: 0, max: 2))) { error in
+            XCTAssertTrue(error is ConstraintViolation)
+        }
+
+        for value in values {
+            XCTAssertNoThrow(try validator.validate(value))
+            XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint()))
+            XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint()))
+            XCTAssertNoThrow(try validator.validate(value, against: IntegerConstraint(min: 0, max: 2)))
         }
     }
 }

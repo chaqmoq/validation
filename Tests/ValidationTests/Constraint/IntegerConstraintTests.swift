@@ -33,7 +33,7 @@ final class IntegerConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.exactMessage, IntegerConstraint.exactMessage)
     }
 
-    func testInitWhenMinValueIsMoreThanMaxValue() {
+    func testInitWhenMinValueIsGreaterThanMaxValue() {
         // Arrange
         let min = 2
         let max = 1
