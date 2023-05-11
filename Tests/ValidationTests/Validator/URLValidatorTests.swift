@@ -10,103 +10,41 @@ final class URLValidatorTests: XCTestCase {
         validator = URLValidator()
     }
 
-    func testNilValueAgainstImplicitConstraint() {
+    func testValidate() {
         // Arrange
-        let value: String? = nil
+        let nilValue: String? = nil
+        let emptyValue = ""
+        let invalidValue = "a"
+        let url = "http://chaqmoq.dev"
+        let fileURL = "file:///users/chaqmoq/logo.png"
 
         // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(nilValue)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testNilValueAgainstExplicitConstraint() {
-        // Arrange
-        let value: String? = nil
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: URLConstraint())) { error in
+        XCTAssertThrowsError(try validator.validate(nilValue, against: URLConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testEmptyValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(emptyValue)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testEmptyValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: URLConstraint())) { error in
+        XCTAssertThrowsError(try validator.validate(emptyValue, against: URLConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testInvalidValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value)) { error in
+        XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testInvalidValueAgainstExplicitConstraint() {
-        // Arrange
-        let value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: URLConstraint())) { error in
+        XCTAssertThrowsError(try validator.validate(invalidValue, against: URLConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueAgainstImplicitConstraint() {
-        // Arrange
-        let value = "http://chaqmoq.dev"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testValuesAgainstExplicitConstraint() {
-        // Arrange
-        var value = "http://chaqmoq.dev"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: URLConstraint()))
-
-        // Arrange
-        value = "file:///users/chaqmoq/logo.png"
-
-        // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value, against: URLConstraint(isFileURL: true)))
-
-        // Arrange
-        value = "a"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: URLConstraint(isFileURL: true))) { error in
+        XCTAssertThrowsError(try validator.validate(invalidValue, against: URLConstraint(isFileURL: true))) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-    }
-
-    func testValueWithInvalidConstraint() {
-        // Arrange
-        let value = "http://chaqmoq.dev"
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
+        XCTAssertNoThrow(try validator.validate(url))
+        XCTAssertNoThrow(try validator.validate(url, against: URLConstraint()))
+        XCTAssertThrowsError(try validator.validate(url, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
+        XCTAssertNoThrow(try validator.validate(fileURL, against: URLConstraint(isFileURL: true)))
     }
 }
