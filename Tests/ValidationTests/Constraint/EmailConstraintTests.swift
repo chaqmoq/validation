@@ -12,6 +12,7 @@ final class EmailConstraintTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(constraint.message, EmailConstraint.message)
+        XCTAssertTrue(constraint.groups.isEmpty)
 
         // Act
         constraint = EmailConstraint(message, groups: groups)

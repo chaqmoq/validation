@@ -13,6 +13,7 @@ final class ChoiceConstraintTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(constraint.message, ChoiceConstraint.message)
+        XCTAssertTrue(constraint.groups.isEmpty)
 
         // Act
         constraint = ChoiceConstraint(choices, message: message, groups: groups)

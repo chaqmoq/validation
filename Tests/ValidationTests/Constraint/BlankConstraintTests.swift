@@ -12,6 +12,7 @@ final class BlankConstraintTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(constraint.message, BlankConstraint.message)
+        XCTAssertTrue(constraint.groups.isEmpty)
 
         // Act
         constraint = BlankConstraint(message, groups: groups)

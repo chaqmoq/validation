@@ -13,6 +13,7 @@ final class AndConstraintTests: XCTestCase {
 
         // Assert
         XCTAssertTrue(constraint.constraints.isEmpty)
+        XCTAssertTrue(constraint.groups.isEmpty)
 
         // Act
         constraint = AndConstraint([notBlank, length], groups: groups)
