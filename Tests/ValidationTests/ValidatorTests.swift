@@ -10,20 +10,13 @@ final class ValidatorTests: XCTestCase {
         validator = Validator()
     }
 
-    func testEmptyValueAgainstImplicitConstraint() {
+    func testEmptyValue() {
         // Arrange
-        let value = ""
+        let emptyValue = ""
 
         // Act/Assert
-        XCTAssertNoThrow(try validator.validate(value))
-    }
-
-    func testEmptyValueWithOneConstraint() {
-        // Arrange
-        let value = ""
-
-        // Act/Assert
-        XCTAssertThrowsError(try validator.validate(value, against: NotBlankConstraint())) { error in
+        XCTAssertNoThrow(try validator.validate(emptyValue))
+        XCTAssertThrowsError(try validator.validate(emptyValue, against: NotBlankConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
     }
