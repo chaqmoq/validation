@@ -20,8 +20,6 @@ final class ChoiceValidatorTests: XCTestCase {
 
         // Act/Assert
         XCTAssertNoThrow(try validator.validate(value, against: ChoiceConstraint(choices)))
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(nilValue)) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
@@ -40,8 +38,6 @@ final class ChoiceValidatorTests: XCTestCase {
         XCTAssertThrowsError(try validator.validate(invalidValue, against: ChoiceConstraint(choices))) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-
-        // Act/Assert
         XCTAssertThrowsError(try validator.validate(value, against: IntegerConstraint())) { error in
             XCTAssertTrue(error is Validator.Error)
         }
