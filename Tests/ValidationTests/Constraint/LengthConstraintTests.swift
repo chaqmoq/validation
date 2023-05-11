@@ -33,7 +33,7 @@ final class LengthConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.exactMessage, LengthConstraint.exactMessage)
     }
 
-    func testInitWhenMinLengthIsMoreThanMaxLength() {
+    func testInitWhenMinLengthIsGreaterThanMaxLength() {
         // Arrange
         let min: UInt = 2
         let max: UInt = 1
