@@ -4,12 +4,10 @@ import XCTest
 final class ConstraintTypeTests: XCTestCase {
     func testAndType() {
         // Arrange
-        let notBlank = NotBlankConstraint()
-        let length = LengthConstraint()
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.and([notBlank, length], groups: groups).constraint as! AndConstraint
+        let constraint = ConstraintType.and([.notBlank(), .length()], groups: groups).constraint as! AndConstraint
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)
@@ -177,12 +175,10 @@ final class ConstraintTypeTests: XCTestCase {
 
     func testOrType() {
         // Arrange
-        let notBlank = NotBlankConstraint()
-        let length = LengthConstraint()
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
-        let constraint = ConstraintType.or([notBlank, length], groups: groups).constraint as! OrConstraint
+        let constraint = ConstraintType.or([.notBlank(), .length()], groups: groups).constraint as! OrConstraint
 
         // Assert
         XCTAssertEqual(constraint.constraints.count, 2)

@@ -2,12 +2,12 @@ import Foundation
 
 /// A simplified API for the existing `Constraint`s.
 public enum ConstraintType {
-    /// Creates a `AndConstraint` type with an array of child constraints and a set of `Group`s to group by.
+    /// Creates a `AndConstraint` type with an array of child constraint types and a set of `Group`s to group by.
     ///
     /// - Parameters:
-    ///   - constraints: An array of child constraints.
+    ///   - constraintTypes: An array of child constraint types.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
-    case and(_ constraints: [Constraint], groups: Set<Group> = .init())
+    case and(_ constraintTypes: [Self], groups: Set<Group> = .init())
 
     /// Creates a `BlankConstraint` type with a custom error message and a set of `Group`s to group by.
     ///
@@ -106,12 +106,12 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case notBlank(_ message: String = NotBlankConstraint.message, groups: Set<Group> = .init())
 
-    /// Creates a `OrConstraint` type with an array of child constraints and a set of `Group`s to group by.
+    /// Creates a `OrConstraint` type with an array of child constraint types and a set of `Group`s to group by.
     ///
     /// - Parameters:
-    ///   - constraints: An array of child constraints.
+    ///   - constraintTypes: An array of child constraint types.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
-    case or(_ constraints: [Constraint], groups: Set<Group> = .init())
+    case or(_ constraintTypes: [Self], groups: Set<Group> = .init())
 
     /// Creates a `RegexConstraint` type with a regular expression pattern, a custom error message and a set of `Group`s to group by.
     ///
@@ -150,7 +150,8 @@ public enum ConstraintType {
     /// A matching `Constraint` for a `ConstraintType`.
     public var constraint: Constraint {
         switch self {
-        case let .and(constraints, groups): return AndConstraint(constraints, groups: groups)
+        case let .and(constraintTypes, groups):
+            return AndConstraint(constraintTypes.map { $0.constraint }, groups: groups)
         case let .blank(message, groups): return BlankConstraint(message, groups: groups)
         case let .choice(choices, message, groups): return ChoiceConstraint(choices, message: message, groups: groups)
         case let .date(dateFormatter, message, groups):
@@ -177,7 +178,8 @@ public enum ConstraintType {
                 groups: groups
             )
         case let .notBlank(message, groups): return NotBlankConstraint(message, groups: groups)
-        case let .or(constraints, groups): return OrConstraint(constraints, groups: groups)
+        case let .or(constraintTypes, groups):
+            return OrConstraint(constraintTypes.map { $0.constraint }, groups: groups)
         case let .regex(pattern, message, groups): return RegexConstraint(pattern, message: message, groups: groups)
         case let .url(message, isFileURL, groups):
             return URLConstraint(message, isFileURL: isFileURL, groups: groups)
