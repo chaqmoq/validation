@@ -54,6 +54,13 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case email(_ message: String = EmailConstraint.message, groups: Set<Group> = .init())
 
+    /// Creates a `HexColorConstraint` with a custom error message and a set of `Group`s to group by.
+    ///
+    /// - Parameters:
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
+    case hexColor(_ message: String = HexColorConstraint.message, groups: Set<Group> = .init())
+
     /// Creates an `IntegerConstraint`type with minimum/maximum values, custom minimum/maximum error messages,
     /// and a set of `Group`s to group by.
     ///
@@ -163,6 +170,7 @@ public enum ConstraintType {
         case let .choice(choices, message, groups): ChoiceConstraint(choices, message: message, groups: groups)
         case let .date(dateFormatter, message, groups): DateConstraint(dateFormatter, message: message, groups: groups)
         case let .email(message, groups): EmailConstraint(message, groups: groups)
+        case let .hexColor(message, groups): HexColorConstraint(message, groups: groups)
         case let .integer(min, max, minMessage, maxMessage, exactMessage, groups):
             IntegerConstraint(
                 min: min,

@@ -91,6 +91,19 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.groups, groups)
     }
 
+    func testHexColorType() {
+        // Arrange
+        let message = "This value is not a valid hex color."
+        let groups: Set<Group> = [.default, "custom"]
+
+        // Act
+        let constraint = ConstraintType.hexColor(message, groups: groups).constraint as! HexColorConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
+    }
+
     func testIntegerType() {
         // Arrange
         let min = 1
