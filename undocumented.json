@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/validation/validation/Sources/Validation/Extension/DateFormatter.swift",
+      "line": 4,
+      "symbol": "DateFormatter.iso8601",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/validation/validation"
+}
