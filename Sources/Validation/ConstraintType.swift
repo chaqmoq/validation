@@ -16,6 +16,13 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case blank(_ message: String = BlankConstraint.message, groups: Set<Group> = .init())
 
+    /// Creates an `BoolConstraint`type with a custom error message and a set of `Group`s to group by.
+    ///
+    /// - Parameters:
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
+    case bool(_ message: String = BoolConstraint.message, groups: Set<Group> = .init())
+
     /// Creates a `ChoiceConstraint` type  with a list of choices, a custom error message and a set of `Group`s to group by.
     ///
     /// - Parameters:
@@ -153,6 +160,7 @@ public enum ConstraintType {
         case let .and(constraintTypes, groups):
             return AndConstraint(constraintTypes.map { $0.constraint }, groups: groups)
         case let .blank(message, groups): return BlankConstraint(message, groups: groups)
+        case let .bool(message, groups): return BoolConstraint(message, groups: groups)
         case let .choice(choices, message, groups): return ChoiceConstraint(choices, message: message, groups: groups)
         case let .date(dateFormatter, message, groups):
             return DateConstraint(dateFormatter, message: message, groups: groups)

@@ -27,6 +27,19 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.groups, groups)
     }
 
+    func testBoolType() {
+        // Arrange
+        let message = "This value is not boolean."
+        let groups: Set<Group> = [.default, "custom"]
+
+        // Act
+        let constraint = ConstraintType.bool(message, groups: groups).constraint as! BoolConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
+    }
+
     func testChoiceType() {
         // Arrange
         let choices = ["first", "second", "third"]
