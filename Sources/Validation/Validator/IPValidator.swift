@@ -13,10 +13,9 @@ struct IPValidator: ConstraintValidator {
     func validate(_ value: Encodable?, against constraint: Constraint) throws {
         let value = try assertPrimitive(value)
         let constraint = try assertConstraintType(IPConstraint.self, for: constraint)
-        let regex = try NSRegularExpression(pattern: IPValidator.pattern)
-        let range = NSRange(location: 0, length: value.utf8.count)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", Self.pattern)
 
-        if regex.firstMatch(in: value, range: range) == nil {
+        if !predicate.evaluate(with: value) {
             throw ConstraintViolation(constraint.message)
         }
     }

@@ -14,8 +14,8 @@ final class HexColorValidatorTests: XCTestCase {
         // Arrange
         let nilValue: String? = nil
         let emptyValue = ""
-        let invalidValue = "a"
-        let values = ["fff", "3195B5"]
+        let invalidValues = ["a", "bb", "#cc", "#ddddddd"]
+        let values = ["fff", "#FFF", "#3195b5", "3195B5"]
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(nilValue)) { error in
@@ -30,11 +30,14 @@ final class HexColorValidatorTests: XCTestCase {
         XCTAssertThrowsError(try validator.validate(emptyValue, against: HexColorConstraint())) { error in
             XCTAssertTrue(error is ConstraintViolation)
         }
-        XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
-            XCTAssertTrue(error is ConstraintViolation)
-        }
-        XCTAssertThrowsError(try validator.validate(invalidValue, against: HexColorConstraint())) { error in
-            XCTAssertTrue(error is ConstraintViolation)
+
+        for invalidValue in invalidValues {
+            XCTAssertThrowsError(try validator.validate(invalidValue)) { error in
+                XCTAssertTrue(error is ConstraintViolation)
+            }
+            XCTAssertThrowsError(try validator.validate(invalidValue, against: HexColorConstraint())) { error in
+                XCTAssertTrue(error is ConstraintViolation)
+            }
         }
 
         for value in values {

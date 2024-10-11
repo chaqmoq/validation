@@ -1,15 +1,7 @@
 import Foundation
 
 struct EmailValidator: ConstraintValidator {
-    static let pattern = """
-    (?:[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}\
-    ~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\\
-    x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[\\p{L}0-9](?:[a-\
-    z0-9-]*[\\p{L}0-9])?\\.)+[\\p{L}0-9](?:[\\p{L}0-9-]*[\\p{L}0-9])?|\\[(?:(?:25[0-5\
-    ]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-\
-    9][0-9]?|[\\p{L}0-9-]*[\\p{L}0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\
-    -\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])
-    """
+    static let pattern = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
 
     func validate(_ value: Encodable?) throws {
         try validate(value, against: EmailConstraint())
@@ -18,10 +10,9 @@ struct EmailValidator: ConstraintValidator {
     func validate(_ value: Encodable?, against constraint: Constraint) throws {
         let value = try assertPrimitive(value)
         let constraint = try assertConstraintType(EmailConstraint.self, for: constraint)
-        let regex = try NSRegularExpression(pattern: EmailValidator.pattern)
-        let range = NSRange(location: 0, length: value.utf8.count)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", Self.pattern)
 
-        if regex.firstMatch(in: value, range: range) == nil {
+        if !predicate.evaluate(with: value) {
             throw ConstraintViolation(constraint.message)
         }
     }
