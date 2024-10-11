@@ -23,8 +23,8 @@ public struct DateConstraint: Constraint {
     ///   - dateFormatter: A custom `DateFormatter`. Defaults to the "iso8601" `DateFormatter`.
     ///   - message: A custom error message. Defaults to the default error message.
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
-    public init(_ dateFormatter: DateFormatter? = nil, message: String = message, groups: Set<Group> = .init()) {
-        self.dateFormatter = dateFormatter ?? DateFormatter.iso8601
+    public init(_ dateFormatter: DateFormatter = .iso8601, message: String = message, groups: Set<Group> = .init()) {
+        self.dateFormatter = dateFormatter
         self.message = message
         self.groups = groups
     }
