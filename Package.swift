@@ -7,8 +7,13 @@ let package = Package(
     products: [
         .library(name: "Validation", targets: ["Validation"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/marmelroy/PhoneNumberKit.git", from: "4.0.0")
+    ],
     targets: [
-        .target(name: "Validation"),
+        .target(name: "Validation", dependencies: [
+            .product(name: "PhoneNumberKit", package: "PhoneNumberKit"),
+        ]),
         .testTarget(name: "ValidationTests", dependencies: [
             .target(name: "Validation")
         ])

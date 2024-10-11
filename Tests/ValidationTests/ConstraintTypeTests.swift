@@ -211,6 +211,19 @@ final class ConstraintTypeTests: XCTestCase {
         XCTAssertEqual(constraint.groups, groups)
     }
 
+    func testPhoneNumberType() {
+        // Arrange
+        let message = "This value is not a valid phone number."
+        let groups: Set<Group> = [.default, "custom"]
+
+        // Act
+        let constraint = ConstraintType.phoneNumber(message, groups: groups).constraint as! PhoneNumberConstraint
+
+        // Assert
+        XCTAssertEqual(constraint.message, message)
+        XCTAssertEqual(constraint.groups, groups)
+    }
+
     func testRegexType() {
         // Arrange
         let pattern = "[a-zA-Z]"

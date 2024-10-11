@@ -127,6 +127,13 @@ public enum ConstraintType {
     ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
     case or(_ constraintTypes: [Self], groups: Set<Group> = .init())
 
+    /// Creates an `PhoneNumberConstraint`type with a custom error message and a set of `Group`s to group by.
+    ///
+    /// - Parameters:
+    ///   - message: A custom error message. Defaults to the default error message.
+    ///   - groups: A set of `Group`s to group by. Defaults to an empty set.
+    case phoneNumber(_ message: String = PhoneNumberConstraint.message, groups: Set<Group> = .init())
+
     /// Creates a `RegexConstraint` type with a regular expression pattern, a custom error message and a set of `Group`s to group by.
     ///
     /// - Parameters:
@@ -193,6 +200,7 @@ public enum ConstraintType {
             )
         case let .notBlank(message, groups): NotBlankConstraint(message, groups: groups)
         case let .or(constraintTypes, groups): OrConstraint(constraintTypes.map { $0.constraint }, groups: groups)
+        case let .phoneNumber(message, groups): PhoneNumberConstraint(message, groups: groups)
         case let .regex(pattern, message, groups): RegexConstraint(pattern, message: message, groups: groups)
         case let .url(message, isFileURL, groups): URLConstraint(message, isFileURL: isFileURL, groups: groups)
         case let .uuid(message, groups): UUIDConstraint(message, groups: groups)
