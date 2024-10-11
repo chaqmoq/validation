@@ -157,16 +157,14 @@ public enum ConstraintType {
     /// A matching `Constraint` for a `ConstraintType`.
     public var constraint: Constraint {
         switch self {
-        case let .and(constraintTypes, groups):
-            return AndConstraint(constraintTypes.map { $0.constraint }, groups: groups)
-        case let .blank(message, groups): return BlankConstraint(message, groups: groups)
-        case let .bool(message, groups): return BoolConstraint(message, groups: groups)
-        case let .choice(choices, message, groups): return ChoiceConstraint(choices, message: message, groups: groups)
-        case let .date(dateFormatter, message, groups):
-            return DateConstraint(dateFormatter, message: message, groups: groups)
-        case let .email(message, groups): return EmailConstraint(message, groups: groups)
+        case let .and(constraintTypes, groups): AndConstraint(constraintTypes.map { $0.constraint }, groups: groups)
+        case let .blank(message, groups): BlankConstraint(message, groups: groups)
+        case let .bool(message, groups): BoolConstraint(message, groups: groups)
+        case let .choice(choices, message, groups): ChoiceConstraint(choices, message: message, groups: groups)
+        case let .date(dateFormatter, message, groups): DateConstraint(dateFormatter, message: message, groups: groups)
+        case let .email(message, groups): EmailConstraint(message, groups: groups)
         case let .integer(min, max, minMessage, maxMessage, exactMessage, groups):
-            return IntegerConstraint(
+            IntegerConstraint(
                 min: min,
                 max: max,
                 minMessage: minMessage,
@@ -174,10 +172,10 @@ public enum ConstraintType {
                 exactMessage: exactMessage,
                 groups: groups
             )
-        case let .ip(message, groups): return IPConstraint(message, groups: groups)
-        case let .json(message, groups): return JSONConstraint(message, groups: groups)
+        case let .ip(message, groups): IPConstraint(message, groups: groups)
+        case let .json(message, groups): JSONConstraint(message, groups: groups)
         case let .length(min, max, minMessage, maxMessage, exactMessage, groups):
-            return LengthConstraint(
+            LengthConstraint(
                 min: min,
                 max: max,
                 minMessage: minMessage,
@@ -185,14 +183,12 @@ public enum ConstraintType {
                 exactMessage: exactMessage,
                 groups: groups
             )
-        case let .notBlank(message, groups): return NotBlankConstraint(message, groups: groups)
-        case let .or(constraintTypes, groups):
-            return OrConstraint(constraintTypes.map { $0.constraint }, groups: groups)
-        case let .regex(pattern, message, groups): return RegexConstraint(pattern, message: message, groups: groups)
-        case let .url(message, isFileURL, groups):
-            return URLConstraint(message, isFileURL: isFileURL, groups: groups)
-        case let .uuid(message, groups): return UUIDConstraint(message, groups: groups)
-        case let .vin(message, groups): return VINConstraint(message, groups: groups)
+        case let .notBlank(message, groups): NotBlankConstraint(message, groups: groups)
+        case let .or(constraintTypes, groups): OrConstraint(constraintTypes.map { $0.constraint }, groups: groups)
+        case let .regex(pattern, message, groups): RegexConstraint(pattern, message: message, groups: groups)
+        case let .url(message, isFileURL, groups): URLConstraint(message, isFileURL: isFileURL, groups: groups)
+        case let .uuid(message, groups): UUIDConstraint(message, groups: groups)
+        case let .vin(message, groups): VINConstraint(message, groups: groups)
         }
     }
 }
