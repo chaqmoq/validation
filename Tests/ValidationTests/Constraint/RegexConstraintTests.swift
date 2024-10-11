@@ -13,7 +13,7 @@ final class RegexConstraintTests: XCTestCase {
     func testInitWithCustomMessage() {
         // Arrange
         let pattern = "[a-zA-Z]"
-        let message = "This value is not valid."
+        let message = "This value is not a valid regular expression."
         let groups: Set<Group> = [.default, "custom"]
 
         // Act
