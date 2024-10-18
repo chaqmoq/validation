@@ -8,8 +8,9 @@ struct RegexValidator: ConstraintValidator {
     func validate(_ value: Encodable?, against constraint: Constraint) throws {
         let value = try assertPrimitive(value)
         let constraint = try assertConstraintType(RegexConstraint.self, for: constraint)
+        let predicate = NSPredicate(format: "SELF MATCHES %@", constraint.pattern)
 
-        if (try? NSRegularExpression(pattern: value)) == nil {
+        if !predicate.evaluate(with: value) {
             throw ConstraintViolation(constraint.message)
         }
     }
