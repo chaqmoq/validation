@@ -15,7 +15,7 @@ final class HexColorValidatorTests: XCTestCase {
         let nilValue: String? = nil
         let emptyValue = ""
         let invalidValues = ["a", "bb", "#cc", "#ddddddd"]
-        let values = ["fff", "#FFF", "#3195b5", "3195B5"]
+        let values = ["ffffff", "#FFFFFF", "#3195b5", "3195B5"]
 
         // Act/Assert
         XCTAssertThrowsError(try validator.validate(nilValue)) { error in

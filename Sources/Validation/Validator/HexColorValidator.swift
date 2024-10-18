@@ -6,13 +6,15 @@ struct HexColorValidator: ConstraintValidator {
     }
 
     func validate(_ value: Encodable?, against constraint: Constraint) throws {
-        let value = try assertPrimitive(value)
+        var value = try assertPrimitive(value)
         let constraint = try assertConstraintType(HexColorConstraint.self, for: constraint)
-        let pattern = "^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
 
-        if !predicate.evaluate(with: value) {
-            throw ConstraintViolation(constraint.message)
+        if value.hasPrefix("#") {
+            value.removeFirst()
         }
+
+        let count = value.count
+        guard count == 6 || count == 8, UInt32(value, radix: 16) != nil
+        else { throw ConstraintViolation(constraint.message) }
     }
 }
